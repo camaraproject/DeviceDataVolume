@@ -7,7 +7,7 @@
 <a href="https://github.com/camaraproject/DeviceDataVolume/releases/latest" title="Latest Release"><img src="https://img.shields.io/github/release/camaraproject/DeviceDataVolume?style=plastic"></a>
 
 # DeviceDataVolume
-Repository to describe, develop, document, and test the DeviceDataVolume API within the Sub Project [DeviceStatus](https://wiki.camaraproject.org/display/CAM/[Sub+Projects](https://wiki.camaraproject.org/display/CAM/DeviceStatus)) of CAMARA
+Repository to describe, develop, document, and test the DeviceDataVolume API within the Sub Project [DeviceStatus](https://lf-camaraproject.atlassian.net/wiki/x/fzLe) of CAMARA
 
 ## Scope
 
@@ -30,7 +30,7 @@ The repository has no (pre)releases yet, work in progress is within the main bra
 * Meetings for the DeviceStatus Sub Project are held virtually 
     * Schedule: Bi-weekly on Wednesday, 11:00 CET/CEST (08:00 UTC, 09:00 UTC during European DST)
     * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94783050047?password=c43ff9fd-4c79-468a-9d98-45222dd6343d)
-    * Minutes: [Access meeting minutes](https://wiki.camaraproject.org/x/5oAuAQ)
+    * Minutes: [Access meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/fzLe)
 * Mailing List
     * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/sp-dst>.
     * A message to the community of this Sub Project can be sent using <sp-dst@lists.camaraproject.org>.
