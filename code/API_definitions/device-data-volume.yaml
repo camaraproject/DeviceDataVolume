@@ -21,9 +21,6 @@ info:
     - The endpoint `POST /retrieve` allows customers to retrieve the remaining device data volume.
     - The endpoint `POST /check` allows customers to Check if the remaining data volume is above a certain threshold.
 
-  termsOfService: http://swagger.io/terms/
-  contact:
-    name: Deutsche Telekom (Noel Wirzius)
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
