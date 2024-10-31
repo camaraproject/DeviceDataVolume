@@ -288,8 +288,8 @@ components:
       description: Enumeration of volume units
       type: string
       enum:
-        - Mb
-        - Gb
+        - MB
+        - GB
        
     ErrorInfo:
       type: object
