@@ -6,7 +6,7 @@ info:
 
     # Device Data Volume
 
-    The API enables customers to retrieve data usage information for a dedicated SIM card, offering estimated remaining data volume categories like <200MB, <1GB, <5GB, and >=5GB. It also allows subscription to changes in data volume status.
+    The API enables customers to retrieve data usage information for a dedicated SIM card, offering estimated remaining data volume categories like <200MiB, <1GiB, <5GiB, and >=5GiB. It also allows subscription to changes in data volume status.
 
     Additionally, a check operation is provided to determine if the remaining data volume exceeds a user-specified threshold.
     
@@ -163,12 +163,12 @@ components:
       properties:
         dataVolumeCategory:
           type: string
-          description: Estimated remaining data volume category
+          description: Estimated remaining data volume category, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes
           enum:
-            - "<200MB"
-            - "<1GB"
-            - "<5GB"
-            - ">=5GB"
+            - "<200MiB"
+            - "<1GiB"
+            - "<5GiB"
+            - ">=5GiB"
       required:
         - dataVolumeCategory
 
@@ -274,7 +274,7 @@ components:
               example: 500
               format: int32
               minimum: 0
-              maximum: 10240
+              maximum: 1024
             unit:
               $ref: "#/components/schemas/VolumeUnitEnum"
           required:
@@ -285,11 +285,11 @@ components:
         - volumeToCheck
     
     VolumeUnitEnum:
-      description: Enumeration of volume units
+      description: Enumeration of volume units, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes
       type: string
       enum:
-        - MB
-        - GB
+        - MiB
+        - GiB
        
     ErrorInfo:
       type: object
