@@ -610,8 +610,11 @@ components:
       description: |
         Event types that can be triggered for device data volume monitoring.
       enum:
-        - org.camaraproject.device-data-volume-subscriptions.v0.data-usage-threshold
-        - org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
+
 
     SubscriptionAsync:
       description: Response for a device quality indicator subscription operation managed asynchronously (Creation or Deletion).
@@ -629,14 +632,20 @@ components:
     NotificationEventType:
       type: string
       description: |
-        data-usage-threshold - Event triggered when the device reaches certain data usage thresholds (e.g., 50%, 75%, 90% of the data plan used).
+        data-50-percent - Event triggered when the device reaches 50% data usage thresholds of the data plan used.
 
-        data-usage-exceeded - Event triggered when the device exceeds its allocated data volume for a billing period.
+        data-75-percent - Event triggered when the device reaches 75% data usage thresholds of the data plan used.
+
+        data-90-percent - Event triggered when the device reaches 90% data usage thresholds of the data plan used.
+
+        data-exceeded - Event triggered when the device reaches 100% data usage exceeded of the data plan used.
 
         subscription-ends - Event triggered when the subscription is terminated.
       enum:
-        - org.camaraproject.device-data-volume-subscriptions.v0.data-usage-threshold
-        - org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
         - org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends
 
     CloudEvent:
@@ -675,8 +684,10 @@ components:
       discriminator:
         propertyName: "type"
         mapping:
-          org.camaraproject.device-data-volume-subscriptions.v0.data-usage-threshold: "#/components/schemas/EventDataUsageThreshold"
-          org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded: "#/components/schemas/EventDataUsageExceeded"
+          org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent: "#/components/schemas/EventDataUsage50Percent"
+          org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent: "#/components/schemas/EventDataUsage75Percent"
+          org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent: "#/components/schemas/EventDataUsage90Percent"
+          org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded: "#/components/schemas/EventDataUsageExceeded"
           org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends: "#/components/schemas/EventSubscriptionEnds"
 
     Source:
@@ -695,8 +706,26 @@ components:
       example: "2018-04-05T17:31:00Z"
 
     # Event structures for data volume
-    EventDataUsageThreshold:
-      description: Event structure for data usage threshold alerts
+    EventDataUsage50Percent:
+      description: Event structure for data usage 50% threshold alerts
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/BasicDeviceEventData"
+
+    EventDataUsage75Percent:
+      description: Event structure for data usage 75% threshold alerts
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/BasicDeviceEventData"
+
+    EventDataUsage90Percent:
+      description: Event structure for data usage 90% threshold alerts
       allOf:
         - $ref: "#/components/schemas/CloudEvent"
         - type: object
@@ -1131,7 +1160,7 @@ components:
       value:
         id: "124007"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1145,7 +1174,7 @@ components:
       value:
         id: "124008"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1159,7 +1188,7 @@ components:
       value:
         id: "124009"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1173,7 +1202,7 @@ components:
       value:
         id: "124010"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1182,34 +1211,6 @@ components:
           dataUsageThreshold: "100%"
           subscriptionId: "dv10-h556-rt89-1409"
         time: "2024-05-12T18:00:23.682Z"
-
-    DATA_VOLUME_USAGE:
-      value:
-        id: "124001"
-        source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
-        specversion: "1.0"
-        datacontenttype: application/json
-        data:
-          device:
-            phoneNumber: +123456789
-          dataUsagePercentage: "75%"
-          subscriptionId: dv10-h556-rt89-1401
-        time: 2024-02-25T11:22:23.682Z
-
-    DATA_VOLUME_THRESHOLD_REACHED:
-      value:
-        id: "124002"
-        source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-volume-threshold
-        specversion: "1.0"
-        datacontenttype: application/json
-        data:
-          device:
-            phoneNumber: +123456780
-          dataVolumeThreshold: "85%"
-          subscriptionId: dv10-h556-rt89-1402
-        time: 2024-03-01T14:35:23.682Z
 
     SUBSCRIPTION_ENDS:
       value:
