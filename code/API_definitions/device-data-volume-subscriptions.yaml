@@ -241,10 +241,6 @@ paths:
               examples:
                 subscription-active:
                   $ref: "#/components/examples/SUBSCRIPTION_ACTIVE"
-                subscription-activation-requested:
-                  $ref: "#/components/examples/SUBSCRIPTION_ACTIVATION_REQUESTED"
-                subscription-deleted:
-                  $ref: "#/components/examples/SUBSCRIPTION_DELETED"
         "400":
           $ref: "#/components/responses/SubscriptionIdRequired"
         "401":
@@ -634,9 +630,9 @@ components:
       type: string
       description: |
         data-usage-threshold - Event triggered when the device reaches certain data usage thresholds (e.g., 50%, 75%, 90% of the data plan used).
-        
+
         data-usage-exceeded - Event triggered when the device exceeds its allocated data volume for a billing period.
-        
+
         subscription-ends - Event triggered when the subscription is terminated.
       enum:
         - org.camaraproject.device-data-volume-subscriptions.v0.data-usage-threshold
@@ -1135,7 +1131,7 @@ components:
       value:
         id: "124007"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1149,7 +1145,7 @@ components:
       value:
         id: "124008"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1163,7 +1159,7 @@ components:
       value:
         id: "124009"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1177,7 +1173,7 @@ components:
       value:
         id: "124010"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1235,7 +1231,7 @@ components:
         sink: https://endpoint.example.com/sink
         protocol: HTTP
         types:
-          - "org.camaraproject.device-data-volume-subscriptions.v0.data-usage"
+          - "org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded"
         config:
           subscriptionDetail:
             device:
@@ -1245,33 +1241,3 @@ components:
           initialEvent: true
         startsAt: 2024-06-15T09:30:02.871Z
         expiresAt: 2024-08-01T14:18:23.682Z
-
-    SUBSCRIPTION_ACTIVATION_REQUESTED:
-      value:
-        id: "124004"
-        source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-activation-requested
-        specversion: "1.0"
-        datacontenttype: application/json
-        data:
-          device:
-            phoneNumber: "+123456789"
-          subscriptionRequestId: "dv10-h556-rt89-activation"
-          subscriptionType: "DATA_VOLUME"
-          requestedTime: 2024-04-01T09:00:23.682Z
-        time: 2024-04-01T09:00:23.682Z
-
-    SUBSCRIPTION_DELETED:
-      value:
-        id: "124005"
-        source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-deleted
-        specversion: "1.0"
-        datacontenttype: application/json
-        data:
-          device:
-            phoneNumber: "+123456789"
-          subscriptionId: "dv10-h556-rt89-1405"
-          deletionReason: "USER_REQUESTED"
-          deletionTime: 2024-05-10T15:45:23.682Z
-        time: 2024-05-10T15:45:23.682Z
