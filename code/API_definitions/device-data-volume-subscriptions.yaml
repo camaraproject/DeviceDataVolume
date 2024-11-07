@@ -35,25 +35,25 @@ info:
     ### Notifications callback
 
     This endpoint describes the event notification received on the subscriber's callback URL when the event occurs. Developers should provide a callback URL to receive notifications regarding data volume usage events from the service provider.
-    
+
     As for subscription, detailed description of the event notification is provided in the CAMARA API design guideline document.
-    
+
     _**WARNING**: This callback endpoint must be exposed on the consumer side as `POST /{$request.body#/sink}`.
-    
+
     Developers may provide a callback URL on which notifications regarding data volume can be received from the service provider.
-    
+
     If an event occurs the application will send events to the provided webhook - 'sink'._
 
     # Authorization and authentication
     The "Camara Security and Interoperability Profile" provides details on how a client requests an access token. Please refer to Identify and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the Profile.
-    
+
     Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the API Provider, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
-    
+
     It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory. This measure ensures that the API remains in strict compliance with user privacy preferences and regulatory obligations, upholding the principles of transparency and user-centric data control.
-    
+
     # Further info and support
     (FAQs will be added in a later version of the documentation)
-    
+
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -513,7 +513,7 @@ components:
           AMQP: "#/components/schemas/AMQPSubscriptionResponse"
           NATS: "#/components/schemas/NATSSubscriptionResponse"
           KAFKA: "#/components/schemas/ApacheKafkaSubscriptionResponse"
-       
+
     Device:
       description: |
         End-user equipment able to connect to a mobile network. Examples of devices include smartphones or IoT sensors/actuators.
@@ -629,7 +629,7 @@ components:
       format: uuid
       description: Unique identifier for the subscription.
       example: 550e8400-e29b-41d4-a716-446655440000
-      
+
     NotificationEventType:
       type: string
       description: |
@@ -682,7 +682,7 @@ components:
           org.camaraproject.device-data-volume-subscriptions.v0.data-usage-threshold: "#/components/schemas/EventDataUsageThreshold"
           org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded: "#/components/schemas/EventDataUsageExceeded"
           org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends: "#/components/schemas/EventSubscriptionEnds"
-    
+
     Source:
       type: string
       format: uri-reference
@@ -697,7 +697,7 @@ components:
         Timestamp of when the occurrence happened.
         It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have a time zone.
       example: "2018-04-05T17:31:00Z"
-    
+
     # Event structures for data volume
     EventDataUsageThreshold:
       description: Event structure for data usage threshold alerts
@@ -707,7 +707,7 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
-    
+
     EventDataUsageExceeded:
       description: Event structure for data usage exceeding the allocated volume
       allOf:
@@ -757,7 +757,7 @@ components:
         - SUBSCRIPTION_EXPIRED
         - SUBSCRIPTION_DELETED
         - ACCESS_TOKEN_EXPIRED
-    
+
     HTTPSubscriptionRequest:
       allOf:
         - $ref: "#/components/schemas/SubscriptionRequest"
@@ -909,7 +909,7 @@ components:
           type: string
       required:
         - subject
-    
+
   responses:
     CreateSubscriptionBadRequest400:
       description: Problem with the client request
@@ -1144,7 +1144,7 @@ components:
           dataUsageThreshold: "50%"
           subscriptionId: "dv10-h556-rt89-1406"
         time: "2024-05-12T12:45:23.682Z"
-        
+
     DATA_75_PERCENT:
       value:
         id: "124008"
@@ -1186,12 +1186,12 @@ components:
           dataUsageThreshold: "100%"
           subscriptionId: "dv10-h556-rt89-1409"
         time: "2024-05-12T18:00:23.682Z"
-        
+
     DATA_VOLUME_USAGE:
       value:
         id: "124001"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage
+        type: org.camaraproject.device-data-volume-subscriptions.v0.data-usage-exceeded
         specversion: "1.0"
         datacontenttype: application/json
         data:
@@ -1200,7 +1200,7 @@ components:
           dataUsagePercentage: "75%"
           subscriptionId: dv10-h556-rt89-1401
         time: 2024-02-25T11:22:23.682Z
-  
+
     DATA_VOLUME_THRESHOLD_REACHED:
       value:
         id: "124002"
@@ -1214,7 +1214,7 @@ components:
           dataVolumeThreshold: "85%"
           subscriptionId: dv10-h556-rt89-1402
         time: 2024-03-01T14:35:23.682Z
-  
+
     SUBSCRIPTION_ENDS:
       value:
         id: "124003"
@@ -1228,7 +1228,7 @@ components:
           terminationReason: SUBSCRIPTION_EXPIRED
           subscriptionId: dv10-h556-rt89-1403
         time: 2024-03-05T15:00:23.682Z
-  
+
     SUBSCRIPTION_ACTIVE:
       value:
         id: 550e8400-e29b-41d4-a716-446655440001
