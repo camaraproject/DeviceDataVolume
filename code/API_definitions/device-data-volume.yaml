@@ -9,11 +9,11 @@ info:
     The API enables customers to retrieve data usage information for a dedicated SIM card, offering estimated remaining data volume categories like <200MiB, <1GiB, <5GiB, and >=5GiB. It also allows subscription to changes in data volume status.
 
     Additionally, a check operation is provided to determine if the remaining data volume exceeds a user-specified threshold.
-    
+
     # Relevant terms and definitions
 
     * **Device**: A device refers to any physical entity that can connect to a network and participate in network communication. At least one identifier for the device (user equipment) out of four options: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device.
-    
+
     # API Functionality
 
     ## Device Data Volume
@@ -257,8 +257,8 @@ components:
           $ref: "#/components/schemas/Device"
       required:
         - device
-    
-    
+
+
     CheckRequest:
       type: object
       properties:
@@ -283,14 +283,14 @@ components:
       required:
         - device
         - volumeToCheck
-    
+
     VolumeUnitEnum:
       description: Enumeration of volume units, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes
       type: string
       enum:
         - MiB
         - GiB
-       
+
     ErrorInfo:
       type: object
       required:
@@ -363,7 +363,7 @@ components:
               value:
                 status: 404
                 code: NOT_FOUND
-                message: The specified resource is not found.  
+                message: The specified resource is not found.
     Generic406:
       description: Not Acceptable
       headers:
