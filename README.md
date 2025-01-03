@@ -35,9 +35,9 @@ Repository to describe, develop, document, and test the DeviceDataVolume API wit
 
 ## Contributing
 * Meetings for the DeviceStatus Sub Project are held virtually 
-    * Schedule: Bi-weekly on Wednesday, 11:00 CET/CEST (08:00 UTC, 09:00 UTC during European DST)
-    * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94783050047?password=c43ff9fd-4c79-468a-9d98-45222dd6343d)
-    * Minutes: [Access meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/fzLe)
+  * Bi-weekly on Wednesday, 09:00 UTC
+  * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/93413850406?password=3aeb0f1b-d9f9-42c5-91d8-3d2b20421ef1)
+  * Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/fzLe) 
 * Mailing List
     * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/sp-dst>.
     * A message to the community of this Sub Project can be sent using <sp-dst@lists.camaraproject.org>.
