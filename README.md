@@ -7,7 +7,7 @@
 <a href="https://github.com/camaraproject/DeviceDataVolume/releases/latest" title="Latest Release"><img src="https://img.shields.io/github/release/camaraproject/DeviceDataVolume?style=plastic"></a>
 
 # DeviceDataVolume
-Repository to describe, develop, document, and test the DeviceDataVolume API within the Sub Project [DeviceStatus](https://lf-camaraproject.atlassian.net/wiki/x/fzLe) of CAMARA
+Repository to describe, develop, document, and test the Device Data Volume APIs within the Sub Project [DeviceStatus](https://lf-camaraproject.atlassian.net/wiki/x/fzLe) of CAMARA
 
 ## Scope
 
