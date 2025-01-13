@@ -380,7 +380,7 @@ components:
         subscriptionExpireTime:
           type: string
           format: date-time
-          example: 2023-01-17T13:18:23.682Z
+          example: "2023-01-17T13:18:23.682Z"
           description: The subscription expiration time (in date-time format).
         subscriptionMaxEvents:
           type: integer
@@ -1231,7 +1231,7 @@ components:
             phoneNumber: +123456789
           terminationReason: SUBSCRIPTION_EXPIRED
           subscriptionId: dv10-h556-rt89-1403
-        time: 2024-03-05T15:00:23.682Z
+        time: "2024-03-05T15:00:23.682Z"
 
     SUBSCRIPTION_ACTIVE:
       value:
@@ -1244,8 +1244,8 @@ components:
           subscriptionDetail:
             device:
               phoneNumber: "+123456789"
-          subscriptionExpireTime: 2024-08-01T14:18:23.682Z
+          subscriptionExpireTime: "2024-08-01T14:18:23.682Z"
           subscriptionMaxEvents: 10
           initialEvent: true
-        startsAt: 2024-06-15T09:30:02.871Z
-        expiresAt: 2024-08-01T14:18:23.682Z
+        startsAt: "2024-06-15T09:30:02.871Z"
+        expiresAt: "2024-08-01T14:18:23.682Z"
