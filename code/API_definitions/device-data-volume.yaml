@@ -25,6 +25,8 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.1.0-alpha.1
+  x-camara-commonalities: 0.5
+
 externalDocs:
   description: Product documentation at CAMARA
   url: https://github.com/camaraproject/
@@ -257,7 +259,6 @@ components:
           $ref: "#/components/schemas/Device"
       required:
         - device
-
 
     CheckRequest:
       type: object
