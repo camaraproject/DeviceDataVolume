@@ -35,7 +35,7 @@ servers:
   - url: "{apiRoot}/device-data-volume/v0.1alpha1"
     variables:
       apiRoot:
-        default: http://localhost:9092
+        default: http://localhost:9091
         description: API root
 
 tags:
