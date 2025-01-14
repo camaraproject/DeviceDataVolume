@@ -9,7 +9,7 @@ For the best results, use the latest published release.**
 # r1.1
 ## Release Notes
 
-This public pre-release contains the definition and documentation of:
+This pre-release contains the definition and documentation of:
 * device-data-volume v0.1.0-alpha.1
 * device-data-volume-subscriptions v0.1.0-alpha.1
 
