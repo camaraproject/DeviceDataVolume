@@ -5,12 +5,13 @@ Feature: CAMARA Device Data Volume API - Operation getDeviceDataVolumeStatus
 # Input to be provided by the implementation to the tests
 # References to OAS spec schemas refer to schemas specifies in device-data-volume.yaml
 
-  Background: Common Device Data Volume setup
-    Given the resource "{api-root}/device-data-volume/vwip" set as base-url                                                             
+  Background: Common getDeviceDataVolumeStatus setup
+    Given an environment at "apiRoot"
+    And the resource "/device-data-volume/vwip/retrieve"                                                            
     And the header "Content-Type" is set to "application/json"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" is set to a UUID value
-    And the request body is compliant with the schema Device
+    And the request body is compliant with the schema RequestDeviceDataVolume at "/components/schemas/RequestDeviceDataVolume"
 	
 #############Happy Path Scenarios##################	
 
