@@ -1,6 +1,6 @@
 
 @Device_Data_Volume
-Feature: CAMARA Device Data Volume API - Operations for Device Data Volume
+Feature: CAMARA Device Data Volume API - Operation getDeviceDataVolumeStatus
 
 # Input to be provided by the implementation to the tests
 # References to OAS spec schemas refer to schemas specifies in device-data-volume.yaml
