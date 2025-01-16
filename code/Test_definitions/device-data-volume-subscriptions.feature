@@ -1,6 +1,6 @@
  
 @DeviceDataVolumeSubscription
-Feature: Device Data Volume Subscriptions API, vwip - Operations DeviceDataVolume
+Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceDataVolumeSubscription
 
 # Input to be provided by the implementation to the tests
 # References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml, version vwip
