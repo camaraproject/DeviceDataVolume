@@ -15,18 +15,14 @@ Feature: CAMARA Device Data Volume API - Operation getDeviceDataVolumeStatus
 	
 #############Happy Path Scenarios##################	
 
-  @device_data_volume_01_retrieve_status_success
+  @device_data_volume_getDeviceDataVolumeStatus_200.01_retrieve_success_scenario
   Scenario: Retrieve the estimated remaining data volume for a device
-    Given a valid CheckRequest request body 
-    And the request body property "$.device" is set to a valid testing device supported by the service
-    When  the HTTPS "POST" request is sent
+    Given the request body property "$.device" is set to identify a valid testing device supported by the service
+    When the HTTPS "POST" request getDeviceDataVolumeStatus is sent
     Then the response code is 200
     And the response header "Content-Type" is "application/json"
     And the response header "x-correlator" has same value as the request header "x-correlator"
-    And the response body complies with the OAS schema at "/components/schemas/DeviceDataVolumeResponse"
-    And the response property "$.status" is 200
-    And the response property "$.code" is "OK"
-    And the response property "$.message" contains a user friendly text
+    And the response body property "$.dataVolumeCategory" is present and has value "<200MiB", "<1GiB",  "<5GiB", or ">=5GiB"
  
 
   @device_data_volume_02_check_status_success
