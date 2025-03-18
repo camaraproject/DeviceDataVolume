@@ -39,26 +39,29 @@ info:
       - the Access Token `sinkCredential` (optionally set by the requester) expiration time has been reached
       - the API server has to stop sending notification prematurely
 
-    ### Notifications callback
+    ### Notification callback
 
-    This endpoint describes the event notification received on the subscriber's callback URL when the event occurs. Developers should provide a callback URL to receive notifications regarding data volume usage events from the service provider.
-
+    This endpoint describes the event notification received on subscription listener side when the event occurred.
     As for subscription, detailed description of the event notification is provided in the CAMARA API design guideline document.
 
     _**WARNING**: This callback endpoint must be exposed on the consumer side as `POST /{$request.body#/sink}`.
-
-    Developers may provide a callback URL on which notifications regarding data volume can be received from the service provider.
-
-    If an event occurs the application will send events to the provided webhook - 'sink'.
+      Developers may provide a callback URL on which notifications regarding geofencing can be received from the service provider.
+      If an event occurs the application will send events to the provided webhook - 'sink'._
 
     # Authorization and authentication
-    The "Camara Security and Interoperability Profile" provides details on how a client requests an access token. Please refer to Identify and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the Profile.
 
-    Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the API Provider, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
+    The "Camara Security and Interoperability Profile" provides details of how an API consumer requests an access token. Please refer to Identity and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the profile.
 
-    It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory. This measure ensures that the API remains in strict compliance with user privacy preferences and regulatory obligations, upholding the principles of transparency and user-centric data control.
+    The specific authorization flows to be used will be agreed upon during the onboarding process, happening between the API consumer and the API provider, taking into account the declared purpose for accessing the API, whilst also being subject to the prevailing legal framework dictated by local legislation.
+
+    In cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.
+    
+    ## Error handling:
+
+    - If the subject cannot be identified because the  `device` object is not included in the request, then the server will return an error with the `422 MISSING_IDENTIFIER` error code.
 
     # Further info and support
+
     (FAQs will be added in a later version of the documentation)
 
   license:
@@ -66,6 +69,10 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: wip
   x-camara-commonalities: 0.5
+
+externalDocs:
+  description: Project documentation at Camara
+  url: https://github.com/camaraproject/DeviceDataVolume
 
 servers:
   - url: "{apiRoot}/device-data-volume-subscriptions/vwip"
@@ -140,12 +147,10 @@ paths:
                   $ref: "#/components/responses/Generic401"
                 "403":
                   $ref: "#/components/responses/Generic403"
+                "410":
+                  $ref: "#/components/responses/Generic410"
                 "429":
                   $ref: "#/components/responses/Generic429"
-                "500":
-                  $ref: "#/components/responses/Generic500"
-                "503":
-                  $ref: "#/components/responses/Generic503"
               security:
                 - {}
                 - notificationsBearerAuth: []
@@ -174,17 +179,13 @@ paths:
         "401":
           $ref: "#/components/responses/Generic401"
         "403":
-          $ref: "#/components/responses/CreateSubscription403"
+          $ref: "#/components/responses/SubscriptionPermissionDenied403"
         "409":
-          $ref: "#/components/responses/Generic409"
+          $ref: "#/components/responses/SubscriptionConflict409"
         "422":
           $ref: "#/components/responses/CreateSubscriptionUnprocessableEntity422"
         "429":
           $ref: "#/components/responses/Generic429"
-        "500":
-          $ref: "#/components/responses/Generic500"
-        "503":
-          $ref: "#/components/responses/Generic503"
     get:
       tags:
         - Device data volume subscription
@@ -217,10 +218,6 @@ paths:
           $ref: "#/components/responses/Generic403"
         "429":
           $ref: "#/components/responses/Generic429"
-        "500":
-          $ref: "#/components/responses/Generic500"
-        "503":
-          $ref: "#/components/responses/Generic503"
 
   /subscriptions/{subscriptionId}:
     get:
@@ -258,10 +255,6 @@ paths:
           $ref: "#/components/responses/Generic404"
         "429":
           $ref: "#/components/responses/Generic429"
-        "500":
-          $ref: "#/components/responses/Generic500"
-        "503":
-          $ref: "#/components/responses/Generic503"
 
     delete:
       tags:
@@ -292,10 +285,6 @@ paths:
           $ref: "#/components/responses/Generic404"
         "429":
           $ref: "#/components/responses/Generic429"
-        "500":
-          $ref: "#/components/responses/Generic500"
-        "503":
-          $ref: "#/components/responses/Generic503"
 
 components:
   securitySchemes:
@@ -528,7 +517,8 @@ components:
         * `phoneNumber`
         * `networkAccessIdentifier`
 
-        NOTE: the MNO might support only a subset of these options. The API invoker can provide multiple identifiers to be compatible across different MNOs. In this case the identifiers MUST belong to the same device.
+        NOTE1: the API provider might support only a subset of these options. The API consumer can provide multiple identifiers to be compatible across different API providers. In this case the identifiers MUST belong to the same device
+        NOTE2: for the Commonalities release v0.4, we are enforcing that the networkAccessIdentifier is only part of the schema for future-proofing, and CAMARA does not currently allow its use. After the CAMARA meta-release work is concluded and the relevant issues are resolved, its use will need to be explicitly documented in the guidelines.
       type: object
       properties:
         phoneNumber:
@@ -981,25 +971,117 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            status: 400
-            code: INVALID_ARGUMENT
-            message: Client specified an invalid argument, request body, or query param
-    Generic401:
-      description: Authentication problem with the client request
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 400
+                  code:
+                    enum:
+                      - INVALID_ARGUMENT
+          examples:
+            GENERIC_400_INVALID_ARGUMENT:
+              description: Invalid Argument. Generic Syntax Exception
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Client specified an invalid argument, request body or query param.
+    SubscriptionIdRequired:
+      description: Problem with the client request
       headers:
         x-correlator:
           $ref: "#/components/headers/x-correlator"
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            status: 401
-            code: UNAUTHENTICATED
-            message: Request not authenticated due to missing, invalid, or expired credentials.
-    CreateSubscription403:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 400
+                  code:
+                    enum:
+                      - INVALID_ARGUMENT
+          examples:
+            GENERIC_400_INVALID_ARGUMENT:
+              summary: Schema validation failed
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Client specified an invalid argument, request body or query param.
+            GENERIC_400_SUBSCRIPTION_ID_REQUIRED:
+              summary: The subscription id is required
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: "Expected property is missing: subscriptionId"
+    Generic401:
+      description: Authentication problem with the client request.
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 401
+                  code:
+                    enum:
+                      - AUTHENTICATION_REQUIRED
+                      - UNAUTHENTICATED
+          examples:
+            GENERIC_401_AUTHENTICATION_REQUIRED:
+              description: New authentication is needed, authentication is no longer valid
+              value:
+                status: 401
+                code: AUTHENTICATION_REQUIRED
+                message: New authentication is required.
+            GENERIC_401_UNAUTHENTICATED:
+              description: Request cannot be authenticated
+              value:
+                status: 401
+                code: UNAUTHENTICATED
+                message: Request not authenticated due to missing, invalid, or expired credentials.
+    SubscriptionPermissionDenied403:
+      description: Client does not have sufficient permission.
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 403
+                  code:
+                    enum:
+                      - PERMISSION_DENIED
+                      - SUBSCRIPTION_MISMATCH
+          examples:
+            GENERIC_403_PERMISSION_DENIED:
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform this action.
+            GENERIC_403_SUBSCRIPTION_MISMATCH:
+              value:
+                status: 403
+                code: SUBSCRIPTION_MISMATCH
+                message: Inconsistent access token for requested events subscription.
+    Generic403:
       description: Client does not have sufficient permission
       headers:
         x-correlator:
@@ -1007,31 +1089,23 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 403
+                  code:
+                    enum:
+                      - PERMISSION_DENIED
           examples:
-            PermissionDenied:
+            GENERIC_403_PERMISSION_DENIED:
+              description: Permission denied. OAuth2 token access does not have the required scope or when the user fails operational security
               value:
                 status: 403
                 code: PERMISSION_DENIED
-                message: Client does not have sufficient permissions to perform this action
-            TokenMismatch:
-              value:
-                status: 403
-                code: SUBSCRIPTION_MISMATCH
-                message: Inconsistent access token for requested events subscription
-    Generic403:
-      description: Forbidden
-      headers:
-        x-correlator:
-          $ref: "#/components/headers/x-correlator"
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            status: 403
-            code: PERMISSION_DENIED
-            message: Client does not have sufficient permissions to perform this action
+                message: Client does not have sufficient permissions to perform this action.
     Generic404:
       description: Not found
       headers:
@@ -1040,7 +1114,16 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 404
+                  code:
+                    enum:
+                      - NOT_FOUND
           examples:
             GENERIC_404_NOT_FOUND:
               description: Resource is not found
@@ -1048,7 +1131,7 @@ components:
                 status: 404
                 code: NOT_FOUND
                 message: The specified resource is not found.
-    Generic409:
+    SubscriptionConflict409:
       description: Conflict
       headers:
         x-correlator:
@@ -1056,11 +1139,49 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            status: 409
-            code: CONFLICT
-            message: "The specified resource is in a conflict"
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 409
+                  code:
+                    enum:
+                      - CONFLICT
+          examples:
+            Conflict:
+              description: Subscription creation is in conflict with already existing subscription
+              value:
+                status: 409
+                code: CONFLICT
+                message: The specified resource is in a conflict
+    Generic410:
+      description: Gone
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 410
+                  code:
+                    enum:
+                      - GONE
+          examples:
+            GENERIC_410_GONE:
+              description: Use in notifications flow to allow API Consumer to indicate that its callback is no longer available
+              value:
+                status: 410
+                code: GONE
+                message:
+                  Access to the target resource is no longer available.
     CreateSubscriptionUnprocessableEntity422:
       description: Unprocessable Entity
       headers:
@@ -1069,25 +1190,52 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 422
+                  code:
+                    enum:
+                      - IDENTIFIER_MISMATCH
+                      - MISSING_IDENTIFIER
+                      - MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
+                      - SERVICE_NOT_APPLICABLE
+                      - UNSUPPORTED_IDENTIFIER
+                      - GEOFENCING_SUBSCRIPTIONS.AREA_NOT_COVERED
+                      - GEOFENCING_SUBSCRIPTIONS.INVALID_AREA
           examples:
-            MultieventSubscriptionNotSupported:
+            GENERIC_422_IDENTIFIER_MISMATCH:
+              description: Inconsistency between device identifiers not pointing to the same device.
+              value:
+                status: 422
+                code: IDENTIFIER_MISMATCH
+                message: Provided identifiers are not consistent.
+            GENERIC_422_SERVICE_NOT_APPLICABLE:
+              description: Service not applicable for the provided identifier
+              value:
+                status: 422
+                code: SERVICE_NOT_APPLICABLE
+                message: The service is not available for the provided identifier.
+            GENERIC_422_MISSING_IDENTIFIER:
+              description: An identifier is not included in the request
+              value:
+                status: 422
+                code: MISSING_IDENTIFIER
+                message: The device cannot be identified.
+            GENERIC_422_MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED:
               value:
                 status: 422
                 code: MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
-                message: Multi event types subscription not managed
-            DeviceIdentifierMismatch:
-              description: Inconsistency between device identifiers not pointing to the same device
+                message: Multi event types subscription not managed.
+            GENERIC_422_UNSUPPORTED_IDENTIFIER:
+              description: None of the provided identifiers is supported by the implementation
               value:
                 status: 422
-                code: DEVICE_IDENTIFIERS_MISMATCH
-                message: Provided device identifiers are not consistent.
-            DeviceNotApplicable:
-              description: Service is not available for the provided device
-              value:
-                status: 422
-                code: DEVICE_NOT_APPLICABLE
-                message: The service is not available for the provided device.
+                code: UNSUPPORTED_IDENTIFIER
+                message: The identifier provided is not supported.
     Generic429:
       description: Too Many Requests
       headers:
@@ -1110,57 +1258,6 @@ components:
                 status: 429
                 code: TOO_MANY_REQUESTS
                 message: Either out of resource quota or reaching rate limiting.
-    Generic500:
-      description: Server error
-      headers:
-        x-correlator:
-          $ref: "#/components/headers/x-correlator"
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            status: 500
-            code: INTERNAL
-            message: Server error
-    Generic503:
-      description: Service unavailable. Typically the server is down.
-      headers:
-        x-correlator:
-          $ref: "#/components/headers/x-correlator"
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          examples:
-            GENERIC_503_UNAVAILABLE:
-              description: Service is not available. Temporary situation usually related to maintenance process in the server side
-              value:
-                status: 503
-                code: UNAVAILABLE
-                message: Service Unavailable.
-    SubscriptionIdRequired:
-      description: Problem with the client request
-      headers:
-        x-correlator:
-          $ref: "#/components/headers/x-correlator"
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          examples:
-            Generic400:
-              summary: Schema validation failed
-              value:
-                status: 400
-                code: INVALID_ARGUMENT
-                message: "Client specified an invalid argument, request body or query param"
-            subscriptionIdRequired:
-              summary: subscription id is required
-              value:
-                status: 400
-                code: INVALID_ARGUMENT
-                message: "Expected property is missing: subscriptionId"
 
   examples:
     DATA_50_PERCENT:
