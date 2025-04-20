@@ -739,6 +739,15 @@ components:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
 
+    EventSubscriptionEnds:
+      description: Event structure for event subscription ends
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SubscriptionEnds"
+
     BasicDeviceEventData:
       description: Event detail structure for basic device events
       type: object
