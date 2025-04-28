@@ -440,6 +440,45 @@ components:
         - accessTokenExpiresUtc
         - accessTokenType
 
+    RefreshTokenCredential:
+      type: object
+      description: An access token credential with a refresh token.
+      allOf:
+        - $ref: "#/components/schemas/SinkCredential"
+        - type: object
+          properties:
+            accessToken:
+              description: REQUIRED. An access token is a previously acquired token granting access to the target resource.
+              type: string
+            accessTokenExpiresUtc:
+              type: string
+              format: date-time
+              description: |
+                REQUIRED. An absolute (UTC) timestamp at which the token shall be considered expired.
+                In the case of an ACCESS_TOKEN_EXPIRED termination reason, implementation should notify the client before the expiration date.
+                If the access token is a JWT and registered "exp" (Expiration Time) claim is present, the two expiry times should match.
+                It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
+                Recommended format is yyyy-MM-dd'T'HH:mm:ss.SSSZ (i.e. which allows 2023-07-03T14:27:08.312+02:00 or 2023-07-03T12:27:08.312Z)
+              example: "2023-07-03T12:27:08.312Z"
+            accessTokenType:
+              description: REQUIRED. Type of the access token (See [OAuth 2.0](https://tools.ietf.org/html/rfc6749#section-7.1)).
+              type: string
+              enum:
+                - bearer
+            refreshToken:
+              description: REQUIRED. An refresh token credential used to acquire access tokens.
+              type: string
+            refreshTokenEndpoint:
+              type: string
+              format: uri
+              description: REQUIRED. A URL at which the refresh token can be traded for an access token.
+      required:
+        - accessToken
+        - accessTokenExpiresUtc
+        - accessTokenType
+        - refreshToken
+        - refreshTokenEndpoint
+
     SubscriptionDetail:
       description: The details of the requested device quality indicator subscription.
       type: object
@@ -471,10 +510,13 @@ components:
           $ref: "#/components/schemas/SinkCredential"
         types:
           description: |
-            Device Quality Indicator event types eligible for delivery by this subscription.
+            Camara Event types eligible to be delivered by this subscription for device quality indicators.
+            Note: As of now we enforce to have only event type per subscription.
           type: array
+          minItems: 1
+          maxItems: 1
           items:
-            type: string
+            $ref: "#/components/schemas/SubscriptionEventType"
         config:
           $ref: "#/components/schemas/Config"
         id:
@@ -738,6 +780,15 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
+
+    EventSubscriptionEnds:
+      description: Event structure for event subscription ends
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SubscriptionEnds"
 
     BasicDeviceEventData:
       description: Event detail structure for basic device events
