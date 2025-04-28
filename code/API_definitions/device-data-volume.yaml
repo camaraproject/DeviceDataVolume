@@ -33,6 +33,9 @@ info:
 
     - If the subject cannot be identified because the  `device` object is not included in the request, then the server will return an error with the `422 MISSING_IDENTIFIER` error code.
 
+    # Further info and support
+
+    (FAQs will be added in a later version of the documentation)
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -40,7 +43,7 @@ info:
   x-camara-commonalities: 0.5
 
 externalDocs:
-  description: Project documentation at Camara
+  description: Project documentation at CAMARA
   url: https://github.com/camaraproject/DeviceDataVolume
 
 servers:
@@ -52,16 +55,16 @@ servers:
 
 tags:
   - name: Device Data Volume
-    description: Operations related to retrieving device data volume status
+    description: Operations related to remaining device data volume of a user device
 
 paths:
   /retrieve:
     post:
       tags:
         - Device Data Volume
-      summary: "Get the device data volume status"
+      summary: "Execute device data volume retrieval for a user device"
       description: Retrieve the estimated remaining data volume for a device.
-      operationId: getDeviceDataVolumeStatus
+      operationId: retrieveDataVolume
       parameters:
         - $ref: '#/components/parameters/x-correlator'
       security:
@@ -71,18 +74,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestDeviceDataVolume"
+              $ref: "#/components/schemas/RetrieveDataVolumeRequest"
         required: true
       responses:
         "200":
-          description: Contains device data volume status
+          description: Contains information about the remaining device data volume.
           headers:
             x-correlator:
               $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DeviceDataVolumeResponse"
+                $ref: "#/components/schemas/RetrieveDataVolumeResponse"
         "400":
           $ref: "#/components/responses/Generic400"
         "401":
@@ -90,9 +93,9 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "404":
-          $ref: "#/components/responses/RetrieveDeviceDataVolumeNotFound404"
+          $ref: "#/components/responses/Generic404"
         "422":
-          $ref: "#/components/responses/RetrieveDeviceDataVolumeUnprocessableEntity422"
+          $ref: "#/components/responses/Generic422"
 
   /check:
     post:
@@ -107,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CheckRequest"
+              $ref: "#/components/schemas/CheckDataVolumeRequest"
         required: true
       responses:
         "200":
@@ -126,7 +129,9 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "404":
-          $ref: "#/components/responses/RetrieveDeviceDataVolumeNotFound404"
+          $ref: "#/components/responses/Generic404"
+        "422":
+          $ref: "#/components/responses/Generic422"
 
 components:
   securitySchemes:
@@ -146,33 +151,76 @@ components:
       schema:
         type: string
   schemas:
-    DeviceDataVolumeResponse:
+    CheckDataVolumeRequest:
+      description: The request to check, if the current remaining data volume is above the requested threshold.
+      type: object
+      properties:
+        device:
+          $ref: "#/components/schemas/Device"
+        volumeToCheck:
+          type: object
+          description: Volume threshold to check against
+          properties:
+            value:
+              description: Quantity of volume to check
+              type: integer
+              example: 500
+              format: int32
+              minimum: 0
+              maximum: 1024
+            unit:
+              $ref: "#/components/schemas/VolumeUnitEnum"
+          required:
+            - value
+            - unit
+      required:
+        - device
+        - volumeToCheck
+
+    VolumeUnitEnum:
+      description: Enumeration of volume units, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes.
+      type: string
+      enum:
+        - MiB
+        - GiB
+
+    RetrieveDataVolumeRequest:
+      description: The request to retrieve the current remaining data volume for the requested device.
+      type: object
+      properties:
+        device:
+          $ref: "#/components/schemas/Device"
+      required:
+        - device
+
+    RetrieveDataVolumeResponse:
+      description: Represents the remaining data volume of the requested device.
       type: object
       properties:
         dataVolumeCategory:
-          type: string
-          description: Estimated remaining data volume category, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes
-          enum:
-            - "<200MiB"
-            - "<1GiB"
-            - "<5GiB"
-            - ">=5GiB"
+          $ref: "#/components/schemas/DataVolumeCategory"
       required:
         - dataVolumeCategory
+
+    DataVolumeCategory:
+      description: Estimated remaining data volume category, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes.
+      type: string
+      enum:
+        - "<200MiB"
+        - "<1GiB"
+        - "<5GiB"
+        - ">=5GiB"
 
     Device:
       description: |
         End-user equipment able to connect to a mobile network. Examples of devices include smartphones or IoT sensors/actuators.
-
-        The developer can choose to provide the below specified device identifiers:
-
-        * `ipv4Address`
-        * `ipv6Address`
-        * `phoneNumber`
-        * `networkAccessIdentifier`
-
-        NOTE1: the API provider might support only a subset of these options. The API consumer can provide multiple identifiers to be compatible across different API providers. In this case the identifiers MUST belong to the same device
-        NOTE2: for the Commonalities release v0.4, we are enforcing that the networkAccessIdentifier is only part of the schema for future-proofing, and CAMARA does not currently allow its use. After the CAMARA meta-release work is concluded and the relevant issues are resolved, its use will need to be explicitly documented in the guidelines.
+            The developer can choose to provide the below specified device identifiers:
+            * `ipv4Address`
+            * `ipv6Address`
+            * `phoneNumber`
+            * `networkAccessIdentifier`
+            NOTE1: the network operator might support only a subset of these options. The API invoker can provide multiple identifiers to be compatible across different network operators. In this case the identifiers MUST belong to the same device.
+            NOTE2: as for this Commonalities release, we are enforcing that the networkAccessIdentifier is only part of the schema for future-proofing, and CAMARA does not currently allow its use. After the CAMARA meta-release work is concluded and the relevant issues are resolved, its use will need to be explicitly documented in the guidelines.
       type: object
       properties:
         phoneNumber:
@@ -239,62 +287,22 @@ components:
       format: ipv6
       example: 2001:db8:85a3:8d3:1319:8a2e:370:7344
 
-    RequestDeviceDataVolume:
-      type: object
-      properties:
-        device:
-          $ref: "#/components/schemas/Device"
-      required:
-        - device
-
-    CheckRequest:
-      type: object
-      properties:
-        device:
-          $ref: "#/components/schemas/Device"
-        volumeToCheck:
-          type: object
-          description: Volume threshold to check against
-          properties:
-            value:
-              description: Quantity of volume to check
-              type: integer
-              example: 500
-              format: int32
-              minimum: 0
-              maximum: 1024
-            unit:
-              $ref: "#/components/schemas/VolumeUnitEnum"
-          required:
-            - value
-            - unit
-      required:
-        - device
-        - volumeToCheck
-
-    VolumeUnitEnum:
-      description: Enumeration of volume units, where "MiB" is 2^20 bytes and "GiB" is 2^30 bytes
-      type: string
-      enum:
-        - MiB
-        - GiB
-
     ErrorInfo:
       type: object
       required:
+        - message
         - status
         - code
-        - message
       properties:
+        message:
+          type: string
+          description: A human readable description of what the event represent
         status:
           type: integer
           description: HTTP response status code
         code:
           type: string
-          description: Code given to this error
-        message:
-          type: string
-          description: Detailed error description
+          description: Friendly Code to describe the error
 
   responses:
     Generic400:
@@ -315,6 +323,7 @@ components:
                   code:
                     enum:
                       - INVALID_ARGUMENT
+                      - OUT_OF_RANGE
           examples:
             GENERIC_400_INVALID_ARGUMENT:
               description: Invalid Argument. Generic Syntax Exception
@@ -322,8 +331,14 @@ components:
                 status: 400
                 code: INVALID_ARGUMENT
                 message: Client specified an invalid argument, request body or query param.
+            GENERIC_400_OUT_OF_RANGE:
+              description: Out of Range. Specific Syntax Exception used when a given field has a pre-defined range or a invalid filter criteria combination is requested
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: Client specified an invalid range.
     Generic401:
-      description: Authentication problem with the client request.
+      description: Unauthorized
       headers:
         x-correlator:
           $ref: "#/components/headers/x-correlator"
@@ -339,21 +354,22 @@ components:
                       - 401
                   code:
                     enum:
-                      - AUTHENTICATION_REQUIRED
                       - UNAUTHENTICATED
+                      - AUTHENTICATION_REQUIRED
           examples:
-            GENERIC_401_AUTHENTICATION_REQUIRED:
-              description: New authentication is needed, authentication is no longer valid
-              value:
-                status: 401
-                code: AUTHENTICATION_REQUIRED
-                message: New authentication is required.
             GENERIC_401_UNAUTHENTICATED:
               description: Request cannot be authenticated
               value:
                 status: 401
                 code: UNAUTHENTICATED
                 message: Request not authenticated due to missing, invalid, or expired credentials.
+            GENERIC_401_AUTHENTICATION_REQUIRED:
+              description: New authentication is needed, authentication is no longer valid
+              value:
+                status: 401
+                code: AUTHENTICATION_REQUIRED
+                message: New authentication is required.
+
     Generic403:
       description: Forbidden
       headers:
@@ -379,7 +395,8 @@ components:
                 status: 403
                 code: PERMISSION_DENIED
                 message: Client does not have sufficient permissions to perform this action.
-    RetrieveDeviceDataVolumeNotFound404:
+
+    Generic404:
       description: Not found
       headers:
         x-correlator:
@@ -405,7 +422,7 @@ components:
                 code: IDENTIFIER_NOT_FOUND
                 message: Device identifier not found.
 
-    RetrieveDeviceDataVolumeUnprocessableEntity422:
+    Generic422:
       description: Unprocessable Content
       headers:
         x-correlator:
