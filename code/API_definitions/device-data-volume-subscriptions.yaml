@@ -327,10 +327,8 @@ components:
           format: url
           description: The address to which events shall be delivered using the selected protocol.
           example: "https://endpoint.example.com/sink"
-        sinkCredential:
-          allOf:
-            - description: A sink credential provides authentication or authorization information necessary to enable delivery of events to a target.
-            - $ref: "#/components/schemas/SinkCredential"
+        sinkCredential:      
+          $ref: "#/components/schemas/SinkCredential"
         types:
           description: |
             Event types eligible to be delivered by this subscription for device quality indicators.
@@ -382,6 +380,7 @@ components:
             Set to `true` if the consumer wants an event triggered immediately if the current situation reflects the event request.
 
     SinkCredential:
+      description: A sink credential provides authentication or authorization information necessary to enable delivery of events to a target.
       type: object
       properties:
         credentialType:
