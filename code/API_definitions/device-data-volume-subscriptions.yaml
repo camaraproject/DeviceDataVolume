@@ -258,7 +258,7 @@ paths:
       summary: "Delete a device data volume event subscription"
       operationId: deleteDeviceDataVolumeSubscription
       description: |
-        This operation deletes a specific data volume usage subscription by its subscription ID. 
+        This operation deletes a specific data volume usage subscription by its subscription ID.
         Once deleted, no more notifications will be sent for the corresponding subscription.
       security:
         - openId:
@@ -408,7 +408,7 @@ components:
             - ACCESSTOKEN
             - REFRESHTOKEN
           description: |
-            The type of the credential. 
+            The type of the credential.
             Note: Type of the credential - MUST be set to ACCESSTOKEN for now
       discriminator:
         propertyName: credentialType
@@ -545,7 +545,7 @@ components:
           format: date-time
           description: |
             Date when the event subscription will begin/began
-            It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone. 
+            It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
             Recommended format is yyyy-MM-dd'T'HH:mm:ss.SSSZ (i.e. which allows 2023-07-03T14:27:08.312+02:00 or 2023-07-03T12:27:08.312Z)
           example: "2023-07-03T12:27:08.312Z"
         expiresAt:
@@ -553,7 +553,7 @@ components:
           format: date-time
           description: |
             Date when the event subscription will expire. Only provided when `subscriptionExpireTime` is indicated by API client or Telco Operator has specific policy about that.
-            It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone. 
+            It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
             Recommended format is yyyy-MM-dd'T'HH:mm:ss.SSSZ (i.e. which allows 2023-07-03T14:27:08.312+02:00 or 2023-07-03T12:27:08.312Z)
         status:
           type: string
