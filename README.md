@@ -5,6 +5,7 @@
 <a href="https://github.com/camaraproject/DeviceDataVolume" title="Repo Size"><img src="https://img.shields.io/github/repo-size/camaraproject/DeviceDataVolume?style=plastic"></a>
 <a href="https://github.com/camaraproject/DeviceDataVolume/blob/main/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=plastic"></a>
 <a href="https://github.com/camaraproject/DeviceDataVolume/releases/latest" title="Latest Release"><img src="https://img.shields.io/github/release/camaraproject/DeviceDataVolume?style=plastic"></a>
+<a href="https://github.com/camaraproject/Governance/blob/main/ProjectStructureAndRoles.md" title="Sandbox API Repository"><img src="https://img.shields.io/badge/Sandbox%20API%20Repository-yellow?style=plastic"></a>
 
 # DeviceDataVolume
 Repository to describe, develop, document, and test the Device Data Volume APIs within the Sub Project [DeviceStatus](https://lf-camaraproject.atlassian.net/wiki/x/fzLe) of CAMARA
