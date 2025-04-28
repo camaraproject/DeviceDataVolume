@@ -45,7 +45,7 @@ info:
     As for subscription, detailed description of the event notification is provided in the CAMARA API design guideline document.
 
     _**WARNING**: This callback endpoint must be exposed on the consumer side as `POST /{$request.body#/sink}`.
-      Developers may provide a callback URL on which notifications regarding geofencing can be received from the service provider.
+      Developers may provide a callback URL on which notifications regarding device data volume events can be received from the service provider.
       If an event occurs the application will send events to the provided webhook - 'sink'._
 
     # Authorization and authentication
@@ -71,7 +71,7 @@ info:
   x-camara-commonalities: 0.5
 
 externalDocs:
-  description: Project documentation at Camara
+  description: Project documentation at CAMARA
   url: https://github.com/camaraproject/DeviceDataVolume
 
 servers:
@@ -82,7 +82,7 @@ servers:
         description: API root
 
 tags:
-  - name: Device data volume subscription
+  - name: Device Data Volume Subscriptions
     description: Manage subscriptions to device data volume usage events.
 
 paths:
@@ -90,11 +90,11 @@ paths:
     post:
       tags:
         - Device data volume subscription
-      summary: "Create a device data volume subscription for a device"
+      summary: "Create a device data volume event subscription"
       description: Create a subscription for data volume usage events
       operationId: createDeviceDataVolumeSubscription
       parameters:
-        - $ref: '#/components/parameters/x-correlator'
+        - $ref: "#/components/parameters/x-correlator"
       security:
         - openId:
             - device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent:create
@@ -117,7 +117,7 @@ paths:
                 The Data Volume server will call this endpoint whenever a data volume usage event occurs.
               operationId: postNotification
               parameters:
-                - $ref: '#/components/parameters/x-correlator'
+                - $ref: "#/components/parameters/x-correlator"
               requestBody:
                 required: true
                 content:
@@ -140,7 +140,7 @@ paths:
                   description: Successful notification
                   headers:
                     x-correlator:
-                      $ref: '#/components/headers/x-correlator'
+                      $ref: "#/components/headers/x-correlator"
                 "400":
                   $ref: "#/components/responses/Generic400"
                 "401":
@@ -160,7 +160,7 @@ paths:
           description: Created
           headers:
             x-correlator:
-              $ref: '#/components/headers/x-correlator'
+              $ref: "#/components/headers/x-correlator"
           content:
             application/json:
               schema:
@@ -169,7 +169,7 @@ paths:
           description: Request accepted to be processed. It applies for async creation process.
           headers:
             x-correlator:
-              $ref: '#/components/headers/x-correlator'
+              $ref: "#/components/headers/x-correlator"
           content:
             application/json:
               schema:
@@ -181,7 +181,7 @@ paths:
         "403":
           $ref: "#/components/responses/SubscriptionPermissionDenied403"
         "409":
-          $ref: "#/components/responses/SubscriptionConflict409"
+          $ref: "#/components/responses/Generic409"
         "422":
           $ref: "#/components/responses/CreateSubscriptionUnprocessableEntity422"
         "429":
@@ -191,9 +191,9 @@ paths:
         - Device data volume subscription
       summary: "Retrieve a list of device data volume subscriptions"
       description: Retrieve a list of data volume usage event subscription(s)
-      operationId: retrieveSubscriptionList
+      operationId: retrieveDeviceDataVolumeSubscriptionList
       parameters:
-        - $ref: '#/components/parameters/x-correlator'
+        - $ref: "#/components/parameters/x-correlator"
       security:
         - openId:
             - device-data-volume-subscriptions:read
@@ -202,7 +202,7 @@ paths:
           description: List of event subscription details
           headers:
             x-correlator:
-              $ref: '#/components/headers/x-correlator'
+              $ref: "#/components/headers/x-correlator"
           content:
             application/json:
               schema:
@@ -216,28 +216,26 @@ paths:
           $ref: "#/components/responses/Generic401"
         "403":
           $ref: "#/components/responses/Generic403"
-        "429":
-          $ref: "#/components/responses/Generic429"
 
   /subscriptions/{subscriptionId}:
     get:
       tags:
         - Device data volume subscription
-      summary: "Retrieve a device data volume subscription for a device"
-      operationId: retrieveSubscription
+      summary: "Retrieve a device data volume event subscription"
       description: Retrieve a specific subscription by ID
+      operationId: retrieveDeviceDataVolumeSubscription
       security:
         - openId:
             - device-data-volume-subscriptions:read
       parameters:
         - $ref: "#/components/parameters/SubscriptionId"
-        - $ref: '#/components/parameters/x-correlator'
+        - $ref: "#/components/parameters/x-correlator"
       responses:
         "200":
           description: OK
           headers:
             x-correlator:
-              $ref: '#/components/headers/x-correlator'
+              $ref: "#/components/headers/x-correlator"
           content:
             application/json:
               schema:
@@ -246,51 +244,61 @@ paths:
                 subscription-active:
                   $ref: "#/components/examples/SUBSCRIPTION_ACTIVE"
         "400":
-          $ref: "#/components/responses/SubscriptionIdRequired"
+          $ref: "#/components/responses/SubscriptionIdRequired400"
         "401":
           $ref: "#/components/responses/Generic401"
         "403":
           $ref: "#/components/responses/Generic403"
         "404":
           $ref: "#/components/responses/Generic404"
-        "429":
-          $ref: "#/components/responses/Generic429"
 
     delete:
       tags:
         - Device data volume subscription
-      summary: "Delete a device data volume subscription for a device"
-      operationId: deleteSubscription
+      summary: "Delete a device data volume event subscription"
+      operationId: deleteDeviceDataVolumeSubscription
       description: |
-        This operation deletes a specific data volume usage subscription by its subscription ID. Once deleted, no more notifications will be sent for the corresponding subscription.
+        This operation deletes a specific data volume usage subscription by its subscription ID. 
+        Once deleted, no more notifications will be sent for the corresponding subscription.
       security:
         - openId:
             - device-data-volume-subscriptions:delete
       parameters:
         - $ref: "#/components/parameters/SubscriptionId"
-        - $ref: '#/components/parameters/x-correlator'
+        - $ref: "#/components/parameters/x-correlator"
       responses:
         "204":
           description: No Content - Subscription successfully deleted
           headers:
             x-correlator:
-              $ref: '#/components/headers/x-correlator'
+              $ref: "#/components/headers/x-correlator"
+        "202":
+          description: Request accepted to be processed. It applies for async deletion process.
+          headers:
+            x-correlator:
+              $ref: "#/components/headers/x-correlator"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubscriptionAsync"
         "400":
-          $ref: "#/components/responses/SubscriptionIdRequired"
+          $ref: "#/components/responses/SubscriptionIdRequired400"
         "401":
           $ref: "#/components/responses/Generic401"
         "403":
           $ref: "#/components/responses/Generic403"
         "404":
           $ref: "#/components/responses/Generic404"
-        "429":
-          $ref: "#/components/responses/Generic429"
 
 components:
   securitySchemes:
     openId:
       type: openIdConnect
       openIdConnectUrl: https://example.com/.well-known/openid-configuration
+    notificationsBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: "{$request.body#/sinkCredential.credentialType}"
   parameters:
     SubscriptionId:
       name: subscriptionId
@@ -305,14 +313,17 @@ components:
       description: Correlation id for the different services
       schema:
         type: string
+        pattern: ^[a-zA-Z0-9-]{0,55}$
+        example: "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
   headers:
     x-correlator:
       description: Correlation id for the different services
       schema:
         type: string
+        pattern: ^[a-zA-Z0-9-]{0,55}$
   schemas:
     SubscriptionRequest:
-      description: The request for creating a device quality indicator subscription
+      description: The request for creating a event-type event subscription
       type: object
       required:
         - sink
@@ -324,7 +335,7 @@ components:
           $ref: "#/components/schemas/Protocol"
         sink:
           type: string
-          format: url
+          format: uri
           description: The address to which events shall be delivered using the selected protocol.
           example: "https://endpoint.example.com/sink"
         sinkCredential:
@@ -333,7 +344,8 @@ components:
             - $ref: "#/components/schemas/SinkCredential"
         types:
           description: |
-            Event types eligible to be delivered by this subscription for device quality indicators.
+            Camara Event types eligible to be delivered by this subscription.
+            Note: for the current Commonalities version (v0.5) only one event type per subscription is allowed, yet in the following releases use of array of event types SHALL be specified without changing this definition.
           type: array
           minItems: 1
           maxItems: 1
@@ -359,7 +371,10 @@ components:
 
     Config:
       description: |
-        Implementation-specific configuration parameters for acquiring device quality indicator events.
+        Implementation-specific configuration parameters needed by the subscription manager for acquiring events.
+        In CAMARA we have predefined attributes like `subscriptionExpireTime`, `subscriptionMaxEvents`, `initialEvent`
+        Specific event type attributes must be defined in `subscriptionDetail`
+        Note: if a request is performed for several event type, all subscribed event will use same `config` parameters.
       type: object
       required:
         - subscriptionDetail
@@ -369,17 +384,19 @@ components:
         subscriptionExpireTime:
           type: string
           format: date-time
-          example: "2023-01-17T13:18:23.682Z"
-          description: The subscription expiration time (in date-time format).
+          example: 2023-01-17T13:18:23.682Z
+          description: The subscription expiration time (in date-time format) requested by the API consumer. Up to API project decision to keep it.
         subscriptionMaxEvents:
           type: integer
-          description: Identifies the maximum number of event reports to be generated (>=1).
+          description: Identifies the maximum number of event reports to be generated (>=1) requested by the API consumer - Once this number is reached, the subscription ends. Up to API project decision to keep it.
           minimum: 1
           example: 5
         initialEvent:
           type: boolean
           description: |
-            Set to `true` if the consumer wants an event triggered immediately if the current situation reflects the event request.
+            Set to `true` by API consumer if consumer wants to get an event as soon as the subscription is created and current situation reflects event request.
+            Example: Consumer request Roaming event. If consumer sets initialEvent to true and device is in roaming situation, an event is triggered
+            Up to API project decision to keep it.
 
     SinkCredential:
       type: object
@@ -390,7 +407,9 @@ components:
             - PLAIN
             - ACCESSTOKEN
             - REFRESHTOKEN
-          description: The type of the credential.
+          description: |
+            The type of the credential. 
+            Note: Type of the credential - MUST be set to ACCESSTOKEN for now
       discriminator:
         propertyName: credentialType
         mapping:
@@ -480,7 +499,7 @@ components:
         - refreshTokenEndpoint
 
     SubscriptionDetail:
-      description: The details of the requested device quality indicator subscription.
+      description: The details of the requested device data volume subscription.
       type: object
       properties:
         device:
@@ -489,7 +508,7 @@ components:
         - device
 
     Subscription:
-      description: Represents a device quality indicator subscription.
+      description: Represents a device data volume subscription.
       type: object
       required:
         - sink
@@ -503,14 +522,14 @@ components:
           $ref: "#/components/schemas/Protocol"
         sink:
           type: string
-          format: url
+          format: uri
           description: The address where events will be delivered using the selected protocol.
           example: "https://endpoint.example.com/sink"
         sinkCredential:
           $ref: "#/components/schemas/SinkCredential"
         types:
           description: |
-            Camara Event types eligible to be delivered by this subscription for device quality indicators.
+            Camara Event types eligible to be delivered by this subscription for device data volume.
             Note: As of now we enforce to have only event type per subscription.
           type: array
           minItems: 1
@@ -524,14 +543,27 @@ components:
         startsAt:
           type: string
           format: date-time
-          description: Date when the event subscription starts.
+          description: |
+            Date when the event subscription will begin/began
+            It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone. 
+            Recommended format is yyyy-MM-dd'T'HH:mm:ss.SSSZ (i.e. which allows 2023-07-03T14:27:08.312+02:00 or 2023-07-03T12:27:08.312Z)
+          example: "2023-07-03T12:27:08.312Z"
         expiresAt:
           type: string
           format: date-time
-          description: Date when the subscription expires, if applicable.
+          description: |
+            Date when the event subscription will expire. Only provided when `subscriptionExpireTime` is indicated by API client or Telco Operator has specific policy about that.
+            It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone. 
+            Recommended format is yyyy-MM-dd'T'HH:mm:ss.SSSZ (i.e. which allows 2023-07-03T14:27:08.312+02:00 or 2023-07-03T12:27:08.312Z)
         status:
           type: string
-          description: Current status of the subscription.
+          description: |-
+            Current status of the subscription - Management of Subscription State engine is not mandatory for now. Note not all statuses may be considered to be implemented. Details:
+              - `ACTIVATION_REQUESTED`: Subscription creation (POST) is triggered but subscription creation process is not finished yet.
+              - `ACTIVE`: Subscription creation process is completed. Subscription is fully operative.
+              - `INACTIVE`: Subscription is temporarily inactive, but its workflow logic is not deleted.
+              - `EXPIRED`: Subscription is ended (no longer active). This status applies when subscription is ended due to `SUBSCRIPTION_EXPIRED` or `ACCESS_TOKEN_EXPIRED` event.
+              - `DELETED`: Subscription is ended as deleted (no longer active). This status applies when subscription information is kept (i.e. subscription workflow is no longer active but its meta-information is kept).
           enum:
             - ACTIVATION_REQUESTED
             - ACTIVE
@@ -551,16 +583,13 @@ components:
     Device:
       description: |
         End-user equipment able to connect to a mobile network. Examples of devices include smartphones or IoT sensors/actuators.
-
-        The developer can choose to provide the below specified device identifiers:
-
-        * `ipv4Address`
-        * `ipv6Address`
-        * `phoneNumber`
-        * `networkAccessIdentifier`
-
-        NOTE1: the API provider might support only a subset of these options. The API consumer can provide multiple identifiers to be compatible across different API providers. In this case the identifiers MUST belong to the same device
-        NOTE2: for the Commonalities release v0.4, we are enforcing that the networkAccessIdentifier is only part of the schema for future-proofing, and CAMARA does not currently allow its use. After the CAMARA meta-release work is concluded and the relevant issues are resolved, its use will need to be explicitly documented in the guidelines.
+            The developer can choose to provide the below specified device identifiers:
+            * `ipv4Address`
+            * `ipv6Address`
+            * `phoneNumber`
+            * `networkAccessIdentifier`
+            NOTE1: the network operator might support only a subset of these options. The API invoker can provide multiple identifiers to be compatible across different network operators. In this case the identifiers MUST belong to the same device.
+            NOTE2: as for this Commonalities release, we are enforcing that the networkAccessIdentifier is only part of the schema for future-proofing, and CAMARA does not currently allow its use. After the CAMARA meta-release work is concluded and the relevant issues are resolved, its use will need to be explicitly documented in the guidelines.
       type: object
       properties:
         phoneNumber:
@@ -630,19 +659,19 @@ components:
     ErrorInfo:
       type: object
       required:
+        - message
         - status
         - code
-        - message
       properties:
+        message:
+          type: string
+          description: A human readable description of what the event represent
         status:
           type: integer
           description: HTTP response status code
         code:
           type: string
-          description: Code given to this error
-        message:
-          type: string
-          description: Detailed error description
+          description: Friendly Code to describe the error
 
     SubscriptionEventType:
       type: string
@@ -656,10 +685,10 @@ components:
 
 
     SubscriptionAsync:
-      description: Response for a device quality indicator subscription operation managed asynchronously (Creation or Deletion).
+      description: Response for a event-type subscription request managed asynchronously (Creation or Deletion)
       type: object
       properties:
-        subscriptionId:
+        id:
           $ref: "#/components/schemas/SubscriptionId"
 
     SubscriptionId:
@@ -733,7 +762,16 @@ components:
       type: string
       format: uri-reference
       minLength: 1
-      description: Identifies the context in which an event happened.
+      description: |
+        Identifies the context in which an event happened - be a non-empty `URI-reference` like:
+        - URI with a DNS authority:
+          * https://github.com/cloudevents
+          * mailto:cncf-wg-serverless@lists.cncf.io
+        - Universally-unique URN with a UUID:
+          * urn:uuid:6e8bc430-9c3a-11d9-9669-0800200c9a66
+        - Application-specific identifier:
+          * /cloudevents/spec/pull/123
+          * 1-555-123-4567
       example: "https://notificationSendServer12.supertelco.com"
 
     DateTime:
@@ -802,7 +840,7 @@ components:
           $ref: "#/components/schemas/SubscriptionId"
 
     SubscriptionEnds:
-      description: Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends event
+      description: Event detail structure for SUBSCRIPTION_ENDS event
       type: object
       required:
         - device
@@ -821,15 +859,15 @@ components:
       description: |
         - NETWORK_TERMINATED - API server stopped sending notification
         - SUBSCRIPTION_EXPIRED - Subscription expire time (optionally set by the requester) has been reached
-        - SUBSCRIPTION_DELETED - Subscription was deleted by the requester
         - MAX_EVENTS_REACHED - Maximum number of events (optionally set by the requester) has been reached
         - ACCESS_TOKEN_EXPIRED - Access Token sinkCredential (optionally set by the requester) expiration time has been reached
+        - SUBSCRIPTION_DELETED - Subscription was deleted by the requester
       enum:
         - MAX_EVENTS_REACHED
         - NETWORK_TERMINATED
         - SUBSCRIPTION_EXPIRED
-        - SUBSCRIPTION_DELETED
         - ACCESS_TOKEN_EXPIRED
+        - SUBSCRIPTION_DELETED
 
     HTTPSubscriptionRequest:
       allOf:
@@ -992,30 +1030,54 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 400
+                  code:
+                    enum:
+                      - INVALID_ARGUMENT
+                      - OUT_OF_RANGE
+                      - INVALID_PROTOCOL
+                      - INVALID_CREDENTIAL
+                      - INVALID_TOKEN
           examples:
-            InvalidArgument:
+            GENERIC_400_INVALID_ARGUMENT:
+              description: Invalid Argument. Generic Syntax Exception
               value:
                 status: 400
                 code: INVALID_ARGUMENT
-                message: Client specified an invalid argument, request body, or query param
-            InvalidProtocol:
+                message: Client specified an invalid argument, request body or query param.
+            GENERIC_400_OUT_OF_RANGE:
+              description: Out of Range. Specific Syntax Exception used when a given field has a pre-defined range or a invalid filter criteria combination is requested
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: Client specified an invalid range.
+            GENERIC_400_INVALID_PROTOCOL:
+              description: Invalid protocol for events subscription management
               value:
                 status: 400
                 code: INVALID_PROTOCOL
                 message: Only HTTP is supported
-            InvalidCredential:
+            GENERIC_400_INVALID_CREDENTIAL:
+              description: Invalid sink credential type
               value:
                 status: 400
                 code: INVALID_CREDENTIAL
                 message: Only Access token is supported
-            InvalidToken:
+            GENERIC_400_INVALID_TOKEN:
+              description: Invalid token type for sink credential of type ACCESSTOKEN
               value:
                 status: 400
                 code: INVALID_TOKEN
                 message: Only bearer token is supported
+
     Generic400:
-      description: Bad Request
+      description: Problem with the client request
       headers:
         x-correlator:
           $ref: "#/components/headers/x-correlator"
@@ -1039,7 +1101,8 @@ components:
                 status: 400
                 code: INVALID_ARGUMENT
                 message: Client specified an invalid argument, request body or query param.
-    SubscriptionIdRequired:
+
+    SubscriptionIdRequired400:
       description: Problem with the client request
       headers:
         x-correlator:
@@ -1059,19 +1122,20 @@ components:
                       - INVALID_ARGUMENT
           examples:
             GENERIC_400_INVALID_ARGUMENT:
-              summary: Schema validation failed
+              description: Invalid Argument. Generic Syntax Exception
               value:
                 status: 400
                 code: INVALID_ARGUMENT
                 message: Client specified an invalid argument, request body or query param.
             GENERIC_400_SUBSCRIPTION_ID_REQUIRED:
-              summary: The subscription id is required
+              description: subscription id is required
               value:
                 status: 400
                 code: INVALID_ARGUMENT
                 message: "Expected property is missing: subscriptionId"
+
     Generic401:
-      description: Authentication problem with the client request.
+      description: Authentication problem with the client request
       headers:
         x-correlator:
           $ref: "#/components/headers/x-correlator"
@@ -1087,51 +1151,22 @@ components:
                       - 401
                   code:
                     enum:
-                      - AUTHENTICATION_REQUIRED
                       - UNAUTHENTICATED
+                      - AUTHENTICATION_REQUIRED
           examples:
-            GENERIC_401_AUTHENTICATION_REQUIRED:
-              description: New authentication is needed, authentication is no longer valid
-              value:
-                status: 401
-                code: AUTHENTICATION_REQUIRED
-                message: New authentication is required.
             GENERIC_401_UNAUTHENTICATED:
               description: Request cannot be authenticated
               value:
                 status: 401
                 code: UNAUTHENTICATED
                 message: Request not authenticated due to missing, invalid, or expired credentials.
-    SubscriptionPermissionDenied403:
-      description: Client does not have sufficient permission.
-      headers:
-        x-correlator:
-          $ref: "#/components/headers/x-correlator"
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/ErrorInfo"
-              - type: object
-                properties:
-                  status:
-                    enum:
-                      - 403
-                  code:
-                    enum:
-                      - PERMISSION_DENIED
-                      - SUBSCRIPTION_MISMATCH
-          examples:
-            GENERIC_403_PERMISSION_DENIED:
+            GENERIC_401_AUTHENTICATION_REQUIRED:
+              description: New authentication is needed, authentication is no longer valid
               value:
-                status: 403
-                code: PERMISSION_DENIED
-                message: Client does not have sufficient permissions to perform this action.
-            GENERIC_403_SUBSCRIPTION_MISMATCH:
-              value:
-                status: 403
-                code: SUBSCRIPTION_MISMATCH
-                message: Inconsistent access token for requested events subscription.
+                status: 401
+                code: AUTHENTICATION_REQUIRED
+                message: New authentication is required.
+
     Generic403:
       description: Client does not have sufficient permission
       headers:
@@ -1157,8 +1192,42 @@ components:
                 status: 403
                 code: PERMISSION_DENIED
                 message: Client does not have sufficient permissions to perform this action.
+
+    SubscriptionPermissionDenied403:
+      description: Client does not have sufficient permission
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 403
+                  code:
+                    enum:
+                      - PERMISSION_DENIED
+                      - SUBSCRIPTION_MISMATCH
+          examples:
+            GENERIC_403_PERMISSION_DENIED:
+              description: Permission denied. OAuth2 token access does not have the required scope or when the user fails operational security
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform this action.
+            GENERIC_403_SUBSCRIPTION_MISMATCH:
+              description: Inconsistent access token for requested subscription
+              value:
+                status: 403
+                code: SUBSCRIPTION_MISMATCH
+                message: Inconsistent access token for requested events subscription
+
     Generic404:
-      description: Not found
+      description: Resource Not Found
       headers:
         x-correlator:
           $ref: "#/components/headers/x-correlator"
@@ -1182,7 +1251,8 @@ components:
                 status: 404
                 code: NOT_FOUND
                 message: The specified resource is not found.
-    SubscriptionConflict409:
+
+    Generic409:
       description: Conflict
       headers:
         x-correlator:
@@ -1199,14 +1269,15 @@ components:
                       - 409
                   code:
                     enum:
-                      - CONFLICT
+                      - ALREADY_EXISTS
           examples:
-            Conflict:
-              description: Subscription creation is in conflict with already existing subscription
+            GENERIC_409_ALREADY_EXISTS:
+              description: Trying to create an existing resource
               value:
                 status: 409
-                code: CONFLICT
-                message: The specified resource is in a conflict
+                code: ALREADY_EXISTS
+                message: The resource that a client tried to create already exists.
+
     Generic410:
       description: Gone
       headers:
@@ -1231,8 +1302,8 @@ components:
               value:
                 status: 410
                 code: GONE
-                message:
-                  Access to the target resource is no longer available.
+                message: Access to the target resource is no longer available.
+
     CreateSubscriptionUnprocessableEntity422:
       description: Unprocessable Entity
       headers:
@@ -1251,15 +1322,13 @@ components:
                   code:
                     enum:
                       - IDENTIFIER_MISMATCH
-                      - MISSING_IDENTIFIER
-                      - MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
                       - SERVICE_NOT_APPLICABLE
+                      - MISSING_IDENTIFIER
                       - UNSUPPORTED_IDENTIFIER
-                      - GEOFENCING_SUBSCRIPTIONS.AREA_NOT_COVERED
-                      - GEOFENCING_SUBSCRIPTIONS.INVALID_AREA
+                      - MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
           examples:
             GENERIC_422_IDENTIFIER_MISMATCH:
-              description: Inconsistency between device identifiers not pointing to the same device.
+              description: Inconsistency between identifiers not pointing to the same device
               value:
                 status: 422
                 code: IDENTIFIER_MISMATCH
@@ -1276,39 +1345,51 @@ components:
                 status: 422
                 code: MISSING_IDENTIFIER
                 message: The device cannot be identified.
-            GENERIC_422_MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED:
-              value:
-                status: 422
-                code: MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
-                message: Multi event types subscription not managed.
             GENERIC_422_UNSUPPORTED_IDENTIFIER:
               description: None of the provided identifiers is supported by the implementation
               value:
                 status: 422
                 code: UNSUPPORTED_IDENTIFIER
                 message: The identifier provided is not supported.
+            GENERIC_422_MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED:
+              description: Multi event types subscription is not supported
+              value:
+                status: 422
+                code: MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
+                message: Multi event types subscription not managed
+
     Generic429:
       description: Too Many Requests
       headers:
-        x-correlator:
+        X-Correlator:
           $ref: "#/components/headers/x-correlator"
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorInfo"
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 429
+                  code:
+                    enum:
+                      - QUOTA_EXCEEDED
+                      - TOO_MANY_REQUESTS
           examples:
             GENERIC_429_QUOTA_EXCEEDED:
               description: Request is rejected due to exceeding a business quota limit
               value:
                 status: 429
                 code: QUOTA_EXCEEDED
-                message: Either out of resource quota or reaching rate limiting.
+                message: Out of resource quota.
             GENERIC_429_TOO_MANY_REQUESTS:
-              description: API Server request limit is overpassed
+              description: Access to the API has been temporarily blocked due to rate or spike arrest limits being reached
               value:
                 status: 429
                 code: TOO_MANY_REQUESTS
-                message: Either out of resource quota or reaching rate limiting.
+                message: Rate limit reached.
 
   examples:
     DATA_50_PERCENT:
@@ -1321,7 +1402,6 @@ components:
         data:
           device:
             phoneNumber: "+123456789"
-          dataUsageThreshold: "50%"
           subscriptionId: "dv10-h556-rt89-1406"
         time: "2024-05-12T12:45:23.682Z"
 
@@ -1335,7 +1415,6 @@ components:
         data:
           device:
             phoneNumber: "+123456789"
-          dataUsageThreshold: "75%"
           subscriptionId: "dv10-h556-rt89-1407"
         time: "2024-05-12T14:30:23.682Z"
 
@@ -1349,7 +1428,6 @@ components:
         data:
           device:
             phoneNumber: "+123456789"
-          dataUsageThreshold: "90%"
           subscriptionId: "dv10-h556-rt89-1408"
         time: "2024-05-12T16:15:23.682Z"
 
@@ -1363,7 +1441,6 @@ components:
         data:
           device:
             phoneNumber: "+123456789"
-          dataUsageThreshold: "100%"
           subscriptionId: "dv10-h556-rt89-1409"
         time: "2024-05-12T18:00:23.682Z"
 
