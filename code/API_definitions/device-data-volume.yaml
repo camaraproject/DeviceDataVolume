@@ -19,7 +19,7 @@ info:
     The API exposes two endpoints/operations:
 
     - The endpoint `POST /retrieve` allows customers to retrieve the remaining device data volume.
-    - The endpoint `POST /check` allows customers to Check if the remaining data volume is above a certain threshold.
+    - The endpoint `POST /check` allows customers to check if the remaining data volume is above a certain threshold.
 
     # Authorization and authentication
 
@@ -121,7 +121,7 @@ paths:
           content:
             application/json:
               schema:
-                type: boolean
+                $ref: "#/components/schemas/CheckDataVolumeResponse"
         "400":
           $ref: "#/components/responses/Generic400"
         "401":
@@ -183,6 +183,15 @@ components:
       enum:
         - MiB
         - GiB
+
+    CheckDataVolumeResponse:
+      type: object
+      properties:
+        thresholdExceeded:
+          type: boolean
+          description: Indicates whether the remaining data volume exceeds the given threshold
+      required:
+        - thresholdExceeded
 
     RetrieveDataVolumeRequest:
       description: The request to retrieve the current remaining data volume for the requested device.
