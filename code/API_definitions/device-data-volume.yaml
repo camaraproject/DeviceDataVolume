@@ -106,6 +106,9 @@ paths:
       operationId: checkDataVolume
       parameters:
         - $ref: '#/components/parameters/x-correlator'
+      security:
+        - openId:
+            - device-data-volume:read
       requestBody:
         content:
           application/json:
