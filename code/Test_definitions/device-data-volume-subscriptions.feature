@@ -248,7 +248,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification request property "$.data.terminationReason" is equal to "SUBSCRIPTION_DELETED"
 
-
 ################
 # Error scenarios for management of input parameter device
 ##################
@@ -350,7 +349,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 # Error code 400
 ##################
 
-
   @device_data_volume_subscriptions_400.1_create_subscription_with_invalid_parameter
   Scenario: Create subscription with invalid parameter
     Given the request body is not compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -443,96 +441,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     Given the header "Authorization" is set to a malformed token
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     When the request "createDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_401.4_no_authorization_header
-  Scenario: No Authorization header
-    Given the request header "Authorization" is removed
-    When the request "retrieveDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_401.5_expired_access_token
-  Scenario: Expired access token
-    Given the header "Authorization" is set to a previously valid but now expired access token
-    When the request "retrieveDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_401.6_malformed_access_token
-  Scenario: Malformed access token
-    Given the header "Authorization" is set to a malformed token
-    When the request "retrieveDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_delete_401.7_no_authorization_header
-  Scenario: No Authorization header
-    Given the request header "Authorization" is removed
-    When the request "deleteDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_delete_401.8_expired_access_token
-  Scenario: Expired access token
-    Given the header "Authorization" is set to a previously valid but now expired access token
-    When the request "deleteDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_delete_401.9_malformed_access_token
-  Scenario: Malformed access token
-    Given the header "Authorization" is set to a malformed token
-    When the request "deleteDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve__list_401.10_no_authorization_header
-  Scenario: No Authorization header
-    Given the request header "Authorization" is removed
-    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_list_401.11_expired_access_token
-  Scenario: Expired access token
-    Given the header "Authorization" is set to a previously valid but now expired access token
-    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_list_401.12_malformed_access_token
-  Scenario: Malformed access token
-    Given the header "Authorization" is set to a malformed token
-    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
     And the response property "$.status" is 401
