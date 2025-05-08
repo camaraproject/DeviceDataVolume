@@ -1,7 +1,14 @@
 Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceDataVolumeSubscription
 
-# Input to be provided by the implementation to the tests
-# References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml, version vwip
+  # Input to be provided by the implementation to the tester
+  #
+  # Implementation indications:
+  # * List of device identifier types which are not supported, among: phoneNumber, networkAccessIdentifier, ipv4Address, ipv6Address
+  #
+  # Testing assets:
+  # * A device object which device data volume is known by the network when connected.
+  #
+  # References to OAS spec schemas refer to schemas specifies in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
     Given the resource "{apiroot}/device-data-volume-subscriptions/vwip" as base-url                                                           
@@ -38,33 +45,33 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
       | org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent |
       | org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded   |
 
-#  @device_data_volume_subscriptions_01.1_sync_creation_3legs #TODO: Activate when 3-legged is supported
-#  Scenario Outline: Synchronous subscription creation with 3-legged-access-token
-#    # Some implementations may only support asynchronous subscription creation
-#    Given the header "Authorization" is set to a valid access token which identifies a valid device
-#    And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
-#    When the request "createDeviceDataVolumeSubscription" is sent
-#    And request property "$.types" is one of the allowed values "<subscription-creation-types>"
-#    And request property "$.protocol" is equal to "HTTP"
-#    And request property "$.sink" is set to a valid callbackUrl
-#    And request property "$.config.subscriptionDetail.device.phoneNumber" is not present
-#    Then the response status code is 201
-#    And the response header "Content-Type" is "application/json"
-#    And the response header "x-correlator" has same value as the request header "x-correlator"
-#    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
-#    And the response properties "$.types", "$.protocol" and "$.sink" are present with the values provided in the request
-#    And the response property "$.id" is present
-#    And the response property "$.startsAt", if present, has a valid value with date-time format
-#    And the response property "$.expiresAt", if present, has a valid value with date-time format
-#    And the response property "$.status", if present, has the value "ACTIVATION_REQUESTED", "ACTIVE" or "INACTIVE"
-#    And the response property "$.config.subscriptionDetail.device" is not present
-#
-#    Examples:
-#      | subscription-creation-types                                           |
-#      | org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent |
-#      | org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent |
-#      | org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent |
-#      | org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded   |
+  @device_data_volume_subscriptions_01.1_sync_creation_3legs
+  Scenario Outline: Synchronous subscription creation with 3-legged-access-token
+    # Some implementations may only support asynchronous subscription creation
+    Given the header "Authorization" is set to a valid access token which identifies a valid device
+    And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
+    When the request "createDeviceDataVolumeSubscription" is sent
+    And request property "$.types" is one of the allowed values "<subscription-creation-types>"
+    And request property "$.protocol" is equal to "HTTP"
+    And request property "$.sink" is set to a valid callbackUrl
+    And request property "$.config.subscriptionDetail.device.phoneNumber" is not present
+    Then the response status code is 201
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response properties "$.types", "$.protocol" and "$.sink" are present with the values provided in the request
+    And the response property "$.id" is present
+    And the response property "$.startsAt", if present, has a valid value with date-time format
+    And the response property "$.expiresAt", if present, has a valid value with date-time format
+    And the response property "$.status", if present, has the value "ACTIVATION_REQUESTED", "ACTIVE" or "INACTIVE"
+    And the response property "$.config.subscriptionDetail.device" is not present
+
+    Examples:
+      | subscription-creation-types                                           |
+      | org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent |
+      | org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent |
+      | org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent |
+      | org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded   |
 
   @device_data_volume_subscriptions_02_async_creation
   Scenario Outline: Asynchronous subscription creation with 2- or 3-legged access token
@@ -101,18 +108,18 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.id" is equal to "id"
     And the response property "$.config.subscriptionDetail.device" is present
 
-#  @device_data_volume_subscriptions_03.2_retrieve_by_id_3legs
-#  Scenario: Check existing subscription is retrieved by id with a 3-legged access token
-#    Given a subscription exists and has a subscriptionId equal to "id"
-#    And the header "Authorization" is set to a valid access token which identifies the device associated with the subscription
-#    When the request "retrieveDeviceDataVolumeSubscription" is sent
-#    And the path parameter "subscriptionId" is set to "id"
-#    Then the response status code is 200
-#    And the response header "Content-Type" is "application/json"
-#    And the response header "x-correlator" has same value as the request header "x-correlator"
-#    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
-#    And the response property "$.id" is equal to "id"
-#    And the response property "$.config.subscriptionDetail.device" is not present
+  @device_data_volume_subscriptions_03.2_retrieve_by_id_3legs
+  Scenario: Check existing subscription is retrieved by id with a 3-legged access token
+    Given a subscription exists and has a subscriptionId equal to "id"
+    And the header "Authorization" is set to a valid access token which identifies the device associated with the subscription
+    When the request "retrieveDeviceDataVolumeSubscription" is sent
+    And the path parameter "subscriptionId" is set to "id"
+    Then the response status code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response property "$.id" is equal to "id"
+    And the response property "$.config.subscriptionDetail.device" is not present
 
   @device_data_volume_subscriptions_04_retrieve_list_2legs
   Scenario: Check existing subscription(s) is/are retrieved in list
@@ -125,27 +132,27 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body complies with an array of OAS schema defined at "#/components/schemas/Subscription"
     And the response body lists all subscriptions belonging to the API consumer
 
-#  @device_data_volume_subscriptions_05_retrieve_list_3legs
-#  Scenario: Check existing subscription(s) is/are retrieved in list
-#    Given the API consumer has at least one active subscription for the device
-#    And the header "Authorization" is set to a valid access token which identifies a valid device associated with one or more subscriptions
-#    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-#    Then the response status code is 200
-#    And the response header "Content-Type" is "application/json"
-#    And the response header "x-correlator" has same value as the request header "x-correlator"
-#    And the response body complies with an array of OAS schema defined at "#/components/schemas/Subscription"
-#    And the response body lists all subscriptions belonging to the API consumer for the identified device
-#    And the response property "$.config.subscriptionDetail.device" is not present in any of the subscription records
-#
-#  @device_data_volume_subscriptions_06_retrieve_empty_list_3legs
-#  Scenario: Check no existing subscription is retrieved in list
-#    Given the API consumer has no active subscriptions for the device
-#    And the header "Authorization" is set to a valid access token which identifies a valid device
-#    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-#    Then the response status code is 200
-#    And the response header "Content-Type" is "application/json"
-#    And the response header "x-correlator" has same value as the request header "x-correlator"
-#    And the response body is an empty array
+  @device_data_volume_subscriptions_05_retrieve_list_3legs
+  Scenario: Check existing subscription(s) is/are retrieved in list
+    Given the API consumer has at least one active subscription for the device
+    And the header "Authorization" is set to a valid access token which identifies a valid device associated with one or more subscriptions
+    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
+    Then the response status code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has same value as the request header "x-correlator"
+    And the response body complies with an array of OAS schema defined at "#/components/schemas/Subscription"
+    And the response body lists all subscriptions belonging to the API consumer for the identified device
+    And the response property "$.config.subscriptionDetail.device" is not present in any of the subscription records
+
+  @device_data_volume_subscriptions_06_retrieve_empty_list_3legs
+  Scenario: Check no existing subscription is retrieved in list
+    Given the API consumer has no active subscriptions for the device
+    And the header "Authorization" is set to a valid access token which identifies a valid device
+    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
+    Then the response status code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has same value as the request header "x-correlator"
+    And the response body is an empty array
 
  @device_data_volume_subscriptions_07_delete_subscription_based_on_an_existing_subscription-id
  Scenario: Delete the subscription with subscriptionId equal to "id"
