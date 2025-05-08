@@ -452,7 +452,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 ##################
 
   @device_data_volume_subscriptions_create_403.1_permission_denied
-  Scenario: Subscription creation without having the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent without having the required scope
    # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -464,7 +464,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_create_403.2_permission_denied
-  Scenario: Subscription creation without having the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent without having the required scope
    # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -476,11 +476,11 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_create_403.3_permission_denied
-  Scenario: Subscription creation without having the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent without having the required scope
    # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
-    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent"
+    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent"
     When the request "createDeviceDataVolumeSubscription" is sent
     Then the response status code is 403
     And the response property "$.status" is 403
@@ -488,7 +488,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_create_403.4_permission_denied
-  Scenario: Subscription creation without having the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded without having the required scope
    # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
