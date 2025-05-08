@@ -1,7 +1,15 @@
 Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceDataVolumeSubscription
 
-# Input to be provided by the implementation to the tests
-# References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml, version vwip
+  # Input to be provided by the implementation to the tester
+  #
+  # Implementation indications:
+  # * List of device identifier types which are not supported, among: phoneNumber, networkAccessIdentifier, ipv4Address, ipv6Address
+  #
+  # Testing assets:
+  # * A device object which device data volume is known by the network when connected.
+  # * The known device data volume status of the testing device
+  #
+  # References to OAS spec schemas refer to schemas specifies in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
     Given the resource "{apiroot}/device-data-volume-subscriptions/vwip" as base-url                                                           
