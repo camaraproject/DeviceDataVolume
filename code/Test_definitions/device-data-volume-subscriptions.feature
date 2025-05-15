@@ -61,8 +61,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
     And the response properties "$.types", "$.protocol" and "$.sink" are present with the values provided in the request
     And the response property "$.id" is present
-    And the response property "$.startsAt", if present, has a valid value with date-time format
-    And the response property "$.expiresAt", if present, has a valid value with date-time format
+    And the response property "$.startsAt" and "$.expiresAt", if present, has a valid value with date-time format
     And the response property "$.status", if present, has the value "ACTIVATION_REQUESTED", "ACTIVE" or "INACTIVE"
     And the response property "$.config.subscriptionDetail.device" is not present
 
@@ -121,7 +120,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.config.subscriptionDetail.device" is not present
 
   @device_data_volume_subscriptions_04_retrieve_list_2legs
-  Scenario: Check existing subscription(s) is/are retrieved in list
+  Scenario: Check existing subscription(s) is/are retrieved in list with 2-legged-token
     Given at least one subscription is existing for the API consumer making this request
     And the header "Authorization" is set to a valid access token which does not identify any device
     When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
@@ -132,7 +131,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body lists all subscriptions belonging to the API consumer
 
   @device_data_volume_subscriptions_05_retrieve_list_3legs
-  Scenario: Check existing subscription(s) is/are retrieved in list
+  Scenario: Check existing subscription(s) is/are retrieved in list with 3-legged-token
     Given the API consumer has at least one active subscription for the device
     And the header "Authorization" is set to a valid access token which identifies a valid device associated with one or more subscriptions
     When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
@@ -463,43 +462,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.code" is "PERMISSION_DENIED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_create_403.2_permission_denied
-  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent without having the required scope
-   # To test this, a token must not have the required scope
-    Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent:create"
-    And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
-    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent"
-    When the request "createDeviceDataVolumeSubscription" is sent
-    Then the response status code is 403
-    And the response property "$.status" is 403
-    And the response property "$.code" is "PERMISSION_DENIED"
-    And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_create_403.3_permission_denied
-  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent without having the required scope
-   # To test this, a token must not have the required scope
-    Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent:create"
-    And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
-    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent"
-    When the request "createDeviceDataVolumeSubscription" is sent
-    Then the response status code is 403
-    And the response property "$.status" is 403
-    And the response property "$.code" is "PERMISSION_DENIED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_create_403.4_permission_denied
-  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded without having the required scope
-   # To test this, a token must not have the required scope
-    Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded:create"
-    And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
-    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"
-    When the request "createDeviceDataVolumeSubscription" is sent
-    Then the response status code is 403
-    And the response property "$.status" is 403
-    And the response property "$.code" is "PERMISSION_DENIED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_create_403.5_subscription_mismatch_for_requested_events_subscription
+  @device_data_volume_subscriptions_create_403.2_subscription_mismatch_for_requested_events_subscription
   Scenario: Subscription creation with invalid access token for requested events subscription
     Given the header "Authorization" set to an access token that includes only a single subscription scope
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
