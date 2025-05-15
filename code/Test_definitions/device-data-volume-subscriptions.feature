@@ -1,10 +1,18 @@
 Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceDataVolumeSubscription
 
-# Input to be provided by the implementation to the tests
-# References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml, version vwip
+  # Input to be provided by the implementation to the tester
+  #
+  # Implementation indications:
+  # * List of device identifier types which are not supported, among: phoneNumber, networkAccessIdentifier, ipv4Address, ipv6Address
+  #
+  # Testing assets:
+  # * A device object which device data volume is known by the network when connected.
+  # * The known device data volume status of the testing device
+  #
+  # References to OAS spec schemas refer to schemas specifies in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
-    Given the resource "{apiroot}/device-data-volume-subscriptions/vwip" as base-url                                                           
+    Given the resource "{apiroot}/device-data-volume-subscriptions/vwip" as base-url
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" is set to a UUID value
 
@@ -27,8 +35,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
     And the response properties "$.types", "$.protocol", "$.sink" and "$.config.subscriptionDetail.device.phoneNumber" are present with the values provided in the request
     And the response property "$.id" is present
-    And the response property "$.startsAt", if present, has a valid value with date-time format
-    And the response property "$.expiresAt", if present, has a valid value with date-time format
+    And the response property "$.startsAt" and "$.expiresAt", if present, has a valid value with date-time format
     And the response property "$.status", if present, has the value "ACTIVATION_REQUESTED", "ACTIVE" or "INACTIVE"
 
     Examples:
@@ -86,7 +93,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
       | org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent |
       | org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent |
       | org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded   |
-
 
   @device_data_volume_subscriptions_03.1_retrieve_by_id_2legs
   Scenario: Check existing subscription is retrieved by id with a 2-legged access token
@@ -147,15 +153,15 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 #    And the response header "x-correlator" has same value as the request header "x-correlator"
 #    And the response body is an empty array
 
- @device_data_volume_subscriptions_07_delete_subscription_based_on_an_existing_subscription-id
- Scenario: Delete the subscription with subscriptionId equal to "id"
-   Given the API consumer has an active subscription with "subscriptionId" equal to "id"
-   When the request "deleteDeviceDataVolumeSubscription" is sent
-   And the path parameter "subscriptionId" is set to "id"
-   Then the response status code is 202 or 204
-   And the response header "x-correlator" has same value as the request header "x-correlator"
-   And if the response property "$.status" is 204 then response body is not present
-   And if the response property "$.status" is 202 then response body complies with the OAS schema at "#/components/schemas/SubscriptionAsync" and the response property "$.id" is equal to "id"
+  @device_data_volume_subscriptions_07_delete_subscription_based_on_an_existing_subscription-id
+  Scenario: Delete the subscription with subscriptionId equal to "id"
+    Given the API consumer has an active subscription with "subscriptionId" equal to "id"
+    When the request "deleteDeviceDataVolumeSubscription" is sent
+    And the path parameter "subscriptionId" is set to "id"
+    Then the response status code is 202 or 204
+    And the response header "x-correlator" has same value as the request header "x-correlator"
+    And if the response property "$.status" is 204 then response body is not present
+    And if the response property "$.status" is 202 then response body complies with the OAS schema at "#/components/schemas/SubscriptionAsync" and the response property "$.id" is equal to "id"
 
   @device_data_volume_subscriptions_08_receive_notification_when_device_consumed_50_percent_of_the_data_plan
   Scenario: Receive notification for data-50-percent event
@@ -242,7 +248,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification request property "$.data.terminationReason" is equal to "SUBSCRIPTION_DELETED"
 
-
 ################
 # Error scenarios for management of input parameter device
 ##################
@@ -274,7 +279,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
       | $.device.ipv6Address       | /components/schemas/DeviceIpv6Address       |
       | $.device.networkIdentifier | /components/schemas/NetworkAccessIdentifier |
 
-  # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
+ # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
   @device_data_volume_subscriptions_C01.03_device_not_found
   Scenario: Some identifier cannot be matched to a device
     Given the header "Authorization" is set to a valid access token which does not identify a single device
@@ -316,7 +321,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.code" is "UNSUPPORTED_IDENTIFIER"
     And the response property "$.message" contains a user-friendly text
 
-  # When the service is only offered to certain types of devices or subscriptions, e.g. IoT, B2C, etc.
+ # When the service is only offered to certain types of devices or subscriptions, e.g. IoT, B2C, etc.
   @device_data_volume_subscriptions_C01.07_device_not_supported
   Scenario: Service not available for the device
     Given that the service is not available for all devices commercialized by the operator
@@ -327,8 +332,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.code" is "SERVICE_NOT_APPLICABLE"
     And the response property "$.message" contains a user-friendly text
 
-  # Several identifiers provided but they do not identify the same device
-  # This scenario may happen with 2-legged access tokens, which do not identify a device
+ # Several identifiers provided but they do not identify the same device
+ # This scenario may happen with 2-legged access tokens, which do not identify a device
   @device_data_volume_subscriptions_C01.08_device_identifiers_mismatch
   Scenario: Device identifiers mismatch
     Given the header "Authorization" is set to a valid access token which does not identify a single device
@@ -442,103 +447,13 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_retrieve_401.4_no_authorization_header
-  Scenario: No Authorization header
-    Given the request header "Authorization" is removed
-    When the request "retrieveDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_401.5_expired_access_token
-  Scenario: Expired access token
-    Given the header "Authorization" is set to a previously valid but now expired access token
-    When the request "retrieveDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_401.6_malformed_access_token
-  Scenario: Malformed access token
-    Given the header "Authorization" is set to a malformed token
-    When the request "retrieveDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_delete_401.7_no_authorization_header
-  Scenario: No Authorization header
-    Given the request header "Authorization" is removed
-    When the request "deleteDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_delete_401.8_expired_access_token
-  Scenario: Expired access token
-    Given the header "Authorization" is set to a previously valid but now expired access token
-    When the request "deleteDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_delete_401.9_malformed_access_token
-  Scenario: Malformed access token
-    Given the header "Authorization" is set to a malformed token
-    When the request "deleteDeviceDataVolumeSubscription" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve__list_401.10_no_authorization_header
-  Scenario: No Authorization header
-    Given the request header "Authorization" is removed
-    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_list_401.11_expired_access_token
-  Scenario: Expired access token
-    Given the header "Authorization" is set to a previously valid but now expired access token
-    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
-  @device_data_volume_subscriptions_retrieve_list_401.12_malformed_access_token
-  Scenario: Malformed access token
-    Given the header "Authorization" is set to a malformed token
-    When the request "retrieveDeviceDataVolumeSubscriptionList" is sent
-    Then the response status code is 401
-    And the response header "Content-Type" is "application/json"
-    And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
-    And the response property "$.message" contains a user friendly text
-
 ##################
 # Error code 403
 ##################
 
   @device_data_volume_subscriptions_create_403.1_permission_denied
-  Scenario: Subscription creation without having the required scope
-    # To test this, a token must not have the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent without having the required scope
+   # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent"
@@ -549,8 +464,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_create_403.2_permission_denied
-  Scenario: Subscription creation without having the required scope
-    # To test this, a token must not have the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent without having the required scope
+   # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent"
@@ -561,11 +476,11 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_create_403.3_permission_denied
-  Scenario: Subscription creation without having the required scope
-    # To test this, a token must not have the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent without having the required scope
+   # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
-    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent"
+    And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent"
     When the request "createDeviceDataVolumeSubscription" is sent
     Then the response status code is 403
     And the response property "$.status" is 403
@@ -573,8 +488,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_create_403.4_permission_denied
-  Scenario: Subscription creation without having the required scope
-    # To test this, a token must not have the required scope
+  Scenario: Subscription creation for org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded without having the required scope
+   # To test this, a token must not have the required scope
     Given the header "Authorization" set to an access token not including scope "device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded:create"
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     And the request body property "$.types" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"

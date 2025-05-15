@@ -1,4 +1,3 @@
-@Device_Data_Volume_Check
 Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
 
   # Input to be provided by the implementation to the tester
@@ -51,7 +50,6 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
 #################
 # Error scenarios for management of input parameter device
 ###################
-
 
   @device_data_volume_checkDataVolume_C01.01_device_empty
   Scenario: The device value is an empty object
