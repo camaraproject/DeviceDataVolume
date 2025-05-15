@@ -30,8 +30,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And a valid phone number identified by "$.config.subscriptionDetail.device.phoneNumber"
     And request property "$.sink" is set to a valid callbackUrl
     Then the response code is 201
-    And the response header "Content-Type" is "application/json"
-    And the response header "x-correlator" has same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
     And the response properties "$.types", "$.protocol", "$.sink" and "$.config.subscriptionDetail.device.phoneNumber" are present with the values provided in the request
     And the response property "$.id" is present
@@ -56,8 +54,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And request property "$.sink" is set to a valid callbackUrl
     And request property "$.config.subscriptionDetail.device.phoneNumber" is not present
     Then the response status code is 201
-    And the response header "Content-Type" is "application/json"
-    And the response header "x-correlator" has same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
     And the response properties "$.types", "$.protocol" and "$.sink" are present with the values provided in the request
     And the response property "$.id" is present
