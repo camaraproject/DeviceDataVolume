@@ -285,15 +285,15 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.code" is "IDENTIFIER_NOT_FOUND"
     And the response property "$.message" contains a user friendly text
 
-#  @device_data_volume_subscriptions_C01.04_unnecessary_device TODO: Activate when 3-legged-token is supported
-#  Scenario: Device not to be included when it can be deduced from the access token
-#    Given the header "Authorization" is set to a valid access token identifying a device
-#    And the request body property "$.device" is also set to a valid device, which may or may not be the same device
-#    When the request "createDeviceDataVolumeSubscription" is sent
-#    Then the response status code is 422
-#    And the response property "$.status" is 422
-#    And the response property "$.code" is "UNNECESSARY_IDENTIFIER"
-#    And the response property "$.message" contains a user-friendly text
+  @device_data_volume_subscriptions_C01.04_unnecessary_device
+  Scenario: Device not to be included when it can be deduced from the access token
+    Given the header "Authorization" is set to a valid access token identifying a device
+    And the request body property "$.device" is also set to a valid device, which may or may not be the same device
+    When the request "createDeviceDataVolumeSubscription" is sent
+    Then the response status code is 422
+    And the response property "$.status" is 422
+    And the response property "$.code" is "UNNECESSARY_IDENTIFIER"
+    And the response property "$.message" contains a user-friendly text
 
   @device_data_volume_subscriptions_C01.05_missing_device
   Scenario: Device not included and cannot be deduced from the access token
