@@ -21,7 +21,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 ##########################
 
   @device_data_volume_subscriptions_01.1_sync_creation_2legs
-  Scenario Outline: Synchronous subscription creation with 2-legged-access-token
+  Scenario Outline: Synchronous subscription creation with 2-legged-token
     Given the header "Authorization" is set to a valid access token which does not identify any device
     And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
     When the  request "createDeviceDataVolumeSubscription" is sent
@@ -46,7 +46,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
       | org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded   |
 
   @device_data_volume_subscriptions_01.1_sync_creation_3legs
-  Scenario Outline: Synchronous subscription creation with 3-legged-access-token
+  Scenario Outline: Synchronous subscription creation with 3-legged-token
     # Some implementations may only support asynchronous subscription creation
     Given the header "Authorization" is set to a valid access token which identifies a valid device
     And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
@@ -461,7 +461,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.status" is 403
     And the response property "$.code" is "PERMISSION_DENIED"
     And the response property "$.message" contains a user friendly text
-
 
   @device_data_volume_subscriptions_create_403.2_subscription_mismatch_for_requested_events_subscription
   Scenario: Subscription creation with invalid access token for requested events subscription
