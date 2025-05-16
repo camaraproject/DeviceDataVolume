@@ -12,7 +12,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   # References to OAS spec schemas refer to schemas specifies in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
-    Given the resource "{apiroot}/device-data-volume-subscriptions/vwip" as base-url
+    Given the resource "{apiroot}/device-data-volume-subscriptions/vwip/subscriptions" as base-url
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" is set to a UUID value
 
