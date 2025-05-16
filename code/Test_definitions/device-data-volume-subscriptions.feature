@@ -206,7 +206,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_11_subscription_expiry
+  @device_data_volume_subscriptions_12_subscription_expiry
   Scenario: Receive notification for subscription-ends event on expiry
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.subscriptionExpireTime" is set to a value in the near future
@@ -218,7 +218,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification property "$.data.terminationReason" is equal to "SUBSCRIPTION_EXPIRED"
 
-  @device_data_volume_subscriptions_12_subscription_end_when_max_events
+  @device_data_volume_subscriptions_13_subscription_end_when_max_events
   Scenario: Receive notification for subscription-ends event on max events reached
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.subscriptionMaxEvents" is set to 1
@@ -230,7 +230,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification request property "$.data.terminationReason" is equal to "MAX_EVENTS_REACHED"
 
-  @device_data_volume_subscriptions_13_subscription_delete_event_validation
+  @device_data_volume_subscriptions_14_subscription_delete_event_validation
   Scenario: Receive notification for subscription-ends event on deletion
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.sink" is a valid callback URL
