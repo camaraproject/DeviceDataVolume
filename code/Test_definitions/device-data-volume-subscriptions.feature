@@ -417,7 +417,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
     And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
+    And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_creation_401.2_expired_access_token
@@ -428,7 +428,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
     And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
+    And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
   @device_data_volume_subscriptions_creation_401.3_malformed_access_token
@@ -439,7 +439,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
     And the response property "$.status" is 401
-    And the response property "$.code" is "UNAUTHENTICATED" or "AUTHENTICATION_REQUIRED"
+    And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
 ##################
