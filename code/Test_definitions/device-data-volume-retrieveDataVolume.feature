@@ -76,25 +76,25 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
     And the response property "$.code" is "IDENTIFIER_NOT_FOUND"
     And the response property "$.message" contains a user friendly text
 
-#  @device_data_volume_retrieveDataVolume_C01.04_unnecessary_device
-#  Scenario: Device not to be included when it can be deduced from the access token
-#    Given the header "Authorization" is set to a valid access token identifying a device
-#    And the request body property "$.device" is set to a valid device, which may or may not be the same device that is identified by the access token
-#    When the request "retrieveDataVolume" is sent
-#    Then the response status code is 422
-#    And the response property "$.status" is 422
-#    And the response property "$.code" is "UNNECESSARY_IDENTIFIER"
-#    And the response property "$.message" contains a user-friendly text
-#
-#  @device_data_volume_retrieveDataVolume_C01.05_missing_device
-#  Scenario: Device not included and cannot be deduced from the access token
-#    Given the header "Authorization" is set to a valid access token which does not identify a single device
-#    And the request body property "$.device" is not included
-#    When the request "retrieveDataVolume" is sent
-#    Then the response status code is 422
-#    And the response property "$.status" is 422
-#    And the response property "$.code" is "MISSING_IDENTIFIER"
-#    And the response property "$.message" contains a user-friendly text
+  @device_data_volume_retrieveDataVolume_C01.04_unnecessary_device
+  Scenario: Device not to be included when it can be deduced from the access token
+    Given the header "Authorization" is set to a valid access token identifying a device
+    And the request body property "$.device" is set to a valid device, which may or may not be the same device that is identified by the access token
+    When the request "retrieveDataVolume" is sent
+    Then the response status code is 422
+    And the response property "$.status" is 422
+    And the response property "$.code" is "UNNECESSARY_IDENTIFIER"
+    And the response property "$.message" contains a user-friendly text
+
+  @device_data_volume_retrieveDataVolume_C01.05_missing_device
+  Scenario: Device not included and cannot be deduced from the access token
+    Given the header "Authorization" is set to a valid access token which does not identify a single device
+    And the request body property "$.device" is not included
+    When the request "retrieveDataVolume" is sent
+    Then the response status code is 422
+    And the response property "$.status" is 422
+    And the response property "$.code" is "MISSING_IDENTIFIER"
+    And the response property "$.message" contains a user-friendly text
 
   @device_data_volume_retrieveDataVolume_C01.06_unsupported_device
   Scenario: None of the provided device identifiers is supported by the implementation
