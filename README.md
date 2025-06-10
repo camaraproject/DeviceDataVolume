@@ -26,11 +26,11 @@ Sandbox API Repository to describe, develop, document, and test the Device Data 
   * **device-data-volume v0.1.0-alpha.1**  
   [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r1.1/code/API_definitions/device-data-volume.yaml)
   [[View it on ReDoc]](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml&nocors)
-  [[View it on Swagger Editor]](https://editor.swagger.io/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml)
+  [[View it on Swagger Editor]](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml)
   * **device-data-volume-subscriptions v0.1.0-alpha.1**  
   [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml)
   [[View it on ReDoc]](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml&nocors)
-  [[View it on Swagger Editor]](https://editor.swagger.io/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml)
+  [[View it on Swagger Editor]](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml)
 
 - Current work-in-progress version is available within the [main branch](https://github.com/camaraproject/DeviceDataVolume)
 
