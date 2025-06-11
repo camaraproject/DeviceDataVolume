@@ -19,7 +19,7 @@ Version 0.1.0-alpha.1 is the first alpha release of device-data-volume
 
 - API definition **with inline documentation**:
   - [View it on ReDoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml&nocors)
-  - [View it on Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml)
+  - [View it on Swagger Editor](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml)
   - OpenAPI [YAML spec file](https://github.com/camaraproject/DeviceDataVolume/blob/r1.1/code/API_definitions/device-data-volume.yaml)
 
 ### Added
@@ -31,7 +31,7 @@ Version 0.1.0-alpha.1 is the first alpha release of device-data-volume-subscript
 
 - API definition **with inline documentation**:
   - [View it on ReDoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml&nocors)
-  - [View it on Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml)
+  - [View it on Swagger Editor](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml)
   - OpenAPI [YAML spec file](https://github.com/camaraproject/DeviceDataVolume/blob/r1.1/code/API_definitions/device-data-volume-subscriptions.yaml)
 
 ### Added
