@@ -8,7 +8,10 @@
 <a href="https://github.com/camaraproject/Governance/blob/main/ProjectStructureAndRoles.md" title="Sandbox API Repository"><img src="https://img.shields.io/badge/Sandbox%20API%20Repository-yellow?style=plastic"></a>
 
 # DeviceDataVolume
-Sandbox API Repository to describe, develop, document, and test the Device Data Volume APIs within the Sub Project [DeviceStatus](https://lf-camaraproject.atlassian.net/wiki/x/fzLe) of CAMARA
+
+Sandbox API Repository to describe, develop, document, and test the DeviceDataVolume APIs within the Sub Project [DeviceStatus](https://lf-camaraproject.atlassian.net/wiki/x/6wApBQ) of CAMARA
+
+* API Repository [wiki page](https://lf-camaraproject.atlassian.net/wiki/x/PoCaBQ)
 
 ## Scope
 
