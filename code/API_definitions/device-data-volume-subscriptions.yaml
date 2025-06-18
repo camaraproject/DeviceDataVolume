@@ -180,6 +180,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Subscription"
+              examples:
+                Successful Subscription Creation:
+                  $ref: "#/components/examples/SUBSCRIPTION_CREATION"
+                Successful Subscription Creation With Device Disambiguation:
+                  $ref: "#/components/examples/SUBSCRIPTION_CREATION_WITH_DEVICE_DISAMBIGUATION"
         "202":
           description: Request accepted to be processed. It applies for async creation process.
           headers:
@@ -225,6 +230,11 @@ paths:
                 minItems: 0
                 items:
                   $ref: "#/components/schemas/Subscription"
+              examples:
+                Subscription List:
+                  $ref: "#/components/examples/SUBSCRIPTION_LIST"
+                Empty Subscription List:
+                  $ref: "#/components/examples/EMPTY_SUBSCRIPTION_LIST"
         "400":
           $ref: "#/components/responses/Generic400"
         "401":
@@ -256,8 +266,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/Subscription"
               examples:
-                subscription-active:
-                  $ref: "#/components/examples/SUBSCRIPTION_ACTIVE"
+                Active Subscription:
+                  $ref: "#/components/examples/ACTIVE_SUBSCRIPTION"
+                Active Subscription With Device Disambiguation:
+                  $ref: "#/components/examples/ACTIVE_SUBSCRIPTION_WITH_DEVICE_DISAMBIGUATION"
         "400":
           $ref: "#/components/responses/SubscriptionIdRequired400"
         "401":
@@ -1481,7 +1493,61 @@ components:
           subscriptionId: dv10-h556-rt89-1403
         time: "2024-03-05T15:00:23.682Z"
 
-    SUBSCRIPTION_ACTIVE:
+    SUBSCRIPTION_CREATION:
+      description: A new subscription has been successfully created
+      value:
+        protocol: HTTP
+        protocolSettings:
+          method: POST
+        sink: https://endpoint.example.com/sink
+        types:
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+        config:
+          subscriptionDetail: {}
+          subscriptionExpireTime: '2023-01-17T13:18:23.682Z'
+          subscriptionMaxEvents: 5
+          initialEvent: true
+        id: 550e8400-e29b-41d4-a716-446655440000
+        status: ACTIVATION_REQUESTED
+
+    SUBSCRIPTION_CREATION_WITH_DEVICE_DISAMBIGUATION:
+      description: A new subscription has been successfully created
+      value:
+        protocol: HTTP
+        protocolSettings:
+          method: POST
+        sink: https://endpoint.example.com/sink
+        types:
+        - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+        config:
+          subscriptionDetail:
+            device:
+              phoneNumber: "+123456789"
+          subscriptionExpireTime: '2023-01-17T13:18:23.682Z'
+          subscriptionMaxEvents: 5
+          initialEvent: true
+        id: 550e8400-e29b-41d4-a716-446655440000
+        status: ACTIVATION_REQUESTED
+
+    ACTIVE_SUBSCRIPTION:
+      description: Details of an active subscription
+      value:
+        id: 550e8400-e29b-41d4-a716-446655440001
+        sink: https://endpoint.example.com/sink
+        protocol: HTTP
+        types:
+          - "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"
+        config:
+          subscriptionDetail: {}
+          subscriptionExpireTime: "2024-08-01T14:18:23.682Z"
+          subscriptionMaxEvents: 10
+          initialEvent: true
+        status: ACTIVE
+        startsAt: "2024-06-15T09:30:02.871Z"
+        expiresAt: "2024-08-01T14:18:23.682Z"
+
+    ACTIVE_SUBSCRIPTION_WITH_DEVICE_DISAMBIGUATION:
+      description: Details of an active subscription with device details for disambiguation
       value:
         id: 550e8400-e29b-41d4-a716-446655440001
         sink: https://endpoint.example.com/sink
@@ -1495,5 +1561,27 @@ components:
           subscriptionExpireTime: "2024-08-01T14:18:23.682Z"
           subscriptionMaxEvents: 10
           initialEvent: true
+        status: ACTIVE
         startsAt: "2024-06-15T09:30:02.871Z"
         expiresAt: "2024-08-01T14:18:23.682Z"
+
+    SUBSCRIPTION_LIST:
+      description: A list of API consumer subscriptions. If a 3-legged access token is used, the list is specific to the device associated with that token.
+      value:
+        - id: 550e8400-e29b-41d4-a716-446655440001
+          sink: https://endpoint.example.com/sink
+          protocol: HTTP
+          types:
+            - "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"
+          config:
+            subscriptionDetail: {}
+            subscriptionExpireTime: "2024-08-01T14:18:23.682Z"
+            subscriptionMaxEvents: 10
+            initialEvent: true
+          status: ACTIVE
+          startsAt: "2024-06-15T09:30:02.871Z"
+          expiresAt: "2024-08-01T14:18:23.682Z"
+
+    EMPTY_SUBSCRIPTION_LIST:
+      description: The API consumer either has no subscriptions or, if a 3-legged access token is used, has none for the device associated with that token.
+      value: []
