@@ -526,7 +526,7 @@ components:
       description: Successfully retrieve the device data volume category
       value:
         dataVolumeCategory: "<200MiB"
-    SuccessfulRetrieveResponse:
+    SuccessfulRetrieveResponseWithDeviceDisambiguation:
       description: Successfully retrieve the device data volume category but device disambiguation is required
       value:
         device:
