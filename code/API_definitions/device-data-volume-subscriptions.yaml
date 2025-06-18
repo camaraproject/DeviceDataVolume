@@ -1501,7 +1501,7 @@ components:
           method: POST
         sink: https://endpoint.example.com/sink
         types:
-        - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+          - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
         config:
           subscriptionDetail: {}
           subscriptionExpireTime: '2023-01-17T13:18:23.682Z'
@@ -1520,7 +1520,7 @@ components:
           method: POST
         sink: https://endpoint.example.com/sink
         types:
-        - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
+          - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
         config:
           subscriptionDetail:
             device:
