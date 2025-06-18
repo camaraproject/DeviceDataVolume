@@ -1508,7 +1508,9 @@ components:
           subscriptionMaxEvents: 5
           initialEvent: true
         id: 550e8400-e29b-41d4-a716-446655440000
-        status: ACTIVATION_REQUESTED
+        status: ACTIVE
+        startsAt: '2023-01-17T12:27:08.312Z'
+        expiresAt: '2023-01-17T13:18:23.682Z'
 
     SUBSCRIPTION_CREATION_WITH_DEVICE_DISAMBIGUATION:
       description: A new subscription has been successfully created
@@ -1527,7 +1529,9 @@ components:
           subscriptionMaxEvents: 5
           initialEvent: true
         id: 550e8400-e29b-41d4-a716-446655440000
-        status: ACTIVATION_REQUESTED
+        status: ACTIVE
+        startsAt: '2023-01-17T12:27:08.312Z'
+        expiresAt: '2023-01-17T13:18:23.682Z'
 
     ACTIVE_SUBSCRIPTION:
       description: Details of an active subscription
@@ -1543,8 +1547,8 @@ components:
           subscriptionMaxEvents: 10
           initialEvent: true
         status: ACTIVE
-        startsAt: "2024-06-15T09:30:02.871Z"
-        expiresAt: "2024-08-01T14:18:23.682Z"
+        startsAt: '2023-01-17T12:27:08.312Z'
+        expiresAt: '2023-01-17T13:18:23.682Z'
 
     ACTIVE_SUBSCRIPTION_WITH_DEVICE_DISAMBIGUATION:
       description: Details of an active subscription with device details for disambiguation
@@ -1562,8 +1566,8 @@ components:
           subscriptionMaxEvents: 10
           initialEvent: true
         status: ACTIVE
-        startsAt: "2024-06-15T09:30:02.871Z"
-        expiresAt: "2024-08-01T14:18:23.682Z"
+        startsAt: '2023-01-17T12:27:08.312Z'
+        expiresAt: '2023-01-17T13:18:23.682Z'
 
     SUBSCRIPTION_LIST:
       description: A list of API consumer subscriptions. If a 3-legged access token is used, the list is specific to the device associated with that token.
@@ -1579,8 +1583,8 @@ components:
             subscriptionMaxEvents: 10
             initialEvent: true
           status: ACTIVE
-          startsAt: "2024-06-15T09:30:02.871Z"
-          expiresAt: "2024-08-01T14:18:23.682Z"
+          startsAt: '2023-01-17T12:27:08.312Z'
+          expiresAt: '2023-01-17T13:18:23.682Z'
 
     EMPTY_SUBSCRIPTION_LIST:
       description: The API consumer either has no subscriptions or, if a 3-legged access token is used, has none for the device associated with that token.
