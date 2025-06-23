@@ -30,7 +30,7 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent`: Event triggered when 90% of the data plan is consumed.
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded`: Event triggered when the data plan is exceeded.
 
-    Note: Additionally, the event `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends` is sent when the subscription ends. This notification does not require a dedicated subscription.
+    Note: Additionally, the event `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends. This notification does not require a dedicated subscription.
 
     It is used in following cases:
       - the subscription expire time (optionally set by the requester) has been reached
@@ -148,7 +148,7 @@ paths:
                         $ref: "#/components/examples/DATA_90_PERCENT"
                       data-exceeded:
                         $ref: "#/components/examples/DATA_EXCEEDED"
-                      subscription-ends:
+                      subscription-ended:
                         $ref: "#/components/examples/SUBSCRIPTION_ENDS"
               responses:
                 "204":
@@ -720,13 +720,13 @@ components:
 
         data-exceeded - Event triggered when the device reaches 100% data usage exceeded of the data plan used.
 
-        subscription-ends - Event triggered when the subscription is terminated.
+        subscription-ended - Event triggered when the subscription is terminated.
       enum:
         - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
-        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends
+        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended
 
     CloudEvent:
       description: The notification callback
@@ -768,7 +768,7 @@ components:
           org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent: "#/components/schemas/EventDataUsage75Percent"
           org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent: "#/components/schemas/EventDataUsage90Percent"
           org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded: "#/components/schemas/EventDataUsageExceeded"
-          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends: "#/components/schemas/EventSubscriptionEnds"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended: "#/components/schemas/EventSubscriptionEnds"
 
     Source:
       type: string
@@ -853,7 +853,7 @@ components:
 
     SubscriptionEnds:
       description: |
-        Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends event.
+        Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended event.
         Note that the device object is defined as optional and will only to be returned if provided in createSubscription.
         If more than one type of device identifier was provided, only one identifier will be returned
         (at implementation choice and with the original value provided in createSubscription).
@@ -1468,7 +1468,7 @@ components:
       value:
         id: "124003"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends
+        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended
         specversion: "1.0"
         datacontenttype: application/json
         data:
