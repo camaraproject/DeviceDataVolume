@@ -30,7 +30,7 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent`: Event triggered when 90% of the data plan is consumed.
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded`: Event triggered when the data plan is exceeded.
 
-    Note: Additionally, the following events will be send, which does not require a dedicated subscription:
+    Note: Additionally, the following events could be send, which do not require a dedicated subscription:
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-started` is sent when the subscription starts.
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated` is sent when the subscription is updated.
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends.
