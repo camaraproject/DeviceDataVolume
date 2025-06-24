@@ -30,7 +30,10 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent`: Event triggered when 90% of the data plan is consumed.
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded`: Event triggered when the data plan is exceeded.
 
-    Note: Additionally, the event `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends. This notification does not require a dedicated subscription.
+    Note: Additionally, the following events will be send, which does not require a dedicated subscription:
+      - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-started` is sent when the subscription starts.
+      - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated` is sent when the subscription is updated.
+      - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends.
 
     It is used in following cases:
       - the subscription expire time (optionally set by the requester) has been reached
@@ -720,12 +723,18 @@ components:
 
         data-exceeded - Event triggered when the device reaches 100% data usage exceeded of the data plan used.
 
+        subscription-started: Event triggered when the subscription starts.
+
+        subscription-updated - Event triggered when the subscription is updated.
+
         subscription-ended - Event triggered when the subscription is terminated.
       enum:
         - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
+        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-started
+        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated
         - org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended
 
     CloudEvent:
@@ -768,7 +777,9 @@ components:
           org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent: "#/components/schemas/EventDataUsage75Percent"
           org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent: "#/components/schemas/EventDataUsage90Percent"
           org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded: "#/components/schemas/EventDataUsageExceeded"
-          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended: "#/components/schemas/EventSubscriptionEnds"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-started: "#/components/schemas/EventSubscriptionStarted"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated: "#/components/schemas/EventSubscriptionUpdated"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended: "#/components/schemas/EventSubscriptionEnded"
 
     Source:
       type: string
@@ -831,7 +842,69 @@ components:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
 
-    EventSubscriptionEnds:
+    EventSubscriptionStarted:
+      description: Event structure for event subscription started
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SubscriptionStarted"
+
+    SubscriptionStarted:
+      description: Event detail structure for subscription started event
+      type: object
+      required:
+        - initiationReason
+        - subscriptionId
+      properties:
+        initiationReason:
+          $ref: "#/components/schemas/InitiationReason"
+        subscriptionId:
+          $ref: "#/components/schemas/SubscriptionId"
+        initiationDescription:
+          type: string
+
+    InitiationReason:
+      type: string
+      description: |
+        - SUBSCRIPTION_CREATED - Subscription created by API Server
+      enum:
+        - SUBSCRIPTION_CREATED
+
+    EventSubscriptionUpdated:
+      description: event structure for event subscription updated
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SubscriptionUpdated"
+
+    SubscriptionUpdated:
+      description: Event detail structure for subscription updated event
+      type: object
+      required:
+        - updateReason
+        - subscriptionId
+      properties:
+        updateReason:
+          $ref: "#/components/schemas/UpdateReason"
+        subscriptionId:
+          $ref: "#/components/schemas/SubscriptionId"
+        updateDescription:
+          type: string
+
+    UpdateReason:
+      type: string
+      description: |
+        - SUBSCRIPTION_ACTIVE - API server transitioned susbcription status to `ACTIVE`
+        - SUBSCRIPTION_INACTIVE - API server transitioned susbcription status to `INACTIVE`
+      enum:
+        - SUBSCRIPTION_ACTIVE
+        - SUBSCRIPTION_INACTIVE
+
+    EventSubscriptionEnded:
       description: Event structure for event subscription ends
       allOf:
         - $ref: "#/components/schemas/CloudEvent"
