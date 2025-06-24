@@ -151,8 +151,12 @@ paths:
                         $ref: "#/components/examples/DATA_90_PERCENT"
                       data-exceeded:
                         $ref: "#/components/examples/DATA_EXCEEDED"
+                      subscription-started:
+                        $ref: "#/components/examples/SUBSCRIPTION_STARTED"
+                      subscription-updated:
+                        $ref: "#/components/examples/SUBSCRIPTION_UPDATED"
                       subscription-ended:
-                        $ref: "#/components/examples/SUBSCRIPTION_ENDS"
+                        $ref: "#/components/examples/SUBSCRIPTION_ENDED"
               responses:
                 "204":
                   description: Successful notification
@@ -863,6 +867,7 @@ components:
         subscriptionId:
           $ref: "#/components/schemas/SubscriptionId"
         initiationDescription:
+          description: Description about the start of the subscription.
           type: string
 
     InitiationReason:
@@ -893,6 +898,7 @@ components:
         subscriptionId:
           $ref: "#/components/schemas/SubscriptionId"
         updateDescription:
+          description: Description about the subscription update.
           type: string
 
     UpdateReason:
@@ -1537,7 +1543,31 @@ components:
           subscriptionId: "dv10-h556-rt89-1409"
         time: "2024-05-12T18:00:23.682Z"
 
-    SUBSCRIPTION_ENDS:
+    SUBSCRIPTION_STARTED:
+      value:
+        id: "124003"
+        source: https://dataUsageServer.supertelco.com
+        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-started
+        specversion: "1.0"
+        datacontenttype: application/json
+        data:
+          initiationReason: SUBSCRIPTION_CREATED
+          subscriptionId: dv10-h556-rt89-1403
+        time: "2024-03-05T15:00:23.682Z"
+
+    SUBSCRIPTION_UPDATED:
+      value:
+        id: "124003"
+        source: https://dataUsageServer.supertelco.com
+        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated
+        specversion: "1.0"
+        datacontenttype: application/json
+        data:
+          updateReason: SUBSCRIPTION_ACTIVE
+          subscriptionId: dv10-h556-rt89-1403
+        time: "2024-03-05T15:00:23.682Z"
+
+    SUBSCRIPTION_ENDED:
       value:
         id: "124003"
         source: https://dataUsageServer.supertelco.com
