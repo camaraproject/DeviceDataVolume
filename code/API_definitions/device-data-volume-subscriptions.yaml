@@ -917,7 +917,7 @@ components:
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionEnds"
+              $ref: "#/components/schemas/SubscriptionEnded"
 
     BasicDeviceEventData:
       description: Event detail structure for basic device events
@@ -930,7 +930,7 @@ components:
         subscriptionId:
           $ref: "#/components/schemas/SubscriptionId"
 
-    SubscriptionEnds:
+    SubscriptionEnded:
       description: |
         Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended event.
         Note that the device object is defined as optional and will only to be returned if provided in createSubscription.
