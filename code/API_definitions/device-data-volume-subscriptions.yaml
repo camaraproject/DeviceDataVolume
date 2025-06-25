@@ -363,6 +363,7 @@ components:
         sink:
           type: string
           format: uri
+          pattern: ^https:\/\/.+$
           description: The address to which events shall be delivered using the selected protocol.
           example: "https://endpoint.example.com/sink"
         sinkCredential:
@@ -547,6 +548,7 @@ components:
         sink:
           type: string
           format: uri
+          pattern: ^https:\/\/.+$
           description: The address where events will be delivered using the selected protocol.
           example: "https://endpoint.example.com/sink"
         sinkCredential:
@@ -1086,6 +1088,7 @@ components:
                       - INVALID_PROTOCOL
                       - INVALID_CREDENTIAL
                       - INVALID_TOKEN
+                      - INVALID_SINK
           examples:
             GENERIC_400_INVALID_ARGUMENT:
               description: Invalid Argument. Generic Syntax Exception
@@ -1117,6 +1120,12 @@ components:
                 status: 400
                 code: INVALID_TOKEN
                 message: Only bearer token is supported
+            GENERIC_400_INVALID_SINK:
+              description: Invalid sink value
+              value:
+                status: 400
+                code: INVALID_SINK
+                message: sink not valid for the specified protocol
 
     Generic400:
       description: Problem with the client request
