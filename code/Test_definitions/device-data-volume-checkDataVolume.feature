@@ -1,4 +1,4 @@
-Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
+Feature: CAMARA Device Data Volume API, v0.1.0-rc.1 - Operation checkDataVolume
 
   # Input to be provided by the implementation to the tester
   #
@@ -12,11 +12,9 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
   # References to OAS spec schemas refer to schemas specifies in device-data-volume.yaml
 
   Background: Common checkDataVolume setup
-    Given an environment at "apiRoot"
-    And the resource "/device-data-volume/vwip/check" set as base-url
-    And the header "Content-Type" is set to "application/json"
+    Given the resource "{apiRoot}/device-data-volume/v0.1rc1/check" set as base-url
     And the header "Authorization" is set to a valid access token
-    And the header "x-correlator" is set to a UUID value
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
     And the request body is set by default to a request body compliant with the schema "#/components/schemas/CheckDataVolumeRequest"
 
 ##########################

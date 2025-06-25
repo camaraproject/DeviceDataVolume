@@ -1,22 +1,21 @@
-Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
+Feature: CAMARA Device Data Volume API, v0.1.0-rc.1 - Operation retrieveDataVolume
 
   # Input to be provided by the implementation to the tester
-  #
-  # Implementation indications:
-  # * List of device identifier types which are not supported, among: phoneNumber, networkAccessIdentifier, ipv4Address, ipv6Address
-  #
+
+  # If the subscription leverages the 'device' object the following indication must be present:
+  #    Implementation indications:
+  #      * List of device identifier types which are not supported, such as: phoneNumber, networkAccessIdentifier, ipv4Address, ipv6Address
+
   # Testing assets:
-  # * A device object which device data volume is known by the network when connected.
-  # * The known device data volume status of the testing device
+  #       A device object which device data volume is known by the network when connected.
+  #       The known device data volume status of the testing device
   #
   # References to OAS spec schemas refer to schemas specifies in device-data-volume.yaml
 
   Background: Common retrieveDataVolume setup
-    Given an environment at "apiRoot"
-    And the resource "/device-data-volume/vwip/retrieve" set as base-url
-    And the header "Content-Type" is set to "application/json"
+    Given the resource "{apiroot}/device-data-volume/v0.1rc.1/retrieve" set as base-url
     And the header "Authorization" is set to a valid access token
-    And the header "x-correlator" is set to a UUID value
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
     And the request body is set by default to a request body compliant with the schema "#/components/schemas/RetrieveDataVolumeRequest"
 
 ##########################
