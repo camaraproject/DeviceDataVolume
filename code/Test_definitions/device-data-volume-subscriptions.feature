@@ -329,19 +329,6 @@ Feature: Device Data Volume Subscriptions API, v0.1.0-rc.1 - Operation on subscr
     And the response property "$.code" is "SERVICE_NOT_APPLICABLE"
     And the response property "$.message" contains a user-friendly text
 
- # Several identifiers provided but they do not identify the same device
- # This scenario may happen with 2-legged access tokens, which do not identify a device
-  @device_data_volume_subscriptions_C01.08_device_identifiers_mismatch
-  Scenario: Device identifiers mismatch
-    Given the header "Authorization" is set to a valid access token which does not identify a single device
-    And at least 2 types of device identifiers are supported by the implementation
-    And the request body property "$.device" includes several identifiers, each of them identifying a valid but different device
-    When the request "createDeviceDataVolumeSubscription" is sent
-    Then the response status code is 422
-    And the response property "$.status" is 422
-    And the response property "$.code" is "IDENTIFIER_MISMATCH"
-    And the response property "$.message" contains a user friendly text
-
 ##################
 # Error code 400
 ##################
@@ -405,6 +392,16 @@ Feature: Device Data Volume Subscriptions API, v0.1.0-rc.1 - Operation on subscr
     Then the response status code is 400
     And the response property "$.status" is 400
     And the response property "$.code" is "INVALID_TOKEN"
+    And the response property "$.message" contains a user friendly text
+
+  @device_data_volume_subscriptions_400.7_create_subscription_with_invalid_sink
+  Scenario: subscription creation with invalid sink
+    Given the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
+    And the request property "$.sink" is not matching the defined pattern
+    When the request "createDeviceDataVolumeSubscription" is sent
+    Then the response status code is 400
+    And the response property "$.status" is 400
+    And the response property "$.code" is "INVALID_SINK"
     And the response property "$.message" contains a user friendly text
 
 ##################
