@@ -4,7 +4,7 @@ info:
   description: |
     This API offers detailed insights into the customer's data usage status, including available data volume and their current position within the volume allocation.
 
-    #  Introduction
+    # Introduction
 
     API consumers are able to retrieve data usage information for a dedicated SIM card, offering estimated remaining data volume categories like <200MiB, <1GiB, <5GiB, and >=5GiB. It also allows subscription to changes in data volume status.
 
