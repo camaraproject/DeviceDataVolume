@@ -14,7 +14,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   Background: Common Device Data Volume setup
     Given the resource "{apiroot}/device-data-volume-subscriptions/vwip/subscriptions" as base-url
     And the header "Authorization" is set to a valid access token
-    And the header "x-correlator" is set to a UUID value
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
 
 ##########################
 # Happy path scenarios

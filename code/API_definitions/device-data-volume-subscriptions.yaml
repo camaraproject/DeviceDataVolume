@@ -347,18 +347,18 @@ components:
     x-correlator:
       name: x-correlator
       in: header
-      description: Correlation id for the different services
       schema:
-        type: string
-        pattern: ^[a-zA-Z0-9-]{0,55}$
-        example: "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+        $ref: "#/components/schemas/XCorrelator"
   headers:
     x-correlator:
-      description: Correlation id for the different services
       schema:
-        type: string
-        pattern: ^[a-zA-Z0-9-]{0,55}$
+        $ref: "#/components/schemas/XCorrelator"
   schemas:
+    XCorrelator:
+      description: Correlation id for the different services
+      type: string
+      pattern: ^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$
+      example: "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
     SubscriptionRequest:
       description: The request for creating a event-type event subscription
       type: object
@@ -381,7 +381,7 @@ components:
         types:
           description: |
             Camara Event types eligible to be delivered by this subscription.
-            Note: for the current Commonalities version (v0.5) only one event type per subscription is allowed, yet in the following releases use of array of event types SHALL be specified without changing this definition.
+            Note: As of now we enforce to have only event type per subscription.
           type: array
           minItems: 1
           maxItems: 1
