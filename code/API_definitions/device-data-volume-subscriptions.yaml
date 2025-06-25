@@ -30,7 +30,10 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent`: Event triggered when 90% of the data plan is consumed.
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded`: Event triggered when the data plan is exceeded.
 
-    Note: Additionally, the event `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends` is sent when the subscription ends. This notification does not require a dedicated subscription.
+    Note: Additionally, the following events could be send, which do not require a dedicated subscription:
+      - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-started` is sent when the subscription starts.
+      - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated` is sent when the subscription is updated.
+      - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends.
 
     It is used in following cases:
       - the subscription expire time (optionally set by the requester) has been reached
@@ -151,8 +154,12 @@ paths:
                         $ref: "#/components/examples/DATA_90_PERCENT"
                       data-exceeded:
                         $ref: "#/components/examples/DATA_EXCEEDED"
-                      subscription-ends:
-                        $ref: "#/components/examples/SUBSCRIPTION_ENDS"
+                      subscription-started:
+                        $ref: "#/components/examples/SUBSCRIPTION_STARTED"
+                      subscription-updated:
+                        $ref: "#/components/examples/SUBSCRIPTION_UPDATED"
+                      subscription-ended:
+                        $ref: "#/components/examples/SUBSCRIPTION_ENDED"
               responses:
                 "204":
                   description: Successful notification
@@ -748,13 +755,19 @@ components:
 
         data-exceeded - Event triggered when the device reaches 100% data usage exceeded of the data plan used.
 
-        subscription-ends - Event triggered when the subscription is terminated.
+        subscription-started: Event triggered when the subscription starts.
+
+        subscription-updated - Event triggered when the subscription is updated.
+
+        subscription-ended - Event triggered when the subscription is terminated.
       enum:
         - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent
         - org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded
-        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends
+        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-started
+        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated
+        - org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended
 
     CloudEvent:
       description: The notification callback
@@ -796,7 +809,9 @@ components:
           org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent: "#/components/schemas/EventDataUsage75Percent"
           org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent: "#/components/schemas/EventDataUsage90Percent"
           org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded: "#/components/schemas/EventDataUsageExceeded"
-          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends: "#/components/schemas/EventSubscriptionEnds"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-started: "#/components/schemas/EventSubscriptionStarted"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated: "#/components/schemas/EventSubscriptionUpdated"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended: "#/components/schemas/EventSubscriptionEnded"
 
     Source:
       type: string
@@ -859,14 +874,78 @@ components:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
 
-    EventSubscriptionEnds:
+    EventSubscriptionStarted:
+      description: Event structure for event subscription started
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SubscriptionStarted"
+
+    SubscriptionStarted:
+      description: Event detail structure for subscription started event
+      type: object
+      required:
+        - initiationReason
+        - subscriptionId
+      properties:
+        initiationReason:
+          $ref: "#/components/schemas/InitiationReason"
+        subscriptionId:
+          $ref: "#/components/schemas/SubscriptionId"
+        initiationDescription:
+          description: Description about the start of the subscription.
+          type: string
+
+    InitiationReason:
+      type: string
+      description: |
+        - SUBSCRIPTION_CREATED - Subscription created by API Server
+      enum:
+        - SUBSCRIPTION_CREATED
+
+    EventSubscriptionUpdated:
+      description: event structure for event subscription updated
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SubscriptionUpdated"
+
+    SubscriptionUpdated:
+      description: Event detail structure for subscription updated event
+      type: object
+      required:
+        - updateReason
+        - subscriptionId
+      properties:
+        updateReason:
+          $ref: "#/components/schemas/UpdateReason"
+        subscriptionId:
+          $ref: "#/components/schemas/SubscriptionId"
+        updateDescription:
+          description: Description about the subscription update.
+          type: string
+
+    UpdateReason:
+      type: string
+      description: |
+        - SUBSCRIPTION_ACTIVE - API server transitioned susbcription status to `ACTIVE`
+        - SUBSCRIPTION_INACTIVE - API server transitioned susbcription status to `INACTIVE`
+      enum:
+        - SUBSCRIPTION_ACTIVE
+        - SUBSCRIPTION_INACTIVE
+
+    EventSubscriptionEnded:
       description: Event structure for event subscription ends
       allOf:
         - $ref: "#/components/schemas/CloudEvent"
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionEnds"
+              $ref: "#/components/schemas/SubscriptionEnded"
 
     BasicDeviceEventData:
       description: Event detail structure for basic device events
@@ -879,9 +958,9 @@ components:
         subscriptionId:
           $ref: "#/components/schemas/SubscriptionId"
 
-    SubscriptionEnds:
+    SubscriptionEnded:
       description: |
-        Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends event.
+        Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended event.
         Note that the device object is defined as optional and will only to be returned if provided in createSubscription.
         If more than one type of device identifier was provided, only one identifier will be returned
         (at implementation choice and with the original value provided in createSubscription).
@@ -1492,11 +1571,35 @@ components:
           subscriptionId: "dv10-h556-rt89-1409"
         time: "2024-05-12T18:00:23.682Z"
 
-    SUBSCRIPTION_ENDS:
+    SUBSCRIPTION_STARTED:
       value:
         id: "124003"
         source: https://dataUsageServer.supertelco.com
-        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-ends
+        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-started
+        specversion: "1.0"
+        datacontenttype: application/json
+        data:
+          initiationReason: SUBSCRIPTION_CREATED
+          subscriptionId: dv10-h556-rt89-1403
+        time: "2024-03-05T15:00:23.682Z"
+
+    SUBSCRIPTION_UPDATED:
+      value:
+        id: "124003"
+        source: https://dataUsageServer.supertelco.com
+        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated
+        specversion: "1.0"
+        datacontenttype: application/json
+        data:
+          updateReason: SUBSCRIPTION_ACTIVE
+          subscriptionId: dv10-h556-rt89-1403
+        time: "2024-03-05T15:00:23.682Z"
+
+    SUBSCRIPTION_ENDED:
+      value:
+        id: "124003"
+        source: https://dataUsageServer.supertelco.com
+        type: org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended
         specversion: "1.0"
         datacontenttype: application/json
         data:
