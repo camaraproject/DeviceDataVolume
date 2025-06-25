@@ -49,7 +49,6 @@ The API definition(s) are based on
 * Update OAS and test definitions to remove IDENTIFIER_MISMATCH error code by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/52
 * Update `x-correlator` pattern by @maxl2287 in https://github.com/camaraproject/DeviceDataVolume/pull/49
 
-### Fixed
 
 ### Removed
 * Remove AUTHENTICATION_REQUIRED error code by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/40
