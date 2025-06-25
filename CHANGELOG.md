@@ -1,7 +1,8 @@
 # Changelog DeviceDataVolume
 
 ## Table of Contents
-- **[r1.1](#r11)**
+- **[r1.2](#r12)**
+- [r1.1](#r11)
 
 **Please be aware that the project will have frequent updates to the main branch. There are no compatibility guarantees associated with code in any branch, including main, until it has been released. For example, changes may be reverted before a release is published. For the best results, use the latest published release.**
 
