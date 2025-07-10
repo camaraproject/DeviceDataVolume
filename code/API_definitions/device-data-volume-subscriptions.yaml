@@ -890,6 +890,8 @@ components:
         - initiationReason
         - subscriptionId
       properties:
+        device:
+          $ref: "#/components/schemas/Device"
         initiationReason:
           $ref: "#/components/schemas/InitiationReason"
         subscriptionId:
@@ -921,6 +923,8 @@ components:
         - updateReason
         - subscriptionId
       properties:
+        device:
+          $ref: "#/components/schemas/Device"
         updateReason:
           $ref: "#/components/schemas/UpdateReason"
         subscriptionId:
@@ -1579,6 +1583,8 @@ components:
         specversion: "1.0"
         datacontenttype: application/json
         data:
+          device:
+            phoneNumber: "+123456789"
           initiationReason: SUBSCRIPTION_CREATED
           subscriptionId: dv10-h556-rt89-1403
         time: "2024-03-05T15:00:23.682Z"
@@ -1591,6 +1597,8 @@ components:
         specversion: "1.0"
         datacontenttype: application/json
         data:
+          device:
+            phoneNumber: "+123456789"
           updateReason: SUBSCRIPTION_ACTIVE
           subscriptionId: dv10-h556-rt89-1403
         time: "2024-03-05T15:00:23.682Z"
@@ -1604,7 +1612,7 @@ components:
         datacontenttype: application/json
         data:
           device:
-            phoneNumber: +123456789
+            phoneNumber: "+123456789"
           terminationReason: SUBSCRIPTION_EXPIRED
           subscriptionId: dv10-h556-rt89-1403
         time: "2024-03-05T15:00:23.682Z"
