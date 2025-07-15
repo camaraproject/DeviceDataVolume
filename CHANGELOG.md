@@ -35,7 +35,7 @@ The API definition(s) are based on
   - OpenAPI [YAML spec file](https://github.com/camaraproject/DeviceDataVolume/blob/r1.2/code/API_definitions/device-data-volume.yaml)
 
 ### Added
-* Basic test specifications for both Device Data Volume and Its Subscription by @sachinvodafone in https://github.com/camaraproject/DeviceDataVolume/pull/13
+* Basic test specifications for both Device Data Volume and its Subscription by @sachinvodafone in https://github.com/camaraproject/DeviceDataVolume/pull/13
 * Add response-component for `/check` - API incl. `thresholdExceeded` as property by @maxl2287 in https://github.com/camaraproject/DeviceDataVolume/pull/33
 * Add gherkin-linting and update links in config by @maxl2287 in https://github.com/camaraproject/DeviceDataVolume/pull/37 
 * Documented Error Responses info.description section by @maxl2287 in https://github.com/camaraproject/DeviceDataVolume/pull/47
