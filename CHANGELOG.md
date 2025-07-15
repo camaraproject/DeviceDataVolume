@@ -103,7 +103,7 @@ This pre-release contains the definition and documentation of:
 
 ## device-data-volume v0.1.0-alpha.1
 
-**device-data-volume v0.1.0-alpha.1 is the first alpha-release of the DeviceDataVolume API v0.1.0**
+**device-data-volume v0.1.0-alpha.1 is the first alpha-release of the API**
 
 - API definition **with inline documentation**:
   - [View it on ReDoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r1.1/code/API_definitions/device-data-volume.yaml&nocors)
