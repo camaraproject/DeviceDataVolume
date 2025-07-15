@@ -22,8 +22,8 @@ This release contains the definition and documentation of
 * device-data-volume-subscriptions v0.1.0-rc.1
 
 The API definition(s) are based on
-* [Commonalities r3.2](https://github.com/camaraproject/Commonalities/releases/tag/r3.2)
-* [Identity and Consent Management r3.2](https://github.com/camaraproject/IdentityAndConsentManagement/releases/tag/r3.2)
+* Commonalities 0.6
+* Identity and Consent Management 0.4
 
 ## device-data-volume v0.1.0-rc.1
 
