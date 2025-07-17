@@ -11,7 +11,7 @@ Feature: Device Data Volume Subscriptions API, v0.1.0-rc.1 - Operation on subscr
   #       A device object which device data volume is known by the network when connected.
   #       The known device data volume status of the testing device
   #
-  # References to OAS spec schemas refer to schemas specifies in device-data-volume-subscriptions.yaml
+  # References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
     Given the resource "/device-data-volume-subscriptions/v0.1rc1/subscriptions"
