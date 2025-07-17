@@ -10,7 +10,7 @@ Feature: CAMARA Device Data Volume API, v0.1.0-rc.1 - Operation retrieveDataVolu
   #       A device object which device data volume is known by the network when connected.
   #       The known device data volume status of the testing device
   #
-  # References to OAS spec schemas refer to schemas specifies in device-data-volume.yaml
+  # References to OAS spec schemas refer to schemas specified in device-data-volume.yaml
 
   Background: Common retrieveDataVolume setup
     Given the resource "/device-data-volume/v0.1rc.1/retrieve"
