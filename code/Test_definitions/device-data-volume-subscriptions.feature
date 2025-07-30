@@ -1,4 +1,4 @@
-Feature: Device Data Volume Subscriptions API, v0.1.0-rc.1 - Operation on subscriptions
+Feature: Device Data Volume Subscriptions API, vwip - Operation on subscriptions
 
   # Input to be provided by the implementation to the tester
   #
@@ -14,7 +14,7 @@ Feature: Device Data Volume Subscriptions API, v0.1.0-rc.1 - Operation on subscr
   # References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
-    Given the resource "/device-data-volume-subscriptions/v0.1rc1/subscriptions"
+    Given the resource "/device-data-volume-subscriptions/vwip/subscriptions"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
 
