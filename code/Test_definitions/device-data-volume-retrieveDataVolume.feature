@@ -1,4 +1,4 @@
-Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
+Feature: CAMARA Device Data Volume API, v0.1.0 - Operation retrieveDataVolume
 
   # Input to be provided by the implementation to the tester
 
@@ -13,7 +13,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
   # References to OAS spec schemas refer to schemas specified in device-data-volume.yaml
 
   Background: Common retrieveDataVolume setup
-    Given the resource "/device-data-volume/vwip/retrieve"
+    Given the resource "/device-data-volume/v0.1/retrieve"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
     And the request body is set by default to a request body compliant with the schema "#/components/schemas/RetrieveDataVolumeRequest"
