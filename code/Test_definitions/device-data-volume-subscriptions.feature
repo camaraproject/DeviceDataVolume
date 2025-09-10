@@ -14,7 +14,8 @@ Feature: Device Data Volume Subscriptions API, v0.1.0 - Operation on subscriptio
   # References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume setup
-    Given the resource "/device-data-volume-subscriptions/v0.1/subscriptions"
+    Given an environment at "apiRoot"
+    And the resource "/device-data-volume-subscriptions/v0.1/subscriptions"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
 
@@ -506,3 +507,4 @@ Feature: Device Data Volume Subscriptions API, v0.1.0 - Operation on subscriptio
     And the response property "$.status" is 422
     And the response property "$.code" is "MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED"
     And the response property "$.message" contains a user friendly text
+
