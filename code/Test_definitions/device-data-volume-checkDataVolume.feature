@@ -12,7 +12,8 @@ Feature: CAMARA Device Data Volume API, v0.1.0 - Operation checkDataVolume
   # References to OAS spec schemas refer to schemas specified in device-data-volume.yaml
 
   Background: Common checkDataVolume setup
-    Given the resource "/device-data-volume/v0.1/check"
+    Given an environment at "apiRoot"
+    And the resource "/device-data-volume/v0.1/check"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
     And the request body is set by default to a request body compliant with the schema "#/components/schemas/CheckDataVolumeRequest"
