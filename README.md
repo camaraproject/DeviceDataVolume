@@ -24,7 +24,7 @@ Sandbox API Repository to describe, develop, document, and test the DeviceDataVo
 
 ## Release Information
 
-* **The latest public release is [r1.3](https://github.com/camaraproject/DeviceDataVolume/tree/r1.3) with the following API definitions:**
+* **The new public release is [r1.3](https://github.com/camaraproject/DeviceDataVolume/tree/r1.3) with the following API definitions:**
 
   * **device-data-volume v0.1.0**  
   [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r1.3/code/API_definitions/device-data-volume.yaml)
