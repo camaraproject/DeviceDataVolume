@@ -506,4 +506,3 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation on subscriptions
     And the response property "$.status" is 422
     And the response property "$.code" is "MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED"
     And the response property "$.message" contains a user friendly text
-
