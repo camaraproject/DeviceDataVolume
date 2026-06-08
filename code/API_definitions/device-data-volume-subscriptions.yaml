@@ -623,28 +623,26 @@ components:
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionStarted"
-
-    SubscriptionStarted:
-      description: Event detail structure for subscription started event
-      allOf:
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionStarted"
-        - $ref: "#/components/schemas/BasicDeviceEventData"
+              allOf:
+                - type: object
+                  properties:
+                    device:
+                      $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+                - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionStarted"
 
     EventSubscriptionUpdated:
-      description: event structure for event subscription updated
+      description: Event structure for event subscription updated
       allOf:
         - $ref: "#/components/schemas/SubscriptionLifecycleEvent"
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionUpdated"
-
-    SubscriptionUpdated:
-      description: Event detail structure for subscription updated event
-      allOf:
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionUpdated"
-        - $ref: "#/components/schemas/BasicDeviceEventData"
+              allOf:
+                - type: object
+                  properties:
+                    device:
+                      $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+                - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionUpdated"
 
     EventSubscriptionEnded:
       description: Event structure for event subscription ends
@@ -653,17 +651,12 @@ components:
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionEnded"
-
-    SubscriptionEnded:
-      description: |
-        Event detail structure for org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended event.
-        Note that the device object is defined as optional and will only to be returned if provided in createSubscription.
-        If more than one type of device identifier was provided, only one identifier will be returned
-        (at implementation choice and with the original value provided in createSubscription).
-      allOf:
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
-        - $ref: "#/components/schemas/BasicDeviceEventData"
+              allOf:
+                - type: object
+                  properties:
+                    device:
+                      $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+                - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
 
     Sink:
       description: The address to which events shall be delivered using the selected protocol.
