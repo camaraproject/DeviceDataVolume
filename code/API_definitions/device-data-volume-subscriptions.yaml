@@ -501,8 +501,6 @@ components:
         propertyName: protocol
         mapping:
           HTTP: "#/components/schemas/HTTPSubscriptionRequest"
-        mapping:
-          HTTP: "#/components/schemas/HTTPSubscriptionRequest"
           # Future protocol support (not yet used in CAMARA):
           # MQTT3: "#/components/schemas/MQTTSubscriptionRequest"
           # MQTT5: "#/components/schemas/MQTTSubscriptionRequest"
@@ -553,7 +551,7 @@ components:
         mapping:
           org.camaraproject.device-data-volume-subscriptions.v0.subscription-started: "#/components/schemas/EventSubscriptionStarted"
           org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated: "#/components/schemas/EventSubscriptionUpdated"
-          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended:   "#/components/schemas/EventSubscriptionEnded"
+          org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended: "#/components/schemas/EventSubscriptionEnded"
 
     SubscriptionLifecycleEventType:
       type: string
@@ -870,7 +868,7 @@ components:
             sink: https://endpoint.example.com/sink
             protocol: HTTP
             types:
-            - "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"
+              - "org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded"
             config:
               subscriptionDetail: {}
               subscriptionExpireTime: "2024-07-17T13:18:23.682Z"
