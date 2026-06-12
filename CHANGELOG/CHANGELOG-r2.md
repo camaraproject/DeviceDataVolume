@@ -69,7 +69,7 @@ The API definition(s) are based on
 
 ### Changed
 
-* N/A
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
 
 ### Fixed
 
@@ -77,7 +77,7 @@ The API definition(s) are based on
 
 ### Removed
 
-* N/A
+* Delete redundant API Readiness Checklists by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/85
 
 ## device-data-volume 0.2.0-rc.1
 
@@ -94,7 +94,7 @@ The API definition(s) are based on
 
 ### Changed
 
-* N/A
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
 
 ### Fixed
 
@@ -102,7 +102,7 @@ The API definition(s) are based on
 
 ### Removed
 
-* N/A
+* Delete redundant API Readiness Checklists by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/85
 
 **Full Changelog**: https://github.com/camaraproject/DeviceDataVolume/compare/r1.3...r2.1
 
