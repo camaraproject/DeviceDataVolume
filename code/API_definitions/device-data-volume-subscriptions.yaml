@@ -438,7 +438,7 @@ components:
           items:
             $ref: "#/components/schemas/ApiEventType"
         config:
-          $ref: "#/components/schemas/Config"
+          $ref: "#/components/schemas/Config2"
         id:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
         startsAt:
