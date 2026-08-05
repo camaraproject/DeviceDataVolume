@@ -63,6 +63,14 @@ The API definition(s) are based on
   - [View it on Swagger Editor](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume-subscriptions.yaml)
   - OpenAPI [YAML spec file](https://github.com/camaraproject/DeviceDataVolume/blob/r2.1/code/API_definitions/device-data-volume-subscriptions.yaml)
 
+### Breaking changes
+
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+  - Pagination for listing of subscriptions using GET /subscriptions is now supported
+    -  Addition of `page` and `perPage` query parameters to control pagination
+    -  Returned subscriptions are now embedded in the array `subscriptions` within the response JSON, with the page tracked within the `pagination` JSON
+    -  Addition of response headers `X-Total-Count`, `X-Total-Pages` and `Link` to facilitate page navigation
+
 ### Added
 
 * N/A
@@ -70,6 +78,10 @@ The API definition(s) are based on
 ### Changed
 
 * Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+  - Pagination for listing of subscriptions using GET /subscriptions is now supported
+    -  Addition of `page` and `perPage` query parameters to control pagination
+    -  Returned subscriptions are now embedded in the array `subscriptions` within the response JSON, with the page tracked within the `pagination` JSON
+    -  Addition of response headers `X-Total-Count`, `X-Total-Pages` and `Link` to facilitate page navigation
 
 ### Fixed
 
@@ -87,6 +99,10 @@ The API definition(s) are based on
   - [View it on ReDoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume.yaml&nocors)
   - [View it on Swagger Editor](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume.yaml)
   - OpenAPI [YAML spec file](https://github.com/camaraproject/DeviceDataVolume/blob/r2.1/code/API_definitions/device-data-volume.yaml)
+
+### Breaking changes
+
+* N/A
 
 ### Added
 
