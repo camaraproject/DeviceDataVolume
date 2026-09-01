@@ -76,19 +76,30 @@ Changes documented below are compared to version 0.1.0.
 
 ### Breaking changes
 
-* N/A
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+  - Pagination for listing of subscriptions using GET /subscriptions is now supported
+    -  Addition of `page` and `perPage` query parameters to control pagination
+    -  Returned subscriptions are now embedded in the array `subscriptions` within the response JSON, with the page tracked within the `pagination` JSON
+    -  Addition of response headers `X-Total-Count`, `X-Total-Pages` and `Link` to facilitate page navigation
+* [Changed, Breaking] Rename data allowance consumption events for clarity by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/106
+  - Data allowance consumption events renamed for clarity:
+    - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining: Event triggered when only 50% of the data plan is remaining
+    - org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining: Event triggered when only 25% of the data plan is remaining
+    - org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining: Event triggered when only 10% of the data plan is remaining
+    - org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining: Event triggered when the data plan is fully consumed
 
 ### Added
 
-* N/A
+* [Added] Add additional device data volume status subscription list scenarios and move to separate feature file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/103
 
 ### Changed
 
-* N/A
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+* [Changed, Breaking] Rename data allowance consumption events for clarity by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/106
 
 ### Fixed
 
-* N/A
+* [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
 
 ### Removed
 
@@ -107,19 +118,27 @@ Changes documented below are compared to version 0.1.0.
 
 ### Breaking changes
 
-* N/A
+* [Changed, Breaking] Refactor device-data-volume to return data volumes rather than categories, and use MB/GB instead of MiB/GiB by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/107
+  - Refactor device-data-volume for simpler and more intuitive behaviour:
+    - Use MB/GB instead of MiB/GiB for data allowances
+    - Return remaining data allowance rather than data allowance category, allowing "Unlimited" as a response option
+    - Rename properties for clarity:
+      - Request property `volumeToCheck` becomes `dataAllowanceThreshold`
+      - Response property `dataVolumeCategory` becomes `remainingDataAllowance`
 
 ### Added
 
-* N/A
+* [Added] Add lastStatusTime field to successful responses with examples by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/89
+* [Added] Update happy path tests to include validation of lastStatusTime property by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/97
 
 ### Changed
 
-* N/A
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+* [Changed, Breaking] Refactor device-data-volume to return data volumes rather than categories, and use MB/GB instead of MiB/GiB by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/107
 
 ### Fixed
 
-* N/A
+* [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
 
 ### Removed
 
