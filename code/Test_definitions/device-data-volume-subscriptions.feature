@@ -135,9 +135,9 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
     When the device's data volume consumed 50% of the data plan
-    Then event notification "data-50-percent" is sent to the specified callback URL
+    Then event notification "data-50-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
-    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage50Percent"
+    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage50PercentRemaining"
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
@@ -147,9 +147,9 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
     When the device's data volume consumed 75% of the data plan
-    Then event notification "data-75-percent" is sent to the specified callback URL
+    Then event notification "data-25-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
-    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage75Percent"
+    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage25PercentRemaining"
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
@@ -159,9 +159,9 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
     When the device's data volume consumed 90% of the data plan
-    Then event notification "data-90-percent" is sent to the specified callback URL
+    Then event notification "data-10-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
-    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage90Percent"
+    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage10PercentRemaining"
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
@@ -171,9 +171,9 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
     When the device's data plan is exceeded
-    Then event notification "data-exceeded" is sent to the specified callback URL
+    Then event notification "data-00-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
-    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage90Percent"
+    And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage00PercentRemaining"
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
