@@ -358,21 +358,26 @@ components:
         $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
 
   schemas:
-    SubscriptionDetailLocal:
+    SubscriptionDetail:
       description: The details of the requested device data volume subscription.
       type: object
       properties:
         device:
           $ref: "../common/CAMARA_common.yaml#/components/schemas/Device"
 
-    ConfigLocal:
+    Config:
       description: Config schema allowing for device to be specified as part of subscription detail
       allOf:
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/Config"
+        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/ConfigBase"
         - type: object
           properties:
             subscriptionDetail:
               $ref: "#/components/schemas/SubscriptionDetailLocal"
+            initialEvent:
+              description: |
+                Set to `true` by API consumer if consumer wants to get an event as soon as the subscription is created and current situation reflects event request.
+                Example: Consumer requests `data-10-percent-remaining` events. If API consumer sets initialEvent to true and remaining device data allowance is less than 10% of the full allowance, an event is triggered
+              type: boolean
 
     ApiEventType:
       type: string
@@ -443,7 +448,7 @@ components:
           items:
             $ref: "#/components/schemas/ApiEventType"
         config:
-          $ref: "#/components/schemas/ConfigLocal"
+          $ref: "#/components/schemas/Config"
         id:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
         startsAt:
@@ -501,7 +506,7 @@ components:
           items:
             $ref: "#/components/schemas/ApiEventType"
         config:
-          $ref: "#/components/schemas/ConfigLocal"
+          $ref: "#/components/schemas/Config"
       discriminator:
         propertyName: protocol
         mapping:
