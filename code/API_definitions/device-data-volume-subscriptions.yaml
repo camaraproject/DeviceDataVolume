@@ -372,7 +372,7 @@ components:
         - type: object
           properties:
             subscriptionDetail:
-              $ref: "#/components/schemas/SubscriptionDetailLocal"
+              $ref: "#/components/schemas/SubscriptionDetail"
             initialEvent:
               description: |
                 Set to `true` by API consumer if consumer wants to get an event as soon as the subscription is created and current situation reflects event request.
