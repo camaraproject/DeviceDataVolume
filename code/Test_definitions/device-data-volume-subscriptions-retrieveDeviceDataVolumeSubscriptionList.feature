@@ -1,5 +1,5 @@
 # device-data-volume-subscriptions-retrieveDeviceDataVolumeSubscriptionList
-Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDataVolumeSubscriptionList
+Feature: Device Data Volume Subscriptions API, v0.2.0-rc.1 - Operation retrieveDeviceDataVolumeSubscriptionList
 
   # Input to be provided by the implementation to the tester
   #
@@ -15,7 +15,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
   # References to OAS spec schemas refer to schemas specified in device-data-volume-subscriptions.yaml
 
   Background: Common Device Data Volume Subscriptions setup
-    Given the resource "{apiroot}/device-data-volume-subscriptions/vwip/subscriptions" as base-url
+    Given the resource "{apiroot}/device-data-volume-subscriptions/v0.2rc1/subscriptions" as base-url
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
 
