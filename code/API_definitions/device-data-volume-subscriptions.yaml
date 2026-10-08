@@ -160,7 +160,7 @@ paths:
                         $ref: "#/components/examples/DATA_25_PERCENT_REMAINING"
                       data-10-percent-remaining:
                         $ref: "#/components/examples/DATA_10_PERCENT_REMAINING"
-                      data-0-percent-remaining:
+                      data-00-percent-remaining:
                         $ref: "#/components/examples/DATA_00_PERCENT_REMAINING"
                       subscription-started:
                         $ref: "#/components/examples/SUBSCRIPTION_STARTED"
