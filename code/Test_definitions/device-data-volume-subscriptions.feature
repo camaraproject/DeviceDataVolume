@@ -129,7 +129,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And if the response property "$.status" is 204 then response body is not present
     And if the response property "$.status" is 202 then response body complies with the OAS schema at "#/components/schemas/SubscriptionAsync" and the response property "$.id" is equal to "id"
 
-  @device_data_volume_subscriptions_05_receive_notification_when_device_consumed_50_percent_of_the_data_plan
+  @device_data_volume_subscriptions_05_receive_notification_when_50_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-50-percent event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
@@ -141,7 +141,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_06_receive_notification_when_device_consumed_75_percent_of_the_data_plan
+  @device_data_volume_subscriptions_06_receive_notification_when_25_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-75-percent event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
@@ -153,7 +153,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_07_receive_notification_when_device_consumed_90_percent_of_the_data_plan
+  @device_data_volume_subscriptions_07_receive_notification_when_10_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-90-percent event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
@@ -165,7 +165,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_08_receive_notification_when_the_data_plan_is_exceeded
+  @device_data_volume_subscriptions_08_receive_notification_when_the_data_plan_is_fully_consumed
   Scenario: Receive notification for data-exceeded event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining"
