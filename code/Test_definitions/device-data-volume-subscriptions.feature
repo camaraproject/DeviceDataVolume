@@ -240,10 +240,10 @@ Feature: Device Data Volume Subscriptions API, vwip - Operations createDeviceDat
 
     Examples:
       | device_identifier          | oas_spec_schema                             |
-      | $.device.phoneNumber       | /components/schemas/PhoneNumber             |
-      | $.device.ipv4Address       | /components/schemas/DeviceIpv4Addr          |
-      | $.device.ipv6Address       | /components/schemas/DeviceIpv6Address       |
-      | $.device.networkIdentifier | /components/schemas/NetworkAccessIdentifier |
+      | $.device.phoneNumber       | #/components/schemas/PhoneNumber             |
+      | $.device.ipv4Address       | #/components/schemas/DeviceIpv4Addr          |
+      | $.device.ipv6Address       | #/components/schemas/DeviceIpv6Address       |
+      | $.device.networkIdentifier | #/components/schemas/NetworkAccessIdentifier |
 
  # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
   @device_data_volume_subscriptions_C01.03_device_not_found
