@@ -24,7 +24,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
 # Happy path scenarios
 ##########################
 
-  @device_data_volume_subscriptions_03.1_retrieve_by_id_2legs
+  @device_data_volume_subscriptions_01_retrieve_by_id_2legs
   Scenario: Check existing subscription is retrieved by id with a 2-legged access token
     Given a subscription exists and has a subscriptionId equal to "id"
     And the header "Authorization" is set to a valid access token which does not identify any device
@@ -37,7 +37,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
     And the response property "$.id" is equal to "id"
     And the response property "$.config.subscriptionDetail.device" is present
 
-  @device_data_volume_subscriptions_03.2_retrieve_by_id_3legs
+  @device_data_volume_subscriptions_02_retrieve_by_id_3legs
   Scenario: Check existing subscription is retrieved by id with a 3-legged access token
     Given a subscription exists and has a subscriptionId equal to "id"
     And the header "Authorization" is set to a valid access token which identifies the device associated with the subscription
@@ -50,19 +50,42 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
     And the response property "$.id" is equal to "id"
     And the response property "$.config.subscriptionDetail.device" is not present
 
-##################
-# Error scenarios for management of input parameter device
-##################
+@device_data_volume_subscriptions_03_Operation_to_retrieve_subscription_based_on_an_existing_subscription-id_access_token_sink_credential_returned
+  # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
+  Scenario: Get a subscription based on existing subscription-id, with ACCESSTOKEN sinkCredential returned.
+    Given the path parameter "subscriptionId" is set to the identifier of an existing roaming status subscription
+    When the request "retrieveDeviceDataVolumeSubscription" is sent
+    Then the response code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.sinkCredential.credentialType", if present, is set to value "ACCESSTOKEN"
+    And the response body property "$.sinkCredential.accessTokenExpiresUtc", if present, is set to the same value of the request property "$.sinkCredential.accessTokenExpiresUtc"
+
+  @device_data_volume_subscriptions_04_Operation_to_retrieve_subscription_based_on_an_existing_subscription-id_private_jwt_key_sink_credential_returned
+  # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
+  # Mainly applicable for in-band provisioning of PRIVATE_JWT_KEY mode for a given subscription
+  Scenario: Get a subscription based on existing subscription-id, with PRIVATE_JWT_KEY sinkCredential returned.
+    Given the path parameter "subscriptionId" is set to the identifier of an existing roaming status subscription
+    When the request "retrieveDeviceDataVolumeSubscription" is sent
+    Then the response code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.sinkCredential.credentialType" is set to value "PRIVATE_JWT_KEY"
+    And the response body property "$.sinkCredential.jwksUri" is set to a valid value
 
 ##################
 # Error code 400
 ##################
 
+# No test cases yet defined
+
 ##################
 # Error code 401
 ##################
 
-  @device_data_volume_subscriptions_retrieve_401.1_no_authorization_header
+  @device_data_volume_subscriptions_retrieve_401.01_no_authorization_header
   Scenario: No Authorization header
     Given the header "Authorization" is removed
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -73,7 +96,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_retrieve_401.2_expired_access_token
+  @device_data_volume_subscriptions_retrieve_401.02_expired_access_token
   Scenario: Expired access token
     Given the header "Authorization" is set to a previously valid but now expired access token
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -84,7 +107,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_retrieve_401.3_malformed_access_token
+  @device_data_volume_subscriptions_retrieve_401.03_malformed_access_token
   Scenario: Malformed access token
     Given the header "Authorization" is set to a malformed token
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -99,11 +122,13 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
 # Error code 403
 ##################
 
+# No test cases yet defined
+
 ##################
 # Error code 404
 ##################
 
-  @device_data_volume_subscriptions_404.1_retrieve_unknown_subscription_id
+  @device_data_volume_subscriptions_404.01_retrieve_unknown_subscription_id
   Scenario: Get subscription when subscriptionId is unknown to the system
     Given that there is no valid subscription with "subscriptionId" equal to "id"
     When the request "retrieveDeviceDataVolumeSubscription" is sent
@@ -111,11 +136,4 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation retrieveDeviceDa
     Then the response status code is 404
     And the response property "$.status" is 404
     And the response property "$.code" is "NOT_FOUND"
-    And the response property "$.message" contains a user friendly text
-
-##################
-# Error code 422
-##################
-
-    And the response property "$.code" is "MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED"
     And the response property "$.message" contains a user friendly text
