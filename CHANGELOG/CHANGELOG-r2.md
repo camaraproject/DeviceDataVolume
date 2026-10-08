@@ -65,19 +65,32 @@ Changes documented below are compared to version 0.2.0-rc.1.
 
 ### Added
 
-* N/A
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Add 404 IDENTIFIER_NOT_FOUND to device-data-volume-subscriptions creation
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Add additional test cases
+    * Add 429 error test cases for checkDataVolume, retrieveDataVolume and createDeviceDataVolumeSubscription operations
+    * Add 401 error test cases for all operations
+    * Add 422 error test cases for createDeviceDataVolumeSubscription operations
 
 ### Changed
 
-* N/A
+* [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Make subscriptionDetail a required subscription creation parameter
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Move test definitions to separate files for each defined operation
 
 ### Fixed
 
-* N/A
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Fix typos in test case definitions
 
 ### Removed
 
-* N/A
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Remove 404 NOT_FOUND from device-data-volume all endpoints
+  * Remove 404 IDENTIFIER_NOT_FOUND from device-data-volume-subscriptions retrieval and deletion
 
 ## device-data-volume 0.2.0-rc.2
 
@@ -96,19 +109,26 @@ Changes documented below are compared to version 0.2.0-rc.1.
 
 ### Added
 
-* N/A
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Add additional test cases
+    * Add 401 and 429 error test cases for checkDataVolume and retrieveDataVolume
 
 ### Changed
 
-* N/A
+* [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
+* [Changed] Increase maximum data allowance limit by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/126
 
 ### Fixed
 
-* N/A
+* [Fixed] Fix feature files for device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/128
+  * Change remaining references to response body property $.dataAllowance to new property name $.remainingDataAllowance
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Fix typos in test case definitions
 
 ### Removed
 
-* N/A
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Remove 404 NOT_FOUND from all device-data-volume endpoints
 
 **Full Changelog**: https://github.com/camaraproject/DeviceDataVolume/compare/r2.1...r2.2
 
