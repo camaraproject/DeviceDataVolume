@@ -305,7 +305,7 @@ components:
           type: integer
           format: int32
           minimum: 0
-          maximum: 1000
+          maximum: 99999
           example: 500
         unit:
           description: The units used to express the data allowance, where "MB" is 10^6 bytes and "GB" is 10^9 bytes. Note that these definitions may be different to the definitions used by the mobile network operator for data allowances, but the API consumer will perform any required unit conversion.
