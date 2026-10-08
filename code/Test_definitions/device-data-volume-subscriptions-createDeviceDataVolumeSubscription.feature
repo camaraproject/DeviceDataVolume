@@ -457,6 +457,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 # Error code 422
 ##################
 
+  # Note that the test conditions for this test cannot be satisified for the current definition of #/components/schemas/SubscriptionRequest
   @device_data_volume_subscriptions_422.01_multi_event_not_supported
   Scenario: Multi-event subscriptions are not supported
     Given a valid 2- or 3-legged access token
@@ -478,10 +479,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.status" is 422
     And the response property "$.code" is "PRIVATE_KEY_JWT_NOT_CONFIGURED"
     And the response property "$.message" contains a user friendly text
-
-##################
-# Error code 429
-##################
 
 #################
 # Error code 429
