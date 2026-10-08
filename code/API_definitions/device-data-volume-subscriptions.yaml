@@ -596,7 +596,7 @@ components:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
 
     EventDataUsage50PercentRemaining:
-      description: Event structure for remaining data allowance below 50% threshold alerts
+      description: Event structure for remaining data allowance equal to 50% threshold alerts
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
@@ -605,7 +605,7 @@ components:
               $ref: "#/components/schemas/BasicDeviceEventData"
 
     EventDataUsage25PercentRemaining:
-      description: Event structure for remaining data allowance below 25% threshold alerts
+      description: Event structure for remaining data allowance equal to 25% threshold alerts
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
@@ -614,7 +614,7 @@ components:
               $ref: "#/components/schemas/BasicDeviceEventData"
 
     EventDataUsage10PercentRemaining:
-      description: Event structure for remaining data allowance below 10% threshold alerts
+      description: Event structure for remaining data allowance equal to 10% threshold alerts
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
@@ -623,7 +623,7 @@ components:
               $ref: "#/components/schemas/BasicDeviceEventData"
 
     EventDataUsage00PercentRemaining:
-      description: Event structure for remaining data allowance below 0% threshold alerts
+      description: Event structure for remaining data allowance equal to 0% threshold alerts
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
