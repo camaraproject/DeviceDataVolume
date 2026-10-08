@@ -24,7 +24,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
 # Happy path scenarios
 ##########################
 
-  @device_data_volume_subscriptions_04_delete_subscription_based_on_an_existing_subscription-id
+  @device_data_volume_subscriptions_01_delete_subscription_based_on_an_existing_subscription-id
   Scenario: Delete the subscription with subscriptionId equal to "id"
     Given the API consumer has an active subscription with "subscriptionId" equal to "id"
     When the request "deleteDeviceDataVolumeSubscription" is sent
@@ -34,7 +34,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
     And if the response property "$.status" is 204 then response body is not present
     And if the response property "$.status" is 202 then response body complies with the OAS schema at "#/components/schemas/SubscriptionAsync" and the response property "$.id" is equal to "id"
 
-  @device_data_volume_subscriptions_11_subscription_delete_event_validation
+  @device_data_volume_subscriptions_02_subscription_delete_event_validation
   Scenario: Receive notification for subscription-ended event on deletion
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.sink" is a valid callback URL
@@ -48,18 +48,16 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
     And the notification request property "$.data.terminationReason" is equal to "SUBSCRIPTION_DELETED"
 
 ##################
-# Error scenarios for management of input parameter device
-##################
-
-##################
 # Error code 400
 ##################
+
+# No test cases yet defined
 
 ##################
 # Error code 401
 ##################
 
-  @device_data_volume_subscriptions_deletion_401.1_no_authorization_header
+  @device_data_volume_subscriptions_deletion_401.01_no_authorization_header
   Scenario: No Authorization header
     Given the header "Authorization" is removed
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -70,7 +68,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_deletion_401.2_expired_access_token
+  @device_data_volume_subscriptions_deletion_401.02_expired_access_token
   Scenario: Expired access token
     Given the header "Authorization" is set to a previously valid but now expired access token
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -81,7 +79,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_deletion_401.3_malformed_access_token
+  @device_data_volume_subscriptions_deletion_401.03_malformed_access_token
   Scenario: Malformed access token
     Given the header "Authorization" is set to a malformed token
     And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
@@ -96,11 +94,13 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
 # Error code 403
 ##################
 
+# No test cases yet defined
+
 ##################
 # Error code 404
 ##################
 
-  @device_data_volume_subscriptions_404.2_delete_unknown_subscription_id
+  @device_data_volume_subscriptions_404.01_delete_unknown_subscription_id
   Scenario: Delete subscription with subscriptionId unknown to the system
     Given that there is no valid subscription with "subscriptionId" equal to "id"
     When the request "deleteDeviceDataVolumeSubscription" is sent
@@ -109,7 +109,3 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
     And the response property "$.status" is 404
     And the response property "$.code" is "NOT_FOUND"
     And the response property "$.message" contains a user friendly text
-
-##################
-# Error code 422
-##################
