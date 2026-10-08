@@ -167,7 +167,7 @@ paths:
                         $ref: "#/components/examples/DATA_25_PERCENT_REMAINING"
                       data-10-percent-remaining:
                         $ref: "#/components/examples/DATA_10_PERCENT_REMAINING"
-                      data-0-percent-remaining:
+                      data-00-percent-remaining:
                         $ref: "#/components/examples/DATA_00_PERCENT_REMAINING"
                       subscription-started:
                         $ref: "#/components/examples/SUBSCRIPTION_STARTED"
@@ -182,15 +182,15 @@ paths:
                     x-correlator:
                       $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
                 "400":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/Generic400"
+                  $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequest400"
                 "401":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+                  $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
                 "403":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+                  $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
                 "410":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/Generic410"
+                  $ref: "../common/CAMARA_event_common.yaml#/components/responses/SinkGone410"
                 "429":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/Generic429"
+                  $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
               security:
                 - {}
                 - notificationsBearerAuth: []
@@ -222,15 +222,17 @@ paths:
         "400":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionBadRequest400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/SubscriptionPermissionDenied403"
+        "404":
+          $ref: "../common/CAMARA_common.yaml#/components/responses/IdentifierNotFound404"
         "409":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic409"
+          $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionConflict409"
         "422":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionUnprocessableEntity422"
         "429":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic429"
+          $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
 
     get:
       tags:
@@ -267,11 +269,11 @@ paths:
                 Empty Subscription List:
                   $ref: "#/components/examples/EMPTY_SUBSCRIPTION_LIST"
         "400":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic400"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequest400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
 
   /subscriptions/{subscriptionId}:
     get:
@@ -304,11 +306,11 @@ paths:
         "400":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/SubscriptionIdRequired400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
         "404":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic404"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/NotFound404"
 
     delete:
       tags:
@@ -342,11 +344,11 @@ paths:
         "400":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/SubscriptionIdRequired400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
         "404":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic404"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/NotFound404"
 
 components:
   securitySchemes:
@@ -354,6 +356,32 @@ components:
       $ref: "../common/CAMARA_common.yaml#/components/securitySchemes/openId"
     notificationsBearerAuth:
       $ref: "../common/CAMARA_event_common.yaml#/components/securitySchemes/notificationsBearerAuth"
+
+  responses:
+    TooManyRequestsOrQuotaExceeded429:
+      description: Too Many Requests or Quota Exceeded
+      headers:
+        x-correlator:
+          $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../common/CAMARA_common.yaml#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 429
+                  code:
+                    enum:
+                      - TOO_MANY_REQUESTS
+                      - QUOTA_EXCEEDED
+          examples:
+            GENERIC_429_TOO_MANY_REQUESTS:
+              $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_TOO_MANY_REQUESTS"
+            GENERIC_429_QUOTA_EXCEEDED:
+              $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_QUOTA_EXCEEDED"
 
   parameters:
     SubscriptionId:
@@ -377,6 +405,8 @@ components:
       allOf:
         - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/ConfigBase"
         - type: object
+          required:
+            - subscriptionDetail
           properties:
             subscriptionDetail:
               $ref: "#/components/schemas/SubscriptionDetail"
@@ -442,7 +472,7 @@ components:
         protocol:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/Protocol"
         sink:
-          $ref: "#/components/schemas/Sink"
+          $ref: "../common/CAMARA_event_common.yaml#/components/schemas/Sink"
         sinkCredential:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SinkCredential"
         types:
@@ -500,7 +530,7 @@ components:
         protocol:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/Protocol"
         sink:
-          $ref: "#/components/schemas/Sink"
+          $ref: "../common/CAMARA_event_common.yaml#/components/schemas/Sink"
         sinkCredential:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SinkCredential"
         types:
@@ -672,14 +702,6 @@ components:
                     device:
                       $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
                 - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
-
-    Sink:
-      description: The address to which events shall be delivered using the selected protocol.
-      type: string
-      format: uri
-      maxLength: 2048
-      pattern: ^https:\/\/.+$
-      example: "https://endpoint.example.com/sink"
 
     HTTPSubscriptionRequest:
       description: Subscription request for HTTP-based event delivery.
@@ -908,4 +930,4 @@ components:
           page: 1
           perPage: 1
           totalCount: 0
-          totalPages: 1
+          totalPages: 0
