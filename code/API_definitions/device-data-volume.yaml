@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Device Data Volume
   description: |
-    This API offers detailed insights into the end user's data usage status, either retrieving their remaining data allowance, or an indication that their remaining data allowance is above a specified threshold.
+    This API offers detailed insights into the end user's data usage status, either retrieving their remaining data allowance, or a check on whether their remaining data allowance is above a specified threshold.
 
     # Introduction
 
@@ -10,18 +10,72 @@ info:
 
     # Relevant terms and definitions
 
-    * **Device**: A device refers to any physical entity that can connect to a network and participate in network communication.
+    * **Device**: A device refers to any physical hardware that can connect to a mobile network and participate in network communication.
 
-        At least one identifier for the device out of four options must be provided: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the session creation response.
+        At least one identifier for the device out of four options must be provided: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the  response, along with the requested data.
 
         Note: Network Access Identifier is defined for future use and will not be supported with this version of the API.
+
+    * **Data Volume** or **Date Allowance**: The amount of data that an end user is allowed to send or receive under the terms of their contract with a mobile network provider without incurring additional costs or service limitations (e.g. rate throttling or an inability to send or receive any data). The data allowance will be periodically renewed.
 
     # API Functionality
 
     The API exposes two endpoints/operations:
 
     - The endpoint `POST /retrieve` allows the API consumer to retrieve the remaining data allowance for a specified device
+
+      An example of a JSON response object for this endpoint is as follows:
+      ```
+      {
+        "lastStatusTime": "2024-02-20T10:41:38.657Z",
+        "remainingDataAllowance": "Unlimited"
+      }
+      ```
+
     - The endpoint `POST /check` allows the API consumer to check if the remaining data allowance for a specified device is above a certain threshold
+
+      An example of a JSON response object for this endpoint is as follows:
+      ```
+      {
+        "lastStatusTime": "2024-02-20T10:41:38.657Z",
+        "thresholdExceeded": false
+      }
+
+    ## Error Handling
+    Errors may be returned for the following reasons. Note that this list is not exhaustive.
+
+    `401 UNAUTHENTICATED`:
+    - The access token is not a valid access token for the API provider
+    - The access token was valid but has now expired
+
+    `400 INVALID_ARGUMENT`:
+    - The API request is not compliant with this OAS definition
+
+    `400 OUT_OF_RANGE`:
+    - A parameter value in the API request is outwith the range documented in this OAS definition for that parameter
+
+    `404 IDENTIFIER_NOT_FOUND`:
+    - The device identified by the `device` object in the request is not managed by the API provider
+
+    `403 PERMISSION_DENIED`:
+    - The access token does not have the required scope for the endpoint being called
+    - The end user has not consented to the API consumer getting access to the device identifier information (2-legged access token only)
+
+    `422 SERVICE_NOT_APPLICABLE`:
+    - The device data volume status is not applicable to the identified device. For example, the phone number might identify a landline.
+
+    `422 UNSUPPORTED_IDENTIFIER`:
+    - A parameter provided in the `device` object is not supported by this implementation (e.g. `networkAccessIdentifier`)
+
+    `422 MISSING_IDENTIFIER`:\
+    `422 UNNECESSARY_IDENTIFIER`:
+    - See the section "Identifying the device from the access token" below
+
+    `429 QUOTA_EXCEEDED`:
+    - The API consumer has used up the quota of API requests that they were allocated for this API
+
+    `429 TOO_MANY_REQUESTS`:
+    - The rate at which the API consumer is sending requests has exceeded that allowed by the API provider. Try again later.
 
     <!-- CAMARA:MANDATORY:authorization-and-authentication:BEGIN -->
 
