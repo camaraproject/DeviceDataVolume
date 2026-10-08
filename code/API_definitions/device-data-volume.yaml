@@ -106,7 +106,6 @@ paths:
             schema:
               $ref: "#/components/schemas/RetrieveDataVolumeRequest"
             examples:
-            examples:
               Identify Device By 3-Legged Access Token:
                 $ref: '#/components/examples/IdentifyDeviceBy3LeggedToken'
               Identify Device By Phone Number:
