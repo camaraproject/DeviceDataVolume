@@ -37,7 +37,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
     And the response properties "$.types", "$.protocol", "$.sink" and "$.config.subscriptionDetail.device.phoneNumber" are present with the values provided in the request
     And the response property "$.id" is present
-    And the response property "$.startsAt" and "$.expiresAt", if present, has a valid value with date-time format
+    And the response property "$.startsAt" is present and has a valid value with date-time format
+    And the response property "$.expiresAt", if present, has a valid value with date-time format
     And the response property "$.status", if present, has the value "ACTIVATION_REQUESTED", "ACTIVE" or "INACTIVE"
 
     Examples:
@@ -61,7 +62,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
     And the response properties "$.types", "$.protocol" and "$.sink" are present with the values provided in the request
     And the response property "$.id" is present
-    And the response property "$.startsAt" and "$.expiresAt", if present, has a valid value with date-time format
+    And the response property "$.startsAt" is present and has a valid value with date-time format
+    And the response property "$.expiresAt", if present, has a valid value with date-time format
     And the response property "$.status", if present, has the value "ACTIVATION_REQUESTED", "ACTIVE" or "INACTIVE"
     And the response property "$.config.subscriptionDetail.device" is not present
 
