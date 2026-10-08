@@ -1,3 +1,4 @@
+# device-data-volume-retrieveDataVolume
 Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
 
   # Input to be provided by the implementation to the tester
@@ -32,7 +33,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
     And the response header "Content-Type" is "application/json"
     And the response header "x-correlator" has same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/RetrieveDataVolumeResponse"
-    And the response body property "$.dataAllowance" is present and complies either with the OAS schema at "#/components/schemas/DataAllowance", or equals "Unlimited"
+    And the response body property "$.remainingDataAllowance" is present and complies either with the OAS schema at "#/components/schemas/DataAllowance", or equals "Unlimited"
     And the response body property "$.lastStatusTime" is present and either has a valid date-time format for a time in the past, or is null
 
 #################
@@ -61,10 +62,10 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
 
     Examples:
       | device_identifier          | oas_spec_schema                             |
-      | $.device.phoneNumber       | /components/schemas/PhoneNumber             |
-      | $.device.ipv4Address       | /components/schemas/DeviceIpv4Addr          |
-      | $.device.ipv6Address       | /components/schemas/DeviceIpv6Address       |
-      | $.device.networkIdentifier | /components/schemas/NetworkAccessIdentifier |
+      | $.device.phoneNumber       | #/components/schemas/PhoneNumber             |
+      | $.device.ipv4Address       | #/components/schemas/DeviceIpv4Addr          |
+      | $.device.ipv6Address       | #/components/schemas/DeviceIpv6Address       |
+      | $.device.networkIdentifier | #/components/schemas/NetworkAccessIdentifier |
 
   # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
   @device_data_volume_retrieveDataVolume_C01.03_device_not_found
@@ -124,7 +125,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
 # Error code 401
 #################
 
-  @device_data_volume_retrieveDataVolume_401.1_expired_access_token
+  @device_data_volume_retrieveDataVolume_401.01_expired_access_token
   Scenario: Expired access token
     Given the header "Authorization" is set to an expired access token
     And the request body is set to a valid request body
@@ -134,7 +135,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_retrieveDataVolume_401.2_no_authorization_header
+  @device_data_volume_retrieveDataVolume_401.02_no_authorization_header
   Scenario: No Authorization header
     Given the header "Authorization" is removed
     And the request body is set to a valid request body
@@ -144,7 +145,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_retrieveDataVolume_401.3_malformed_access_token
+  @device_data_volume_retrieveDataVolume_401.03_malformed_access_token
   Scenario: Malformed access token
     Given the header "Authorization" is set to a malformed token
     And the request body is set to a valid request body
@@ -159,7 +160,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
 # Error code 403
 #################
 
-  @device_data_volume_retrieveDataVolume_403_permission_denied
+  @device_data_volume_retrieveDataVolume_403.01_permission_denied
   Scenario: OAuth2 token access does not have the required scope
     Given header "Authorization" set to an access token not including scope "device-data-volume:read"
     And the request body is set to a valid request body

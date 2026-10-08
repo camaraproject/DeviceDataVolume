@@ -1,3 +1,4 @@
+# device-data-volume-checkDataVolume
 Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
 
   # Input to be provided by the implementation to the tester
@@ -74,10 +75,10 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
 
     Examples:
       | device_identifier          | oas_spec_schema                             |
-      | $.device.phoneNumber       | /components/schemas/PhoneNumber             |
-      | $.device.ipv4Address       | /components/schemas/DeviceIpv4Addr          |
-      | $.device.ipv6Address       | /components/schemas/DeviceIpv6Address       |
-      | $.device.networkIdentifier | /components/schemas/NetworkAccessIdentifier |
+      | $.device.phoneNumber       | #/components/schemas/PhoneNumber             |
+      | $.device.ipv4Address       | #/components/schemas/DeviceIpv4Addr          |
+      | $.device.ipv6Address       | #/components/schemas/DeviceIpv6Address       |
+      | $.device.networkIdentifier | #/components/schemas/NetworkAccessIdentifier |
 
   # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
   @device_data_volume_checkDataVolume_C01.03_device_not_found
@@ -137,7 +138,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
 # Error code 401
 #################
 
-  @device_data_volume_checkDataVolume_401.1_expired_access_token
+  @device_data_volume_checkDataVolume_401.01_expired_access_token
   Scenario: Expired access token
     Given the header "Authorization" is set to an expired access token
     And the request body is set to a valid request body
@@ -147,7 +148,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_checkDataVolume_401.2_no_authorization_header
+  @device_data_volume_checkDataVolume_401.02_no_authorization_header
   Scenario: No Authorization header
     Given the header "Authorization" is removed
     And the request body is set to a valid request body
@@ -157,7 +158,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_checkDataVolume_401.3_malformed_access_token
+  @device_data_volume_checkDataVolume_401.03_malformed_access_token
   Scenario: Malformed access token
     Given the header "Authorization" is set to a malformed token
     And the request body is set to a valid request body
@@ -172,7 +173,7 @@ Feature: CAMARA Device Data Volume API, vwip - Operation checkDataVolume
 # Error code 403
 #################
 
-  @device_data_volume_checkDataVolume_403_permission_denied
+  @device_data_volume_checkDataVolume_403.01_permission_denied
   Scenario: OAuth2 token access does not have the required scope
     Given header "Authorization" set to an access token not including scope "device-data-volume:read"
     And the request body is set to a valid request body
