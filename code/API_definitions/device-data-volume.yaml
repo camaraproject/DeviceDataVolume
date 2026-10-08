@@ -106,10 +106,15 @@ paths:
             schema:
               $ref: "#/components/schemas/RetrieveDataVolumeRequest"
             examples:
-              Retrieve Request:
-                $ref: "#/components/examples/RetrieveRequest"
-              Retrieve Request With 2-legged Access Token:
-                $ref: "#/components/examples/RetrieveRequestWith2-leggedAccessToken"
+            examples:
+              Identify Device By 3-Legged Access Token:
+                $ref: '#/components/examples/IdentifyDeviceBy3LeggedToken'
+              Identify Device By Phone Number:
+                $ref: '#/components/examples/IdentifyDeviceByPhoneNumber'
+              Identify Device By IP Address:
+                $ref: '#/components/examples/IdentifyDeviceByIPAddress'
+              Identify Device By Multiple Identifiers:
+                $ref: '#/components/examples/IdentifyDeviceByMultipleIdentifiers'
       responses:
         "200":
           description: Contains information about the remaining device data volume.
@@ -128,17 +133,17 @@ paths:
                 Successful Response With Device Disambiguation:
                   $ref: "#/components/examples/SuccessfulRetrieveResponseWithDeviceDisambiguation"
         "400":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic400"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequestWithRange400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
         "404":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic404"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/IdentifierNotFound404"
         "422":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic422"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/DeviceIdentifier422"
         "429":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic429"
+          $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
 
   /check:
     post:
@@ -181,22 +186,48 @@ paths:
                 Successful Response With Device Disambiguation:
                   $ref: "#/components/examples/SuccessfulCheckResponseWithDeviceDisambiguation"
         "400":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic400"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequestWithRange400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
         "404":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic404"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/IdentifierNotFound404"
         "422":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic422"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/DeviceIdentifier422"
         "429":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Generic429"
+          $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
 
 components:
   securitySchemes:
     openId:
       $ref: "../common/CAMARA_common.yaml#/components/securitySchemes/openId"
+
+  responses:
+    TooManyRequestsOrQuotaExceeded429:
+      description: Too Many Requests or Quota Exceeded
+      headers:
+        x-correlator:
+          $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../common/CAMARA_common.yaml#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 429
+                  code:
+                    enum:
+                      - TOO_MANY_REQUESTS
+                      - QUOTA_EXCEEDED
+          examples:
+            GENERIC_429_TOO_MANY_REQUESTS:
+              $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_TOO_MANY_REQUESTS"
+            GENERIC_429_QUOTA_EXCEEDED:
+              $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_QUOTA_EXCEEDED"
 
   schemas:
     LastStatusTime:
@@ -293,19 +324,41 @@ components:
                 - Unlimited
 
   examples:
-    RetrieveRequest:
-      description: Request remaining device data allowance using a 3-legged access token
-      value: {}
-    RetrieveRequestWith2-leggedAccessToken:
-      description: Request remaining device data allowance using a 2-legged access token
+    IdentifyDeviceBy3LeggedToken:
+      description: Empty JSON when device is identified by access token
+      value:
+        {}
+
+    IdentifyDeviceByPhoneNumber:
+      description: Identifying device by phone number
       value:
         device:
           phoneNumber: "+123456789"
+
+    IdentifyDeviceByIPAddress:
+      description: Identifying device by IP address
+      value:
+        device:
+          ipv4Address:
+            publicAddress: "84.125.93.10"
+            publicPort: 59765
+
+    IdentifyDeviceByMultipleIdentifiers:
+      description: Identifying device by multiple device identifiers
+      value:
+        device:
+          phoneNumber: "+123456789"
+          ipv4Address:
+            publicAddress: "84.125.93.10"
+            publicPort: 59765
+          networkAccessIdentifier: "123456789@example.com"
+
     SuccessfulRetrieveResponse:
       description: Successfully retrieve the remaining device data allowance with known status time
       value:
         lastStatusTime: "2024-02-20T10:41:38.657Z"
         remainingDataAllowance: "Unlimited"
+
     SuccessfulRetrieveResponseWithUnknownStatusTime:
       description: Successfully retrieve the remaining device data allowance, but status time of that information is unknown
       value:
@@ -313,6 +366,7 @@ components:
         remainingDataAllowance:
           value: 1000
           unit: "GB"
+
     SuccessfulRetrieveResponseWithDeviceDisambiguation:
       description: Successfully retrieve the remaining device data allowance, but device disambiguation is required
       value:
@@ -322,12 +376,14 @@ components:
         remainingDataAllowance:
           value: 200
           unit: "MB"
+
     CheckRequest:
       description: Request remaining device data allowance check using a 3-legged access token
       value:
         dataAllowanceThreshold:
           value: 500
           unit: "MB"
+
     CheckRequestWith2-leggedAccessToken:
       description: Request remaining device data allowance check using a 2-legged access token
       value:
@@ -336,16 +392,19 @@ components:
         dataAllowanceThreshold:
           value: 500
           unit: "MB"
+
     SuccessfulCheckResponse:
       description: Successfully check the remaining device data allowance with known status time
       value:
         lastStatusTime: "2024-02-20T10:41:38.657Z"
         thresholdExceeded: false
+
     SuccessfulCheckResponseWithUnknownStatusTime:
       description: Successfully check the remaining device data allowance, but status time of that information is unknown
       value:
         lastStatusTime: null
         thresholdExceeded: false
+
     SuccessfulCheckResponseWithDeviceDisambiguation:
       description: Successfully check the remaining device data allowance, but device disambiguation is required
       value:
