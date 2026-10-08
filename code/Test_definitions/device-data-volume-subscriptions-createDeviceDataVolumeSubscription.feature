@@ -448,6 +448,12 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
 ##################
+# Error code 409
+##################
+
+# No tests cases yet defined
+
+##################
 # Error code 422
 ##################
 
@@ -477,4 +483,30 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 # Error code 429
 ##################
 
-# No test cases yet defined
+#################
+# Error code 429
+#################
+
+  @device_data_volume_subscriptions_create_429.01_Too_Many_Requests
+  #To test this scenario environment has to be configured to reject requests reaching the threshold limit set.
+  Scenario: Request is rejected due to threshold policy
+    Given a valid request for "createDeviceDataVolumeSubscription"
+    And the header "Authorization" is set to a valid access token
+    And the threshold of requests has been reached
+    When the request "createDeviceDataVolumeSubscription" is sent
+    Then the response status code is 429
+    And the response property "$.status" is 429
+    And the response property "$.code" is "TOO_MANY_REQUESTS"
+    And the response property "$.message" contains a user friendly text
+
+  @device_data_volume_subscriptions_create_429.02_Quota_Exceeded
+  #To test this scenario environment has to be configured to reject requests reaching the allocated quota.
+  Scenario: Request is rejected due to API consumer quota being reached
+    Given a valid request for "createDeviceDataVolumeSubscription"
+    And the header "Authorization" is set to a valid access token
+    And the API consumer allocated quota of requests has been reached
+    When the request "createDeviceDataVolumeSubscription" is sent
+    Then the response status code is 429
+    And the response property "$.status" is 429
+    And the response property "$.code" is "QUOTA_EXCEEDED"
+    And the response property "$.message" contains a user friendly text
