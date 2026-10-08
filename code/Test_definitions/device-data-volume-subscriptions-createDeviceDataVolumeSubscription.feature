@@ -27,7 +27,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   @device_data_volume_subscriptions_01.1_sync_creation_2legs
   Scenario Outline: Synchronous subscription creation with 2-legged-token
     Given the header "Authorization" is set to a valid access token which does not identify any device
-    And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
+    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     When the  request "createDeviceDataVolumeSubscription" is sent
     And request property "$.types" is one of the allowed values "<subscription-creation-types>"
     And request property "$.protocol" is equal to "HTTP"
@@ -51,7 +51,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   Scenario Outline: Synchronous subscription creation with 3-legged-token
     # Some implementations may only support asynchronous subscription creation
     Given the header "Authorization" is set to a valid access token which identifies a valid device
-    And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
+    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     When the request "createDeviceDataVolumeSubscription" is sent
     And request property "$.types" is one of the allowed values "<subscription-creation-types>"
     And request property "$.protocol" is equal to "HTTP"
@@ -75,7 +75,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   @device_data_volume_subscriptions_02_async_creation
   Scenario Outline: Asynchronous subscription creation with 2- or 3-legged access token
     Given a valid target device, identified by either the access token or in the request body
-    And the request body is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
+    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     When the request "createDeviceDataVolumeSubscription" is sent
     And request property "$.types" is one of the allowed values "<subscription-creation-types>"
     And request property "$.protocol" is equal to "HTTP"
@@ -456,7 +456,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   @device_data_volume_subscriptions_422.01_multi_event_not_supported
   Scenario: Multi-event subscriptions are not supported
     Given a valid 2- or 3-legged access token
-    And a request body that is compliant with the OAS schema at "#/component/schemas/SubscriptionRequest"
+    And a request body that is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     And request property "$.types" includes more than one subscription-type
     When the request "createDeviceDataVolumeSubscription" is sent
     Then the response status code is 422
