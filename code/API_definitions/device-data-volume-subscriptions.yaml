@@ -398,6 +398,8 @@ components:
       allOf:
         - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/ConfigBase"
         - type: object
+          required:
+            - subscriptionDetail
           properties:
             subscriptionDetail:
               $ref: "#/components/schemas/SubscriptionDetail"
