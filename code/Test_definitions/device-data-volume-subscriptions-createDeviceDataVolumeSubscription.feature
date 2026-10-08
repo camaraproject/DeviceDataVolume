@@ -19,6 +19,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the resource "/device-data-volume-subscriptions/vwip/subscriptions"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
+    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
 
 ##########################
 # Happy path scenarios
@@ -27,7 +28,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   @device_data_volume_subscriptions_01.1_sync_creation_2legs
   Scenario Outline: Synchronous subscription creation with 2-legged-token
     Given the header "Authorization" is set to a valid access token which does not identify any device
-    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     When the  request "createDeviceDataVolumeSubscription" is sent
     And request property "$.types" is one of the allowed values "<subscription-creation-types>"
     And request property "$.protocol" is equal to "HTTP"
@@ -52,7 +52,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   Scenario Outline: Synchronous subscription creation with 3-legged-token
     # Some implementations may only support asynchronous subscription creation
     Given the header "Authorization" is set to a valid access token which identifies a valid device
-    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     When the request "createDeviceDataVolumeSubscription" is sent
     And request property "$.types" is one of the allowed values "<subscription-creation-types>"
     And request property "$.protocol" is equal to "HTTP"
@@ -77,7 +76,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   @device_data_volume_subscriptions_02_async_creation
   Scenario Outline: Asynchronous subscription creation with 2- or 3-legged access token
     Given a valid target device, identified by either the access token or in the request body
-    And the request body is compliant with the OAS schema at "#/components/schemas/SubscriptionRequest"
     When the request "createDeviceDataVolumeSubscription" is sent
     And request property "$.types" is one of the allowed values "<subscription-creation-types>"
     And request property "$.protocol" is equal to "HTTP"
@@ -181,7 +179,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
     Given that subscriptions are created synchronously
-    And a valid subscription request body
     And the request property "$.sinkCredential.credentialType" is set to "ACCESSTOKEN"
     And the request property "$.sinkCredential.accessTokenType" is set to "bearer"
     And the request property "$.sinkCredential.accessToken" is set to a valid access token
@@ -199,7 +196,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may only support out_of_band provisioning
     Given that subscriptions are created synchronously
-    And a valid subscription request body
     And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_JWT_KEY"
     When the request "createDeviceDataVolumeSubscription" is sent
     Then the response code is 201
@@ -212,7 +208,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may additionally support in_band provisioning
     Given that subscriptions are created synchronously
-    And a valid subscription request body
     And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_JWT_KEY"
     And the request property "$.sinkCredential.clientId" is set to a valid value
     And the request property "$.sinkCredential.tokenUri" is set to a valid value
