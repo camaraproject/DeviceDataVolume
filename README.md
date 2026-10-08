@@ -16,9 +16,9 @@ Sandbox API Repository to describe, develop, document, and test the DeviceDataVo
 ## Scope
 
 * Service APIs “Device Data Volume” and "Device Data Volume Subscriptions" (see [APIBacklog.md](https://github.com/camaraproject/APIBacklog/blob/main/documentation/APIbacklog.md))
-* The service APIs provide the customer with the ability to:  
+* The service APIs provide the API consumer with the ability to:  
   * get detailed insights into the customer's data usage status
-  * get alerts when the customer's data usage status changes
+  * get alerts when the customer's data usage status reaches a specified threshold
 * Describe, develop, document, and test the service APIs
 * Started: August 2024
 
