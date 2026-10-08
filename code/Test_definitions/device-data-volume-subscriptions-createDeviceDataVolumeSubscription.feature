@@ -448,10 +448,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.message" contains a user friendly text
 
 ##################
-# Error code 404
-##################
-
-##################
 # Error code 422
 ##################
 
@@ -476,3 +472,9 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.status" is 422
     And the response property "$.code" is "PRIVATE_KEY_JWT_NOT_CONFIGURED"
     And the response property "$.message" contains a user friendly text
+
+##################
+# Error code 429
+##################
+
+# No test cases yet defined
