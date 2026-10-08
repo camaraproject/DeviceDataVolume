@@ -61,11 +61,11 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
     And the response property "$.message" contains a user friendly text
 
     Examples:
-      | device_identifier          | oas_spec_schema                             |
-      | $.device.phoneNumber       | #/components/schemas/PhoneNumber             |
-      | $.device.ipv4Address       | #/components/schemas/DeviceIpv4Addr          |
-      | $.device.ipv6Address       | #/components/schemas/DeviceIpv6Address       |
-      | $.device.networkIdentifier | #/components/schemas/NetworkAccessIdentifier |
+      | device_identifier                | oas_spec_schema                              |
+      | $.device.phoneNumber             | #/components/schemas/PhoneNumber             |
+      | $.device.ipv4Address             | #/components/schemas/DeviceIpv4Address       |
+      | $.device.ipv6Address             | #/components/schemas/DeviceIpv6Address       |
+      | $.device.networkAccessIdentifier | #/components/schemas/NetworkAccessIdentifier |
 
   # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
   @device_data_volume_retrieveDataVolume_C01.03_device_not_found
@@ -168,4 +168,32 @@ Feature: CAMARA Device Data Volume API, vwip - Operation retrieveDataVolume
     Then the response status code is 403
     And the response property "$.status" is 403
     And the response property "$.code" is "PERMISSION_DENIED"
+    And the response property "$.message" contains a user friendly text
+
+#################
+# Error code 429
+#################
+
+  @device_data_volume_retrieve_429.01_Too_Many_Requests
+  #To test this scenario environment has to be configured to reject requests reaching the threshold limit set.
+  Scenario: Request is rejected due to threshold policy
+    Given a valid request for "retrieveDataVolume"
+    And the header "Authorization" is set to a valid access token
+    And the threshold of requests has been reached
+    When the request "retrieveDataVolume" is sent
+    Then the response status code is 429
+    And the response property "$.status" is 429
+    And the response property "$.code" is "TOO_MANY_REQUESTS"
+    And the response property "$.message" contains a user friendly text
+
+  @device_data_volume_retrieve_429.02_Quota_Exceeded
+  #To test this scenario environment has to be configured to reject requests reaching the allocated quota.
+  Scenario: Request is rejected due to API consumer quota being reached
+    Given a valid request for "retrieveDataVolume"
+    And the header "Authorization" is set to a valid access token
+    And the API consumer allocated quota of requests has been reached
+    When the request "retrieveDataVolume" is sent
+    Then the response status code is 429
+    And the response property "$.status" is 429
+    And the response property "$.code" is "QUOTA_EXCEEDED"
     And the response property "$.message" contains a user friendly text
