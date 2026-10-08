@@ -2,17 +2,21 @@ openapi: 3.0.3
 info:
   title: Device Data Volume Subscriptions
   description: |
-    This API enables customers to subscribe to events related to data volume usage thresholds on a device. It supports both request and subscription modes to track remaining data volume.
+    This API enables API consumers to subscribe to receive events when the remaining data volume usage for a device reaches a specified threshold
 
     # Introduction
 
     ## Device Data Volume Subscriptions
 
-    API consumers can receive notifications regarding data volume usage thresholds, such as when the remaining data volume reaches 50%, 75%, or 90% of the user's allocated data plan. This is useful for managing data usage and avoiding overage fees.
+    API consumers can receive notifications when remaining data volume thresholds are reached, for example, when the remaining data volume reaches 50%, 25%, or 10% of the user's allocated data plan, or when the plan is exhausted (0% remaining). This is useful for managing data usage and avoiding overage fees.
 
     # Relevant terms and definitions
 
-    * **Device**: A device refers to any physical entity capable of network communication, identified via an IP address, phone number, or Network Access Identifier.
+    * **Device**: A device refers to any physical hardware capable of network communication, identified via an IP address, phone number, or Network Access Identifier.
+
+        At least one identifier for the mobile device (user equipment) out of four options must be provided: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the response along with the connected network type information.
+
+    * **Data Volume** or **Date Allowance**: The amount of data that an end user is allowed to send or receive under the terms of their contract with a mobile network provider without incurring additional costs or service limitations (e.g. rate throttling or an inability to send or receive any data). The data allowance will be periodically renewed.
 
     # API Functionality
 
@@ -35,21 +39,24 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated` is sent when the subscription is updated
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends
 
-    It is used in following cases:
+    The `subscription-ended` event may used in following cases:
       - the subscription expire time (optionally set by the requester) has been reached
       - the maximum number of subscription events (optionally set by the requester) has been reached
-      - the subscription was deleted by the requester
-      - the Access Token `sinkCredential` (optionally set by the requester) expiration time has been reached
-      - the API server has to stop sending notification prematurely
+      - the subscription was deleted by the API consumer
+      - the expiry time for the access token `sinkCredential` (optionally set by the API consumer) time has been reached
+      - the API provider has to stop sending notifications early
+
+    **Note on combined usage of `initialEvent` and `subscriptionMaxEvents`**:
+
+    If an initial event is triggered because `initialEvent` set to true, that event will count towards `subscriptionMaxEvents` if that has been specified. An initial event will only be triggered if the remaining data volume percentage is equal to that specified by the event at the time the subscription is created.
 
     ### Notification callback
 
-    This endpoint describes the event notification received on subscription listener side when the event occurred.
-    As for subscription, detailed description of the event notification is provided in the CAMARA API design guideline document.
+    This endpoint describes the format of the event notification received by the API consumer when an event is sent.
+    A detailed description of the event subscription and notification mechanism is provided in the `CAMARA API Event Subscription and Notification Guide`.
 
-    _**WARNING**: This callback endpoint must be exposed on the consumer side as `POST /{$request.body#/sink}`.
-      Developers may provide a callback URL on which notifications regarding device data volume events can be received from the service provider.
-      If an event occurs the application will send events to the provided webhook - 'sink'._
+    _**WARNING**:\
+      API consumers must provide a callback URL on which reachability status notifications from the API provider can be received. This callback endpoint must be exposed by API consumer as `POST /{$request.body#/sink}`. When an event occurs, the API provider will send the event to the URL specified by `sink`._
 
     <!-- CAMARA:MANDATORY:authorization-and-authentication:BEGIN -->
 
