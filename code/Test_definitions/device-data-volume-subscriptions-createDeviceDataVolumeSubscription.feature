@@ -94,11 +94,11 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
       | org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining |
 
   @device_data_volume_subscriptions_03_receive_notification_when_50_percent_of_the_data_plan_remaining
-  Scenario: Receive notification for data-50-percent event
+  Scenario: Receive notification for data-50-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
-    When the device's data volume consumed 50% of the data plan
+    When the remaining device data volume is equal to 50% of the data plan
     Then event notification "data-50-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
     And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage50PercentRemaining"
@@ -106,11 +106,11 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
 
   @device_data_volume_subscriptions_04_receive_notification_when_25_percent_of_the_data_plan_remaining
-  Scenario: Receive notification for data-75-percent event
+  Scenario: Receive notification for data-25-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
-    When the device's data volume consumed 75% of the data plan
+    When the remaining device data volume is equal to 25% of the data plan
     Then event notification "data-25-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
     And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage25PercentRemaining"
@@ -118,11 +118,11 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
 
   @device_data_volume_subscriptions_05_receive_notification_when_10_percent_of_the_data_plan_remaining
-  Scenario: Receive notification for data-90-percent event
+  Scenario: Receive notification for data-10-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
-    When the device's data volume consumed 90% of the data plan
+    When the remaining device data volume is equal to 10% of the data plan
     Then event notification "data-10-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
     And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage10PercentRemaining"
@@ -130,11 +130,11 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
 
   @device_data_volume_subscriptions_06_receive_notification_when_the_data_plan_is_fully_consumed
-  Scenario: Receive notification for data-exceeded event
+  Scenario: Receive notification for data-00-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining"
     And the subscription property "$.sink" is a valid callback URL
-    When the device's data plan is exceeded
+    When the remaining device data volume is equal to 0% of the data plan
     Then event notification "data-00-percent-remaining" is sent to the specified callback URL
     And the sink credentials specified when the subscription was created are included
     And notification body complies with the OAS schema at "#/components/schemas/EventDataUsage00PercentRemaining"
@@ -158,7 +158,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.config.subscriptionMaxEvents" is set to 1
     And the subscription property "$.sink" is a valid callback URL
-    When a single notification corresponding to subscription property "$.type" has been sent to the callback URL
+    When a single notification corresponding to subscription property "$.types" has been sent to the callback URL
     Then a subscription termination event notification is sent to the callback URL
     And the notification body complies with the OAS schema at "#/components/schemas/EventSubscriptionEnded"
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended"
@@ -174,7 +174,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And an event notification of the subscribed type is received on callback-url
     And notification body complies with the OAS schema at "#/components/schemas/CloudEvent"
 
-  @device_data_volume_subscriptions_10_Create_device_data_volume_subscription_sync_with_accesstoken_sink_credential
+  @device_data_volume_subscriptions_10_create_device_data_volume_subscription_sync_with_accesstoken_sink_credential
   Scenario: Create device data volume subscription (sync creation) with ACCESSTOKEN sinkCredential
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
@@ -191,7 +191,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body property "$.sinkCredential.credentialType", if present, is set to value "ACCESSTOKEN"
     And the response body property "$.sinkCredential.accessTokenExpiresUtc", if present, is set to the same value of the request property "$.sinkCredential.accessTokenExpiresUtc"
 
-  @device_data_volume_subscriptions_11_Create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
+  @device_data_volume_subscriptions_11_create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
   Scenario: Create device data volume  subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, out-of-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may only support out_of_band provisioning
@@ -203,8 +203,8 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response header "x-correlator" has the same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
 
-  @device_data_volume_subscriptions_12_Create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_in_band_provisioning
-  Scenario: Create roaming status subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, in-band provisioning
+  @device_data_volume_subscriptions_12_create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_in_band_provisioning
+  Scenario: Create device data volume subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, in-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may additionally support in_band provisioning
     Given that subscriptions are created synchronously
