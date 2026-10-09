@@ -234,7 +234,7 @@ paths:
         "409":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionConflict409"
         "422":
-          $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionUnprocessableEntity422"
+          $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionDevice422"
         "429":
           $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
 
@@ -416,8 +416,8 @@ components:
               $ref: "#/components/schemas/SubscriptionDetail"
             initialEvent:
               description: |
-                Set to `true` by API consumer if consumer wants to get an event as soon as the subscription is created and current situation reflects event request.
-                Example: Consumer requests `data-10-percent-remaining` events. If API consumer sets initialEvent to true and remaining device data allowance is less than 10% of the full allowance, an event is triggered
+                Set to `true` if the API consumer wants to get an event as soon as the subscription is created and current situation matches the event trigger.
+                Example: The API consumer requests `data-10-percent-remaining` events. If the API consumer sets `initialEvent` to true, and the remaining device data allowance is equal to 10% of the full allowance, an initial event is triggered.
               type: boolean
 
     ApiEventType:
