@@ -38,12 +38,12 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining`: Event triggered when only 10% of the data plan is remaining
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining`: Event triggered when the data plan is fully consumed
 
-    Note: Additionally, the following events could be send, which do not require a dedicated subscription:
+    Note: Additionally, the following events could be sent, which do not require a dedicated subscription:
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-started` is sent when the subscription starts
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated` is sent when the subscription is updated
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends
 
-    The `subscription-ended` event may used in following cases:
+    The `subscription-ended` event may be used in following cases:
       - the subscription expire time (optionally set by the requester) has been reached
       - the maximum number of subscription events (optionally set by the requester) has been reached
       - the subscription was deleted by the API consumer
