@@ -446,7 +446,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
 # Error code 409
 ##################
 
-# No tests cases yet defined
+# No test cases yet defined
 
 ##################
 # Error code 422
