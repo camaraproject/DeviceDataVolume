@@ -12,11 +12,15 @@ info:
 
     # Relevant terms and definitions
 
-    * **Device**: A device refers to any physical hardware capable of network communication, identified via an IP address, phone number, or Network Access Identifier.
+    * **Device**:\
+        A device refers to any physical hardware capable of network communication, identified via an IP address, phone number, or network access identifier.
 
-        At least one identifier for the mobile device (user equipment) out of four options must be provided: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the response along with the connected network type information.
+        At least one identifier for the mobile device (user equipment) out of four options must be provided: IPv4 address, IPv6 address, phone number, or network access identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the subscription creation response.
 
-    * **Data Volume** or **Date Allowance**: The amount of data that an end user is allowed to send or receive under the terms of their contract with a mobile network provider without incurring additional costs or service limitations (e.g. rate throttling or an inability to send or receive any data). The data allowance will be periodically renewed.
+        Note: Network Access Identifier is defined for future use and will not be supported with this version of the API.
+
+    * **Data Volume** or **Data Allowance**:\
+        The amount of data that an end user is allowed to send or receive under the terms of their contract with a mobile network provider without incurring additional costs or service limitations (e.g. rate throttling, or an inability to send or receive any data). The data allowance will be periodically renewed.
 
     # API Functionality
 
@@ -34,12 +38,12 @@ info:
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining`: Event triggered when only 10% of the data plan is remaining
       - `org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining`: Event triggered when the data plan is fully consumed
 
-    Note: Additionally, the following events could be send, which do not require a dedicated subscription:
+    Note: Additionally, the following events could be sent, which do not require a dedicated subscription:
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-started` is sent when the subscription starts
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated` is sent when the subscription is updated
       - `org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended` is sent when the subscription ends
 
-    The `subscription-ended` event may used in following cases:
+    The `subscription-ended` event may be used in following cases:
       - the subscription expire time (optionally set by the requester) has been reached
       - the maximum number of subscription events (optionally set by the requester) has been reached
       - the subscription was deleted by the API consumer

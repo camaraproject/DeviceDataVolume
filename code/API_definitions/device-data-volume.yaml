@@ -10,13 +10,15 @@ info:
 
     # Relevant terms and definitions
 
-    * **Device**: A device refers to any physical hardware that can connect to a mobile network and participate in network communication.
+    * **Device**:\
+        A device refers to any physical hardware that can connect to a mobile network and participate in network communication.
 
-        At least one identifier for the device out of four options must be provided: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the  response, along with the requested data.
+        At least one identifier for the device out of four options must be provided: IPv4 address, IPv6 address, phone number, or network access identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the  response, along with the requested data.
 
         Note: Network Access Identifier is defined for future use and will not be supported with this version of the API.
 
-    * **Data Volume** or **Date Allowance**: The amount of data that an end user is allowed to send or receive under the terms of their contract with a mobile network provider without incurring additional costs or service limitations (e.g. rate throttling or an inability to send or receive any data). The data allowance will be periodically renewed.
+    * **Data Volume** or **Data Allowance**:\
+        The amount of data that an end user is allowed to send or receive under the terms of their contract with a mobile network provider without incurring additional costs or service limitations (e.g. rate throttling, or an inability to send or receive any data). The data allowance will be periodically renewed.
 
     # API Functionality
 
@@ -40,6 +42,7 @@ info:
         "lastStatusTime": "2024-02-20T10:41:38.657Z",
         "thresholdExceeded": false
       }
+      ```
 
     ## Error Handling
     Errors may be returned for the following reasons. Note that this list is not exhaustive.
