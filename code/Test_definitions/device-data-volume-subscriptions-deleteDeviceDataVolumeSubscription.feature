@@ -60,7 +60,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
   @device_data_volume_subscriptions_deletion_401.01_no_authorization_header
   Scenario: No Authorization header
     Given the header "Authorization" is removed
-    And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     When the request "deleteDeviceDataVolumeSubscription" is sent
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
@@ -71,7 +70,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
   @device_data_volume_subscriptions_deletion_401.02_expired_access_token
   Scenario: Expired access token
     Given the header "Authorization" is set to a previously valid but now expired access token
-    And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     When the request "deleteDeviceDataVolumeSubscription" is sent
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
@@ -82,7 +80,6 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation deleteDeviceData
   @device_data_volume_subscriptions_deletion_401.03_malformed_access_token
   Scenario: Malformed access token
     Given the header "Authorization" is set to a malformed token
-    And the request body is compliant with the schema "#/components/schemas/SubscriptionRequest"
     When the request "deleteDeviceDataVolumeSubscription" is sent
     Then the response status code is 401
     And the response header "Content-Type" is "application/json"
