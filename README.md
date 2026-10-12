@@ -42,11 +42,11 @@ Sandbox API Repository to describe, develop, document, and test the DeviceDataVo
 
 ### Upcoming Release Preview
 
-* Pre-release: [r2.1](https://github.com/camaraproject/DeviceDataVolume/releases/tag/r2.1) (release candidate)
-  * **device-data-volume-subscriptions 0.2.0-rc.1**
-  [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r2.1/code/API_definitions/device-data-volume-subscriptions.yaml)  [[ReDoc]](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume-subscriptions.yaml&nocors)  [[Swagger]](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume-subscriptions.yaml)
-  * **device-data-volume 0.2.0-rc.1**
-  [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r2.1/code/API_definitions/device-data-volume.yaml)  [[ReDoc]](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume.yaml&nocors)  [[Swagger]](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.1/code/API_definitions/device-data-volume.yaml)
+* Pre-release: [r2.2](https://github.com/camaraproject/DeviceDataVolume/releases/tag/r2.2) (release candidate)
+  * **device-data-volume-subscriptions 0.2.0-rc.2**
+  [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r2.2/code/API_definitions/device-data-volume-subscriptions.yaml)  [[ReDoc]](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.2/code/API_definitions/device-data-volume-subscriptions.yaml&nocors)  [[Swagger]](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.2/code/API_definitions/device-data-volume-subscriptions.yaml)
+  * **device-data-volume 0.2.0-rc.2**
+  [[YAML]](https://github.com/camaraproject/DeviceDataVolume/blob/r2.2/code/API_definitions/device-data-volume.yaml)  [[ReDoc]](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.2/code/API_definitions/device-data-volume.yaml&nocors)  [[Swagger]](https://camaraproject.github.io/swagger-ui/?url=https://raw.githubusercontent.com/camaraproject/DeviceDataVolume/r2.2/code/API_definitions/device-data-volume.yaml)
 
 
 _The above section is automatically synchronized by CAMARA project-administration._
