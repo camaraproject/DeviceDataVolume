@@ -127,7 +127,7 @@ Changes documented below are compared to version 0.2.0-rc.1.
 
 * [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
 * [Changed] Increase maximum data allowance limit by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/126
-  * The max of `remainingDataAllowance.value` in the POST /retrieve 200 response increased from 1000 to 99999 (response-property-max-increased)
+  * The max of `remainingDataAllowance.value` in the POST /retrieve 200 response and of `dataAllowanceThreshold.value` in the POST /check request increased from 1000 to 99999
 
 ### Fixed
 
