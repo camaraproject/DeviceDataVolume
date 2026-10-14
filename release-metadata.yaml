@@ -2,7 +2,7 @@ repository:
   repository_name: DeviceDataVolume
   release_tag: r2.2
   release_type: pre-release-rc
-  release_date: null
+  release_date: '2026-10-14T12:57:30Z'
   src_commit_sha: bae20e63134d22c6b56f0d6a342d9cbb71b4b7c2
 apis:
 - api_name: device-data-volume-subscriptions
