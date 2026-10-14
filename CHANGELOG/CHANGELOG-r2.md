@@ -85,6 +85,9 @@ Changes documented below are compared to version 0.2.0-rc.1.
 ### Changed
 
 * [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
+  * Threshold events now trigger when the remaining data allowance is equal to the threshold, instead of below it
+* [Changed] Update response reference for unprocessable entity and improved initialEvent description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/138
+  * With `initialEvent` set to true, an initial event is only sent if the remaining data allowance equals the threshold when the subscription is created
 * [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
   * Property subscriptionDetail is now a required subscription creation parameter
 * [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
