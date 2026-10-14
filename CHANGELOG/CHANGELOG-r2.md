@@ -66,6 +66,7 @@ Changes documented below are compared to version 0.2.0-rc.1.
 
 * [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
   * Property subscriptionDetail is now a required subscription creation parameter
+  * Add 404 IDENTIFIER_NOT_FOUND to device-data-volume-subscriptions creation
 
 ### Added
 
