@@ -60,7 +60,7 @@ info:
     A detailed description of the event subscription and notification mechanism is provided in the `CAMARA API Event Subscription and Notification Guide`.
 
     _**WARNING**:\
-      API consumers must provide a callback URL on which reachability status notifications from the API provider can be received. This callback endpoint must be exposed by API consumer as `POST /{$request.body#/sink}`. When an event occurs, the API provider will send the event to the URL specified by `sink`._
+      API consumers must provide a callback URL on which device data volume notifications from the API provider can be received. This callback endpoint must be exposed by API consumer as `POST /{$request.body#/sink}`. When an event occurs, the API provider will send the event to the URL specified by `sink`._
 
     <!-- CAMARA:MANDATORY:authorization-and-authentication:BEGIN -->
 
