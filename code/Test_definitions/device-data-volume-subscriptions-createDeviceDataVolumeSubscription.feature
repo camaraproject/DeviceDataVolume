@@ -93,7 +93,17 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
       | org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining |
       | org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining |
 
-  @device_data_volume_subscriptions_03_receive_notification_when_50_percent_of_the_data_plan_remaining
+  @device_data_volume_subscriptions_03_subscription_creation_event_validation
+  Scenario: Receive notification for subscription-started event on creation
+    Given a valid subscription request body
+    When the request "createDeviceDataVolumeSubscription" is sent
+    Then the response code is 201 or 202
+    And event notification "subscription-started" is received on callback-url
+    And notification body complies with the OAS schema at "#/components/schemas/EventSubscriptionStarted"
+    And type="org.camaraproject.device-data-volume-subscriptions.v0.subscription-started"
+    And the response property "$.initiationReason" is "SUBSCRIPTION_CREATED"
+
+  @device_data_volume_subscriptions_04_receive_notification_when_50_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-50-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
@@ -105,7 +115,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_04_receive_notification_when_25_percent_of_the_data_plan_remaining
+  @device_data_volume_subscriptions_05_receive_notification_when_25_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-25-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
@@ -117,7 +127,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_05_receive_notification_when_10_percent_of_the_data_plan_remaining
+  @device_data_volume_subscriptions_06_receive_notification_when_10_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-10-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
@@ -129,7 +139,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_06_receive_notification_when_the_data_plan_is_fully_consumed
+  @device_data_volume_subscriptions_07_receive_notification_when_the_data_plan_is_fully_consumed
   Scenario: Receive notification for data-00-percent-remaining event
     Given a valid subscription for that device exists with "subscriptionId" equal to "id"
     And the subscription property "$.types" contains the element "org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining"
@@ -141,7 +151,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining"
     And the notification property "$.data.subscriptionId" is equal to "id"
 
-  @device_data_volume_subscriptions_07_subscription_expiry
+  @device_data_volume_subscriptions_08_subscription_expiry
   Scenario: Receive notification for subscription-ended event on expiry
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.config.subscriptionExpireTime" is set to a value in the near future
@@ -153,7 +163,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification property "$.data.terminationReason" is equal to "SUBSCRIPTION_EXPIRED"
 
-  @device_data_volume_subscriptions_08_subscription_end_when_max_events
+  @device_data_volume_subscriptions_09_subscription_end_when_max_events
   Scenario: Receive notification for subscription-ended event on max events reached
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.config.subscriptionMaxEvents" is set to 1
@@ -165,7 +175,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification request property "$.data.terminationReason" is equal to "MAX_EVENTS_REACHED"
 
-  @device_data_volume_subscriptions_09_subscription_creation_initial_event
+  @device_data_volume_subscriptions_10_subscription_creation_initial_event
   Scenario: Receive initial event notification on creation
     Given the API supports initial events to be sent
     And a valid subscription request body with property "$.config.initialEvent" set to true
@@ -174,7 +184,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And an event notification of the subscribed type is received on callback-url
     And notification body complies with the OAS schema at "#/components/schemas/CloudEvent"
 
-  @device_data_volume_subscriptions_10_create_device_data_volume_subscription_sync_with_accesstoken_sink_credential
+  @device_data_volume_subscriptions_11_create_device_data_volume_subscription_sync_with_accesstoken_sink_credential
   Scenario: Create device data volume subscription (sync creation) with ACCESSTOKEN sinkCredential
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
