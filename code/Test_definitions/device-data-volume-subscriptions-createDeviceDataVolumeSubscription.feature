@@ -203,7 +203,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response header "x-correlator" has the same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
 
-  @device_data_volume_subscriptions_12_create_device_data_volume_subscription_sync_with_private_key_jwt_sink_credential_in_band_provisioning
+  @device_data_volume_subscriptions_13_create_device_data_volume_subscription_sync_with_private_key_jwt_sink_credential_in_band_provisioning
   Scenario: Create device data volume subscription (sync creation) with PRIVATE_KEY_JWT sinkCredential, in-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may additionally support in_band provisioning
