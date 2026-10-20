@@ -191,24 +191,24 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body property "$.sinkCredential.credentialType", if present, is set to value "ACCESSTOKEN"
     And the response body property "$.sinkCredential.accessTokenExpiresUtc", if present, is set to the same value of the request property "$.sinkCredential.accessTokenExpiresUtc"
 
-  @device_data_volume_subscriptions_11_create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
-  Scenario: Create device data volume  subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, out-of-band provisioning
+  @device_data_volume_subscriptions_11_create_device_data_volume_subscription_sync_with_private_key_jwt_sink_credential_out_of_band_provisioning
+  Scenario: Create device data volume  subscription (sync creation) with PRIVATE_KEY_JWT sinkCredential, out-of-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may only support out_of_band provisioning
     Given that subscriptions are created synchronously
-    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_JWT_KEY"
+    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_KEY_JWT"
     When the request "createDeviceDataVolumeSubscription" is sent
     Then the response code is 201
     And the response header "Content-Type" is "application/json"
     And the response header "x-correlator" has the same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
 
-  @device_data_volume_subscriptions_12_create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_in_band_provisioning
-  Scenario: Create device data volume subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, in-band provisioning
+  @device_data_volume_subscriptions_12_create_device_data_volume_subscription_sync_with_private_key_jwt_sink_credential_in_band_provisioning
+  Scenario: Create device data volume subscription (sync creation) with PRIVATE_KEY_JWT sinkCredential, in-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may additionally support in_band provisioning
     Given that subscriptions are created synchronously
-    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_JWT_KEY"
+    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_KEY_JWT"
     And the request property "$.sinkCredential.clientId" is set to a valid value
     And the request property "$.sinkCredential.tokenUri" is set to a valid value
     When the request "createDeviceDataVolumeSubscription" is sent
@@ -216,7 +216,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response header "Content-Type" is "application/json"
     And the response header "x-correlator" has the same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
-    And the response body property "$.sinkCredential.credentialType" is set to value "PRIVATE_JWT_KEY"
+    And the response body property "$.sinkCredential.credentialType" is set to value "PRIVATE_KEY_JWT"
     And the response body property "$.sinkCredential.jwksUri" is set to a valid value
 
 ##########################################################
@@ -464,10 +464,10 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response property "$.code" is "MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED"
     And the response property "$.message" contains a user friendly text
 
-  @device_data_volume_subscriptions_422.02_creation_with_private_jwt_key_not_configured
+  @device_data_volume_subscriptions_422.02_creation_with_private_key_jwt_not_configured
   Scenario: Private JWT Key not configured for subscription creation
-    Given the API provider requires the use of a Private JWT key mechanism for subscription creation authentication
-    And the Private JWT key mechanism is not pre-configured in the environment
+    Given the API provider requires the use of a private key JWT mechanism for subscription creation authentication
+    And the private key JWT mechanism is not pre-configured in the environment
     And a valid subscription request body with the property "$.sinkCredential.credentialType" set to "PRIVATE_KEY_JWT"
     When the request "createDeviceDataVolumeSubscription" is sent
     Then the response code is 422
