@@ -66,7 +66,9 @@ Changes documented below are compared to version 0.2.0-rc.2.
 
 ### Added
 
-* N/A
+* [Added] Add scenario for subscription-created event generation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/152
+  * Add scenario @device_data_volume_subscriptions_03_subscription_creation_event_validation
+  * Renumber other test scenarios accordingly
 
 ### Changed
 
@@ -74,7 +76,8 @@ Changes documented below are compared to version 0.2.0-rc.2.
 
 ### Fixed
 
-* N/A
+* [Fixed] Fix copy/paste error in device-data-volume-subscriptions.yaml info.description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/145
+* [Fixed] Fix typo PRIVATE_JWT_KEY to PRIVATE_KEY_JWT in feature files by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/150
 
 ### Removed
 
@@ -109,7 +112,8 @@ Changes documented below are compared to version 0.2.0-rc.2.
 
 ### Removed
 
-* N/A
+* [Removed] Remove the OUT_OF_RANGE error response from device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/151
+  * Remove 400 OUT_OF_RANGE as a valid error response code
 
 **Full Changelog**: https://github.com/camaraproject/DeviceDataVolume/compare/r2.2...r2.3
 
