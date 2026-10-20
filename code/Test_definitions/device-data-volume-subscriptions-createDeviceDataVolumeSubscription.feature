@@ -201,7 +201,7 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     And the response body property "$.sinkCredential.credentialType", if present, is set to value "ACCESSTOKEN"
     And the response body property "$.sinkCredential.accessTokenExpiresUtc", if present, is set to the same value of the request property "$.sinkCredential.accessTokenExpiresUtc"
 
-  @device_data_volume_subscriptions_12_create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
+  @device_data_volume_subscriptions_11_create_device_data_volume_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
   Scenario: Create device data volume  subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, out-of-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may only support out_of_band provisioning
