@@ -103,23 +103,63 @@ Changes documented below are compared to version 0.1.0.
 
 ### Breaking changes
 
-* N/A
+- Data allowance consumption events renamed for clarity in https://github.com/camaraproject/DeviceDataVolume/pull/106
+  - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining: Event triggered when only 50% of the data plan is remaining
+  - org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining: Event triggered when only 25% of the data plan is remaining
+  - org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining: Event triggered when only 10% of the data plan is remaining
+  - org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining: Event triggered when the data plan is fully consumed
+- Pagination for listing of subscriptions using GET /subscriptions is now supported in https://github.com/camaraproject/DeviceDataVolume/pull/81
+  -  Addition of `page` and `perPage` query parameters to control pagination
+  -  Returned subscriptions are now embedded in the array `subscriptions` within the response JSON, with the page tracked within the `pagination` JSON
+  -  Addition of response headers `X-Total-Count`, `X-Total-Pages` and `Link` to facilitate page navigation
+* Property subscriptionDetail is now a required subscription creation parameter in https://github.com/camaraproject/DeviceDataVolume/pull/127
+* Response code 404 IDENTIFIER_NOT_FOUND added for subscription creation in https://github.com/camaraproject/DeviceDataVolume/pull/127
+* Threshold events now trigger when the remaining data allowance is equal to the threshold, instead of below it in https://github.com/camaraproject/DeviceDataVolume/pull/129
+* With `initialEvent` set to true, an initial event is only sent if the remaining data allowance equals the threshold when the subscription is created in https://github.com/camaraproject/DeviceDataVolume/pull/138
 
 ### Added
 
-* N/A
+* [Added] Add scenario for subscription-created event generation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/152
+  * Add scenario @device_data_volume_subscriptions_03_subscription_creation_event_validation
+  * Renumber other test scenarios accordingly
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Add 404 IDENTIFIER_NOT_FOUND to device-data-volume-subscriptions creation
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Add additional test cases
+    * Add 429 error test cases for createDeviceDataVolumeSubscription operations
+    * Add 401 error test cases for all operations
+    * Add 422 error test cases for createDeviceDataVolumeSubscription operations
+* [Added] Add additional device data volume status subscription list scenarios and move to separate feature file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/103
 
 ### Changed
 
-* N/A
+* [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
+  * Threshold events now trigger when the remaining data allowance is equal to the threshold, instead of below it
+* [Changed] Update response reference for unprocessable entity and improved initialEvent description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/138
+  * With `initialEvent` set to true, an initial event is only sent if the remaining data allowance equals the threshold when the subscription is created
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Property subscriptionDetail is now a required subscription creation parameter
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Move test definitions to separate files for each defined operation
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+* [Changed, Breaking] Rename data allowance consumption events for clarity by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/106
+* [Changed] Refactor subscription schemas for Commonalities r4.4 and add initialEvent by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/113
 
 ### Fixed
 
-* N/A
+* [Fixed] Fix copy/paste error in device-data-volume-subscriptions.yaml info.description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/145
+* [Fixed] Fix typo PRIVATE_JWT_KEY to PRIVATE_KEY_JWT in feature files by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/150
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Fix typos in test case definitions
+* [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
+* [Fix] Correct feature file name and event names / schemas within feature files by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/110
+* [Fixed] Update subscriptionDetail reference in YAML file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/114
 
 ### Removed
 
-* N/A
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Remove 404 IDENTIFIER_NOT_FOUND from device-data-volume-subscriptions retrieval and deletion
+  * Removed OUT_OF_RANGE from the 400 response of GET /subscriptions, and INCOMPATIBLE_STATE from the 409 response of POST /subscriptions
 
 ## device-data-volume 0.2.0
 
@@ -134,23 +174,43 @@ Changes documented below are compared to version 0.1.0.
 
 ### Breaking changes
 
-* N/A
+- Refactor device-data-volume for simpler and more intuitive behaviour in https://github.com/camaraproject/DeviceDataVolume/pull/107
+  - Use MB/GB instead of MiB/GiB for data allowances
+  - Return remaining data allowance rather than data allowance category, allowing "Unlimited" as a response option
+  - Properties renamed for clarity:
+    - Request property `volumeToCheck` becomes `dataAllowanceThreshold`
+    - Response property `dataVolumeCategory` becomes `remainingDataAllowance`, with the maximum value increased from 1000 to 99999 (in https://github.com/camaraproject/DeviceDataVolume/pull/126)
 
 ### Added
 
-* N/A
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Add additional test cases
+    * Add 401 and 429 error test cases for checkDataVolume and retrieveDataVolume
+* [Added] Add lastStatusTime field to successful responses with examples by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/89
+* [Added] Update happy path tests to include validation of lastStatusTime property by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/97
 
 ### Changed
 
-* N/A
+* [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
+* [Changed] Increase maximum data allowance limit by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/126
+  * The max of `remainingDataAllowance.value` in the POST /retrieve 200 response and of `dataAllowanceThreshold.value` in the POST /check request increased from 1000 to 99999
+* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+* [Changed, Breaking] Refactor device-data-volume to return data volumes rather than categories, and use MB/GB instead of MiB/GiB by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/107
 
 ### Fixed
 
-* N/A
+* [Fixed] Fix feature files for device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/128
+  * Change remaining references to response body property $.dataAllowance to new property name $.remainingDataAllowance
+* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Fix typos in test case definitions
+* [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
 
 ### Removed
 
-* N/A
+* [Removed] Remove the OUT_OF_RANGE error response from device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/151
+  * Remove 400 OUT_OF_RANGE as a valid error response code
+* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Remove 404 NOT_FOUND from all device-data-volume endpoints
 
 **Full Changelog**: https://github.com/camaraproject/DeviceDataVolume/compare/r1.3...r2.4
 
