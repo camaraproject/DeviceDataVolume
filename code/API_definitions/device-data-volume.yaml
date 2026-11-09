@@ -328,6 +328,7 @@ components:
           description: The data allowance threshold to check against
           allOf:
             - $ref: "#/components/schemas/DataAllowance"
+      additionalProperties: false
 
     CheckDataVolumeResponse:
       description: The response format when checking if the remaining data allowance exceeds a specified threshold
@@ -345,7 +346,7 @@ components:
           description: |
             Indicates whether the remaining data allowance exceeds the specified threshold
             - `true`: The remaining data allowance is above the specified threshold
-            - `false`: The remaining data allowance is below the specified threshold
+            - `false`: The remaining data allowance is equal to or below the specified threshold
 
     RetrieveDataVolumeRequest:
       description: |
@@ -355,6 +356,7 @@ components:
       properties:
         device:
           $ref: "../common/CAMARA_common.yaml#/components/schemas/Device"
+      additionalProperties: false
 
     RetrieveDataVolumeResponse:
       description: Represents the remaining data volume of the requested device.
