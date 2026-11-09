@@ -634,6 +634,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
@@ -643,6 +645,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
@@ -652,6 +656,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
@@ -661,6 +667,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/ApiNotificationEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               $ref: "#/components/schemas/BasicDeviceEventData"
@@ -670,6 +678,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/SubscriptionLifecycleEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               allOf:
@@ -684,6 +694,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/SubscriptionLifecycleEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               allOf:
@@ -698,6 +710,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/SubscriptionLifecycleEvent"
         - type: object
+          required:
+            - data
           properties:
             data:
               allOf:
