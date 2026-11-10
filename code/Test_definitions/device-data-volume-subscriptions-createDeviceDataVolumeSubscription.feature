@@ -100,8 +100,9 @@ Feature: Device Data Volume Subscriptions API, vwip - Operation createDeviceData
     Then the response code is 201 or 202
     And event notification "subscription-started" is received on callback-url
     And notification body complies with the OAS schema at "#/components/schemas/EventSubscriptionStarted"
-    And type="org.camaraproject.device-data-volume-subscriptions.v0.subscription-started"
-    And the response property "$.initiationReason" is "SUBSCRIPTION_CREATED"
+    And the notification property "$.type" is equal to "org.camaraproject.device-data-volume-subscriptions.v0.subscription-started"
+    And the notification property "$.data.subscriptionId" is equal to response property "$.id"
+    And the notification property "$.initiationReason" is equal to "SUBSCRIPTION_CREATED"
 
   @device_data_volume_subscriptions_04_receive_notification_when_50_percent_of_the_data_plan_remaining
   Scenario: Receive notification for data-50-percent-remaining event
