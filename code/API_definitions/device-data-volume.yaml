@@ -217,9 +217,9 @@ paths:
             schema:
               $ref: "#/components/schemas/CheckDataVolumeRequest"
             examples:
-              Check Request:
+              Check Request Using a 3-legged Access Token:
                 $ref: "#/components/examples/CheckRequest"
-              Retrieve Request With 2-legged Access Token:
+              Check Request Using a 2-legged Access Token:
                 $ref: "#/components/examples/CheckRequestWith2-leggedAccessToken"
       responses:
         "200":
@@ -359,7 +359,7 @@ components:
       additionalProperties: false
 
     RetrieveDataVolumeResponse:
-      description: Represents the remaining data volume of the requested device.
+      description: Response containing the remaining data volume of the requested device.
       type: object
       required:
         - lastStatusTime
@@ -433,14 +433,14 @@ components:
           unit: "MB"
 
     CheckRequest:
-      description: Request remaining device data allowance check using a 3-legged access token
+      description: Request a check on the remaining device data allowance using a 3-legged access token
       value:
         dataAllowanceThreshold:
           value: 500
           unit: "MB"
 
     CheckRequestWith2-leggedAccessToken:
-      description: Request remaining device data allowance check using a 2-legged access token
+      description: Request a check on the remaining device data allowance using a 2-legged access token
       value:
         device:
           phoneNumber: "+123456789"
