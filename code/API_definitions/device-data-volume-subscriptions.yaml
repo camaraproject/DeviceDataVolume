@@ -294,7 +294,7 @@ paths:
         - $ref: "../common/CAMARA_common.yaml#/components/parameters/x-correlator"
       responses:
         "200":
-          description: OK
+          description: Response with detail of the requested subscription
           headers:
             x-correlator:
               $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
@@ -389,9 +389,9 @@ components:
 
   parameters:
     SubscriptionId:
+      description: Subscription identifier that was obtained from the create event subscription operation
       name: subscriptionId
       in: path
-      description: Subscription identifier that was obtained from the create event subscription operation
       required: true
       schema:
         $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
@@ -421,14 +421,24 @@ components:
               type: boolean
 
     ApiEventType:
+      description: Event types that can be triggered for device data volume monitoring.
       type: string
-      description: |
-        Event types that can be triggered for device data volume monitoring.
       enum:
         - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining
         - org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining
         - org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining
         - org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining
+
+    ApiEventTypeArray:
+      description: |
+        Camara Event types eligible to be delivered by this subscription for device data volume.
+        Note: As of now we enforce to have only event type per subscription.
+      type: array
+      minItems: 1
+      maxItems: 1
+      uniqueItems: true
+      items:
+        $ref: "#/components/schemas/ApiEventType"
 
     ApiNotificationEvent:
       description: |
@@ -480,14 +490,7 @@ components:
         sinkCredential:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SinkCredential"
         types:
-          description: |
-            Camara Event types eligible to be delivered by this subscription for device data volume.
-            Note: As of now we enforce to have only event type per subscription.
-          type: array
-          minItems: 1
-          maxItems: 1
-          items:
-            $ref: "#/components/schemas/ApiEventType"
+          $ref: "#/components/schemas/ApiEventTypeArray"
         config:
           $ref: "#/components/schemas/Config"
         id:
@@ -497,7 +500,6 @@ components:
         expiresAt:
           $ref: "../common/CAMARA_common.yaml#/components/schemas/DateTime"
         status:
-          type: string
           description: |-
             Current status of the subscription - Management of Subscription State engine is not mandatory for now. Note not all statuses may be considered to be implemented. Details:
               - `ACTIVATION_REQUESTED`: Subscription creation (POST) is triggered but subscription creation process is not finished yet.
@@ -505,6 +507,7 @@ components:
               - `INACTIVE`: Subscription is temporarily inactive, but its workflow logic is not deleted.
               - `EXPIRED`: Subscription is ended (no longer active). This status applies when subscription is ended due to `SUBSCRIPTION_EXPIRED` or `ACCESS_TOKEN_EXPIRED` event.
               - `DELETED`: Subscription is ended as deleted (no longer active). This status applies when subscription information is kept (i.e. subscription workflow is no longer active but its meta-information is kept).
+          type: string
           enum:
             - ACTIVATION_REQUESTED
             - ACTIVE
@@ -538,14 +541,7 @@ components:
         sinkCredential:
           $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SinkCredential"
         types:
-          description: |
-            Camara Event types eligible to be delivered by this subscription.
-            Note: As of now we enforce to have only event type per subscription.
-          type: array
-          minItems: 1
-          maxItems: 1
-          items:
-            $ref: "#/components/schemas/ApiEventType"
+          $ref: "#/components/schemas/ApiEventTypeArray"
         config:
           $ref: "#/components/schemas/Config"
       discriminator:
@@ -605,13 +601,13 @@ components:
           org.camaraproject.device-data-volume-subscriptions.v0.subscription-ended: "#/components/schemas/EventSubscriptionEnded"
 
     SubscriptionLifecycleEventType:
-      type: string
       description: |
         Enum of subscription lifecycle event type strings.
         These are managed by Commonalities and are identical across all CAMARA
         APIs that support explicit subscriptions.
         Kept as a separate named schema so the set of valid lifecycle type
         strings can be referenced independently from the discriminated schema.
+      type: string
       enum:
         - org.camaraproject.device-data-volume-subscriptions.v0.subscription-started
         - org.camaraproject.device-data-volume-subscriptions.v0.subscription-updated
