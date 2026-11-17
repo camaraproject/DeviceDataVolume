@@ -208,11 +208,8 @@ Changes documented below are compared to version 0.1.0.
 
 ### Removed
 
-* [Removed] Remove the OUT_OF_RANGE error response from device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/151
-  * Remove 400 OUT_OF_RANGE as a valid error response code
-* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
-  * Remove 404 NOT_FOUND from all device-data-volume endpoints
-* [Removed] Remove 400 OUT_OF_RANGE as a valid error response code for POST /retrieve by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/161
+* [Removed] Remove the OUT_OF_RANGE error response from device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/151 and https://github.com/camaraproject/DeviceDataVolume/pull/161
+  * Remove 400 OUT_OF_RANGE as a valid error response code for POST /check and POST /retrieve
 
 **Full Changelog**: https://github.com/camaraproject/DeviceDataVolume/compare/r1.3...r2.4
 
