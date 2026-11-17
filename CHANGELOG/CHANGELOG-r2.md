@@ -196,8 +196,10 @@ Changes documented below are compared to version 0.1.0.
 
 * [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
 * [Changed] Increase maximum data allowance limit by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/126
-  * The max of `remainingDataAllowance.value` in the POST /retrieve 200 response and of `dataAllowanceThreshold.value` in the POST /check request increased from 1000 to 99999
-* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
+  * The max of `dataAllowanceThreshold.value` in the POST /check request increased from 1024 to 99999
+* Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81, https://github.com/camaraproject/DeviceDataVolume/pull/127 and https://github.com/camaraproject/DeviceDataVolume/pull/161
+  * Request bodies with properties that are not declared in the specification are rejected with 400 INVALID_ARGUMENT
+  * `publicPort` starts at 1 instead of 0
 * [Changed, Breaking] Refactor device-data-volume to return data volumes rather than categories, and use MB/GB instead of MiB/GiB by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/107
 
 ### Fixed
