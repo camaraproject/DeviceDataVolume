@@ -158,9 +158,10 @@ Changes documented below are compared to version 0.1.0.
 
 ### Removed
 
-* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
-  * Remove 404 IDENTIFIER_NOT_FOUND from device-data-volume-subscriptions retrieval and deletion
-  * Removed OUT_OF_RANGE from the 400 response of GET /subscriptions, and INCOMPATIBLE_STATE from the 409 response of POST /subscriptions
+* Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81
+  * Remove sink credential types `PLAIN` and `REFRESHTOKEN`, and all protocols other than `HTTP`
+    * Not breaking: 0.1.0 already allowed only `ACCESSTOKEN` and `HTTP`
+  * Remove `SUBSCRIPTION_UNPROCESSABLE` from the `terminationReason` values of the `subscription-ended` event
 
 ## device-data-volume 0.2.0
 
