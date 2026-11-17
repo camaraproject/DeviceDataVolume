@@ -145,9 +145,12 @@ Changes documented below are compared to version 0.1.0.
   * With `initialEvent` set to true, an initial event is only sent if the remaining data allowance equals the threshold when the subscription is created
 * [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
   * Move test definitions to separate files for each defined operation
-* Update API definitions to fix CAMARA validation warnings and hints by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/81
 * [Changed, Breaking] Rename data allowance consumption events for clarity by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/106
-* [Changed] Refactor subscription schemas for Commonalities r4.4 and add initialEvent by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/113
+* Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81, https://github.com/camaraproject/DeviceDataVolume/pull/113, https://github.com/camaraproject/DeviceDataVolume/pull/114, https://github.com/camaraproject/DeviceDataVolume/pull/127 and https://github.com/camaraproject/DeviceDataVolume/pull/162
+  * GET /subscriptions returns a paginated list (see Breaking changes)
+  * Request bodies with properties that are not declared in the specification are rejected with 400 INVALID_ARGUMENT
+  * `subscriptionMaxEvents` is limited to 1000000, and `publicPort` starts at 1 instead of 0
+  * Subscription identifiers are no longer declared with `format: uuid`
 
 ### Fixed
 
