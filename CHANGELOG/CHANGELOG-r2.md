@@ -186,7 +186,7 @@ Changes documented below are compared to version 0.1.0.
 ### Added
 
 * [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
-  * Add additional test cases
+  * Add additional test cases and fix typos in the existing ones
     * Add 401 and 429 error test cases for checkDataVolume and retrieveDataVolume
 * [Added] Add lastStatusTime field to successful responses with examples by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/89
 * [Added] Update happy path tests to include validation of lastStatusTime property by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/97
