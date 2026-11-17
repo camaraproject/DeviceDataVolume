@@ -154,7 +154,6 @@ Changes documented below are compared to version 0.1.0.
 
 ### Fixed
 
-* [Fixed] Fix copy/paste error in device-data-volume-subscriptions.yaml info.description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/145
 * [Fixed] Fix typo PRIVATE_JWT_KEY to PRIVATE_KEY_JWT in feature files by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/150
 * [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
   * Fix typos in test case definitions
