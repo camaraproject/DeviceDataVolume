@@ -180,8 +180,8 @@ Changes documented below are compared to version 0.1.0.
   - Use MB/GB instead of MiB/GiB for data allowances
   - Return remaining data allowance rather than data allowance category, allowing "Unlimited" as a response option
   - Properties renamed for clarity:
-    - Request property `volumeToCheck` becomes `dataAllowanceThreshold`
-    - Response property `dataVolumeCategory` becomes `remainingDataAllowance`, with the maximum value increased from 1000 to 99999 (in https://github.com/camaraproject/DeviceDataVolume/pull/126)
+    - Request property `volumeToCheck` becomes `dataAllowanceThreshold`, with the maximum of `value` increased from 1024 to 99999 (in https://github.com/camaraproject/DeviceDataVolume/pull/126)
+    - Response property `dataVolumeCategory` becomes `remainingDataAllowance`, with `value` between 0 and 99999 (in https://github.com/camaraproject/DeviceDataVolume/pull/126)
 
 ### Added
 
