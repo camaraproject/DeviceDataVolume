@@ -190,6 +190,7 @@ Changes documented below are compared to version 0.1.0.
     * Add 401 and 429 error test cases for checkDataVolume and retrieveDataVolume
 * [Added] Add lastStatusTime field to successful responses with examples by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/89
 * [Added] Update happy path tests to include validation of lastStatusTime property by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/97
+* Add 429 TOO_MANY_REQUESTS and QUOTA_EXCEEDED responses for POST /check and POST /retrieve in https://github.com/camaraproject/DeviceDataVolume/pull/81
 
 ### Changed
 
