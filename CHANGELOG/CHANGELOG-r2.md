@@ -127,6 +127,9 @@ Changes documented below are compared to version 0.1.0.
   * Renumber other test scenarios accordingly
 * [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
   * Add 404 IDENTIFIER_NOT_FOUND to device-data-volume-subscriptions creation
+* Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81, https://github.com/camaraproject/DeviceDataVolume/pull/113 and https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Add sink credential type `PRIVATE_KEY_JWT`, and 422 PRIVATE_KEY_JWT_NOT_CONFIGURED for subscription creation
+  * Add 409 ABORTED and 422 MULTIEVENT_COMBINATION_TEMPORARILY_NOT_SUPPORTED for subscription creation
 * [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
   * Add additional test cases
     * Add 429 error test cases for createDeviceDataVolumeSubscription operations
