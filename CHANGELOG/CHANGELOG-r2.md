@@ -135,7 +135,7 @@ Changes documented below are compared to version 0.1.0.
     * Add 429 error test cases for createDeviceDataVolumeSubscription operations
     * Add 401 error test cases for all operations
     * Add 422 error test cases for createDeviceDataVolumeSubscription operations
-* [Added] Add additional device data volume status subscription list scenarios and move to separate feature file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/103
+* [Added] Add additional device data volume status subscription list scenarios and move to separate feature file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/103 and https://github.com/camaraproject/DeviceDataVolume/pull/110
 
 ### Changed
 
