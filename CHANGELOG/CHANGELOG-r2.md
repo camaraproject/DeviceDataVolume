@@ -155,7 +155,6 @@ Changes documented below are compared to version 0.1.0.
 ### Fixed
 
 * [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
-* [Fix] Correct feature file name and event names / schemas within feature files by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/110
 * [Fixed] Update subscriptionDetail reference in YAML file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/114
 * [Fixed] Make `data` a required property of notifications by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/162
 
