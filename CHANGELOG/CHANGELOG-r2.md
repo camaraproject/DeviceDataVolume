@@ -131,7 +131,7 @@ Changes documented below are compared to version 0.1.0.
   * Add sink credential type `PRIVATE_KEY_JWT`, and 422 PRIVATE_KEY_JWT_NOT_CONFIGURED for subscription creation
   * Add 409 ABORTED and 422 MULTIEVENT_COMBINATION_TEMPORARILY_NOT_SUPPORTED for subscription creation
 * [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
-  * Add additional test cases
+  * Add additional test cases and fix typos in the existing ones
     * Add 429 error test cases for createDeviceDataVolumeSubscription operations
     * Add 401 error test cases for all operations
     * Add 422 error test cases for createDeviceDataVolumeSubscription operations
