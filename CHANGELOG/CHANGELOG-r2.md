@@ -122,7 +122,7 @@ Changes documented below are compared to version 0.1.0.
 
 ### Added
 
-* [Added] Add scenario for subscription-created event generation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/152
+* [Added] Add scenario for subscription-created event generation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/152 and https://github.com/camaraproject/DeviceDataVolume/pull/166
   * Add scenario @device_data_volume_subscriptions_03_subscription_creation_event_validation
   * Renumber other test scenarios accordingly
 * [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
