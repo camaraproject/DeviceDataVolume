@@ -122,30 +122,30 @@ Changes documented below are compared to version 0.1.0.
 
 ### Added
 
-* [Added] Add scenario for subscription-created event generation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/152 and https://github.com/camaraproject/DeviceDataVolume/pull/166
-  * Add scenario @device_data_volume_subscriptions_03_subscription_creation_event_validation
-  * Renumber other test scenarios accordingly
-* [Changed / Added / Removed] Update error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
-  * Add 404 IDENTIFIER_NOT_FOUND to device-data-volume-subscriptions creation
+* Added scenario for subscription-created event generation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/152 and https://github.com/camaraproject/DeviceDataVolume/pull/166
+  * Added scenario @device_data_volume_subscriptions_03_subscription_creation_event_validation
+  * Renumbered other test scenarios accordingly
+* Updated error response codes to use new Commonalities r4.4 schema by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/127
+  * Added 404 IDENTIFIER_NOT_FOUND to device-data-volume-subscriptions creation
 * Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81, https://github.com/camaraproject/DeviceDataVolume/pull/113 and https://github.com/camaraproject/DeviceDataVolume/pull/127
-  * Add sink credential type `PRIVATE_KEY_JWT`, and 422 PRIVATE_KEY_JWT_NOT_CONFIGURED for subscription creation
-  * Add 409 ABORTED and 422 MULTIEVENT_COMBINATION_TEMPORARILY_NOT_SUPPORTED for subscription creation
-* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
-  * Add additional test cases and fix typos in the existing ones
-    * Add 429 error test cases for createDeviceDataVolumeSubscription operations
-    * Add 401 error test cases for all operations
-    * Add 422 error test cases for createDeviceDataVolumeSubscription operations
-* [Added] Add additional device data volume status subscription list scenarios and move to separate feature file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/103 and https://github.com/camaraproject/DeviceDataVolume/pull/110
+  * Added sink credential type `PRIVATE_KEY_JWT`, and 422 PRIVATE_KEY_JWT_NOT_CONFIGURED for subscription creation
+  * Added 409 ABORTED and 422 MULTIEVENT_COMBINATION_TEMPORARILY_NOT_SUPPORTED for subscription creation
+* Refactored test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Added additional test cases and fixed typos in the existing ones
+    * Added 429 error test cases for createDeviceDataVolumeSubscription operations
+    * Added 401 error test cases for all operations
+    * Added 422 error test cases for createDeviceDataVolumeSubscription operations
+* Added additional device data volume status subscription list scenarios and moved to separate feature file by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/103 and https://github.com/camaraproject/DeviceDataVolume/pull/110
 
 ### Changed
 
-* [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129 and https://github.com/camaraproject/DeviceDataVolume/pull/145
-  * Clarify that threshold events trigger when the remaining data allowance is equal to the threshold
-* [Changed] Update response reference for unprocessable entity and improved initialEvent description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/138
+* Improved API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129 and https://github.com/camaraproject/DeviceDataVolume/pull/145
+  * Clarified that threshold events trigger when the remaining data allowance is equal to the threshold
+* Updated response reference for unprocessable entity and improved initialEvent description by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/138
   * With `initialEvent` set to true, an initial event is only sent if the remaining data allowance equals the threshold when the subscription is created
-* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
-  * Move test definitions to separate files for each defined operation
-* [Changed, Breaking] Rename data allowance consumption events for clarity by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/106
+* Refactored test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Moved test definitions to separate files for each defined operation
+* Renamed data allowance consumption events for clarity by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/106
 * Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81, https://github.com/camaraproject/DeviceDataVolume/pull/113, https://github.com/camaraproject/DeviceDataVolume/pull/114, https://github.com/camaraproject/DeviceDataVolume/pull/127 and https://github.com/camaraproject/DeviceDataVolume/pull/162
   * GET /subscriptions returns a paginated list (see Breaking changes)
   * Request bodies with properties that are not declared in the specification are rejected with 400 INVALID_ARGUMENT
@@ -154,14 +154,14 @@ Changes documented below are compared to version 0.1.0.
 
 ### Fixed
 
-* [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
+* Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
 
 ### Removed
 
 * Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81
-  * Remove sink credential types `PLAIN` and `REFRESHTOKEN`, and all protocols other than `HTTP`
+  * Removed sink credential types `PLAIN` and `REFRESHTOKEN`, and all protocols other than `HTTP`
     * Not breaking: 0.1.0 already allowed only `ACCESSTOKEN` and `HTTP`
-  * Remove `SUBSCRIPTION_UNPROCESSABLE` from the `terminationReason` values of the `subscription-ended` event
+  * Removed `SUBSCRIPTION_UNPROCESSABLE` from the `terminationReason` values of the `subscription-ended` event
 
 ## device-data-volume 0.2.0
 
@@ -185,31 +185,31 @@ Changes documented below are compared to version 0.1.0.
 
 ### Added
 
-* [Updated / Fixed / Added] Refactor test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
-  * Add additional test cases and fix typos in the existing ones
-    * Add 401 and 429 error test cases for checkDataVolume and retrieveDataVolume
-* [Added] Add lastStatusTime field to successful responses with examples by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/89
-* [Added] Update happy path tests to include validation of lastStatusTime property by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/97
-* Add 429 TOO_MANY_REQUESTS and QUOTA_EXCEEDED responses for POST /check and POST /retrieve in https://github.com/camaraproject/DeviceDataVolume/pull/81
+* Refactored test cases for updated API definitions by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/130
+  * Added additional test cases and fixed typos in the existing ones
+    * Added 401 and 429 error test cases for checkDataVolume and retrieveDataVolume
+* Added lastStatusTime field to successful responses with examples by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/89
+* Updated happy path tests to include validation of lastStatusTime property by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/97
+* Added 429 TOO_MANY_REQUESTS and QUOTA_EXCEEDED responses for POST /check and POST /retrieve in https://github.com/camaraproject/DeviceDataVolume/pull/81
 
 ### Changed
 
-* [Changed] Improve API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
-* [Changed] Increase maximum data allowance limit by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/126
+* Improved API documentation by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/129
+* Increased maximum data allowance limit by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/126
   * The max of `dataAllowanceThreshold.value` in the POST /check request increased from 1024 to 99999
 * Aligned with CAMARA Commonalities r4.4 (0.9.0) in https://github.com/camaraproject/DeviceDataVolume/pull/81, https://github.com/camaraproject/DeviceDataVolume/pull/127 and https://github.com/camaraproject/DeviceDataVolume/pull/161
   * Request bodies with properties that are not declared in the specification are rejected with 400 INVALID_ARGUMENT
   * `publicPort` starts at 1 instead of 0
-* [Changed, Breaking] Refactor device-data-volume to return data volumes rather than categories, and use MB/GB instead of MiB/GiB by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/107 and https://github.com/camaraproject/DeviceDataVolume/pull/128
+* Refactored device-data-volume to return data volumes rather than categories, and use MB/GB instead of MiB/GiB by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/107 and https://github.com/camaraproject/DeviceDataVolume/pull/128
 
 ### Fixed
 
-* [Fixed] Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
+* Documentation fixes for Sync26 by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/104
 
 ### Removed
 
-* [Removed] Remove the OUT_OF_RANGE error response from device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/151 and https://github.com/camaraproject/DeviceDataVolume/pull/161
-  * Remove 400 OUT_OF_RANGE as a valid error response code for POST /check and POST /retrieve
+* Removed the OUT_OF_RANGE error response from device-data-volume by @eric-murray in https://github.com/camaraproject/DeviceDataVolume/pull/151 and https://github.com/camaraproject/DeviceDataVolume/pull/161
+  * Removed 400 OUT_OF_RANGE as a valid error response code for POST /check and POST /retrieve
 
 **Full Changelog**: https://github.com/camaraproject/DeviceDataVolume/compare/r1.3...r2.4
 
