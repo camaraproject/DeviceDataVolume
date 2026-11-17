@@ -118,7 +118,6 @@ Changes documented below are compared to version 0.1.0.
   -  Addition of response headers `X-Total-Count`, `X-Total-Pages` and `Link` to facilitate page navigation
 * Response code 404 IDENTIFIER_NOT_FOUND added for subscription creation in https://github.com/camaraproject/DeviceDataVolume/pull/127
   * Implementations of 0.1.0 might already have returned this error (the 0.1.0 test definitions expected it)
-* Threshold events now trigger when the remaining data allowance is equal to the threshold, instead of below it in https://github.com/camaraproject/DeviceDataVolume/pull/129
 * With `initialEvent` set to true, an initial event is only sent if the remaining data allowance equals the threshold when the subscription is created in https://github.com/camaraproject/DeviceDataVolume/pull/138
 
 ### Added
