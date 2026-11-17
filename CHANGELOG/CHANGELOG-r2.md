@@ -106,11 +106,12 @@ Changes documented below are compared to version 0.1.0.
 
 ### Breaking changes
 
-- Data allowance consumption events renamed for clarity in https://github.com/camaraproject/DeviceDataVolume/pull/106
-  - org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining: Event triggered when only 50% of the data plan is remaining
-  - org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining: Event triggered when only 25% of the data plan is remaining
-  - org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining: Event triggered when only 10% of the data plan is remaining
-  - org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining: Event triggered when the data plan is fully consumed
+- Data allowance consumption events renamed, and now named after the remaining instead of the consumed data allowance, in https://github.com/camaraproject/DeviceDataVolume/pull/106
+  - `org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent` became `org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining`: Event triggered when only 50% of the data plan is remaining
+  - `org.camaraproject.device-data-volume-subscriptions.v0.data-75-percent` became `org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining`: Event triggered when only 25% of the data plan is remaining
+  - `org.camaraproject.device-data-volume-subscriptions.v0.data-90-percent` became `org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining`: Event triggered when only 10% of the data plan is remaining
+  - `org.camaraproject.device-data-volume-subscriptions.v0.data-exceeded` became `org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining`: Event triggered when the data plan is fully consumed
+  - The scopes for subscription creation were renamed accordingly
 - Pagination for listing of subscriptions using GET /subscriptions is now supported in https://github.com/camaraproject/DeviceDataVolume/pull/81
   -  Addition of `page` and `perPage` query parameters to control pagination
   -  Returned subscriptions are now embedded in the array `subscriptions` within the response JSON, with the page tracked within the `pagination` JSON
