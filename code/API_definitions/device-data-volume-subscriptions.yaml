@@ -138,8 +138,11 @@ paths:
       security:
         - openId:
             - device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-50-percent-remaining:create
+        - openId:
             - device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-25-percent-remaining:create
+        - openId:
             - device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-10-percent-remaining:create
+        - openId:
             - device-data-volume-subscriptions:org.camaraproject.device-data-volume-subscriptions.v0.data-00-percent-remaining:create
       requestBody:
         content:
