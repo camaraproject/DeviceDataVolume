@@ -406,6 +406,7 @@ components:
       properties:
         device:
           $ref: "../common/CAMARA_common.yaml#/components/schemas/Device"
+      additionalProperties: false
 
     Config:
       description: Config schema allowing for device to be specified as part of subscription detail
@@ -547,6 +548,7 @@ components:
           $ref: "#/components/schemas/ApiEventTypeArray"
         config:
           $ref: "#/components/schemas/Config"
+      additionalProperties: false
       discriminator:
         propertyName: protocol
         mapping:
