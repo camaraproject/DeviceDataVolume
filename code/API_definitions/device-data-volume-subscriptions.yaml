@@ -406,6 +406,7 @@ components:
       properties:
         device:
           $ref: "../common/CAMARA_common.yaml#/components/schemas/Device"
+      additionalProperties: false
 
     Config:
       description: Config schema allowing for device to be specified as part of subscription detail
@@ -422,6 +423,7 @@ components:
                 Set to `true` if the API consumer wants to get an event as soon as the subscription is created and current situation matches the event trigger.
                 Example: The API consumer requests `data-10-percent-remaining` events. If the API consumer sets `initialEvent` to true, and the remaining device data allowance is equal to 10% of the full allowance, an initial event is triggered.
               type: boolean
+          additionalProperties: false
 
     ApiEventType:
       description: Event types that can be triggered for device data volume monitoring.
@@ -547,6 +549,7 @@ components:
           $ref: "#/components/schemas/ApiEventTypeArray"
         config:
           $ref: "#/components/schemas/Config"
+      additionalProperties: false
       discriminator:
         propertyName: protocol
         mapping:
